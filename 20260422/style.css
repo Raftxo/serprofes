@@ -56,6 +56,9 @@ footer{
     margin: 15px; /* separa esta caja de las otras */
     border-radius: 10px; /* redondeo de las esquinas */ 
 }
+.caja:hover{
+    background-color: darkorange;
+}
 
 .contenedor-principal{
     flex: 1;
@@ -63,17 +66,17 @@ footer{
 
 .anuncio{
     background-color: deepskyblue;
-    color:aquamarine;
+    color:rgb(7, 77, 53);
     padding: 40px;
     border-radius: 10px;
     margin: 15px;
+    background-image: url(paper.gif);
 }
 
 
 /* 4. LA MAGIA DE FLEXBOX (Poniendo orden) */
 nav{
     background-color: yellowgreen;
-    background-image: url(paper.gif);
     color:brown;
     padding: 15px;
     font-weight: bolder;
