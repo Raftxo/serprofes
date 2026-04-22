@@ -1,0 +1,70 @@
+/* 1. Reseteo Básico */
+/* El asterisco (*) significa que se aplica a todo */
+*{
+    margin: 0;
+    padding: 0;
+    /* Hace que el tamaño de las cajas sea predecible */
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+}
+
+body{
+    /* background-color = color de fondo */
+    background-color: blanchedalmond;
+    /* tipo de letra */ 
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header{
+    /* background-color = color de fondo */
+    background-color: burlywood;
+    /* color = color de la fuente */
+    color: whitesmoke;
+    /* text-align centra el texto */
+    text-align: center;
+    /* PADDING : Espacio hacia ADENTRO de la caja   */
+    padding: 20px;
+}
+
+main{
+    flex: 1;
+}
+
+footer{
+    background-color: black;
+    color: whitesmoke;
+    padding: 15px;
+    /* MARGIN: Espacio hacia AFUERA de la caja (lo empuja hacia abajo) */
+    /* margin-top: 20px; */
+    /* margin-bottom: 100px;  */
+}
+
+/* 3. EL MODELO DE LA CAJA */
+.caja{
+    background-color: chocolate;
+    color:bisque;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 30px; /* 1. engorda la caja hacia adentro */
+    border: 5px solid black; /* el borde de la caja (una línea sólida negra) */
+    margin: 15px; /* separa esta caja de las otras */
+    border-radius: 10px; /* redondeo de las esquinas */ 
+}
+
+.contenedor-principal{
+    flex: 1;
+}
+
+.anuncio{
+    background-color: deepskyblue;
+    color:aquamarine;
+    padding: 40px;
+    border-radius: 10px;
+    margin: 15px;
+}
