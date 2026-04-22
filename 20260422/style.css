@@ -68,3 +68,25 @@ footer{
     border-radius: 10px;
     margin: 15px;
 }
+
+
+/* 4. LA MAGIA DE FLEXBOX (Poniendo orden) */
+nav{
+    background-color: yellowgreen;
+    background-image: url(paper.gif);
+    color:brown;
+    padding: 15px;
+    font-weight: bolder;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Efecto hover: cambia de color al pasar el cursor por encima */
+.link:hover{
+    color:antiquewhite;
+    /* Aparece la manita arrastrando (grabbing) */
+    /* cursor:grabbing; */
+    cursor:help;
+
+}
