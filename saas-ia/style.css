@@ -51,10 +51,36 @@
   text-align: center;
   }
 
-  .mensajes-container{
+.mensajes-container{
     flex-grow: 1; /* Mensajes ocupan el centro */
     padding: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
+
+.mensaje-ia{
+  color:#d1d5db;
+  max-width: 600px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* 5. FORMULARIO DE ENTRADA (input) */
+.input-area{
+  padding: 20px 40px;
+}
+
+.chat-form{
+  max-width: 700px;
+  margin: 0 auto; /* centra verticalmente el formulario*/
+  display: flex;
+  background-color: #40414f;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+.chat-form input{
+  flex-grow: 1;
+  padding: 10px
+}
