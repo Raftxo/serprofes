@@ -1,0 +1,60 @@
+/* CSS PROYECTO saas-ia */
+/* eliminar (reseteo) los márgenes por defecto (globales con asterisco) */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* se autoregularán las cajitas */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 2. LAYOUT PRINCIPAL (Flexbox) */ 
+.app-container{
+  display: flex; /* Ponemos el sidebar y chat en fila */
+  height: 100vh; /* Ocupar el 100% de la altura de la ventana sin importar la altura del elemento padre. */
+  overflow: hidden; /* Evita que la web entera haga scroll */
+}
+
+/* 3. SIDEBAR (Barra lateral) */
+.sidebar{
+  width: 260px; /* ancho fijo para el menú */
+  background-color: #9b3991; /* color oscuro tipo chatgpt*/
+  color: #fff;
+  display: flex;
+  flex-direction: column; /* los elementos del menú van ... */
+  justify-content: space-between; /* logo arriba, perfíl abajo */
+  padding: 15px;
+}
+
+.menu-lateral button{
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #4d4d4f;
+  color: bisque;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+/* 4. ÁREA DE CHAT (Zona Central) */
+.chat-area{
+  flex-grow: 1; /* Ocupa TODO el espacio restante de la pantalla*/
+  display: flex;
+  flex-direction: column; /* cabezera arriba, mensajes en el centro e input abajo */
+  background-color: #343541;
+}
+
+.chat-header{
+  padding: 15px;
+  border-bottom: 1px solid #4d4d4f;
+  color: #ececf1;
+  text-align: center;
+  }
+
+  .mensajes-container{
+    flex-grow: 1; /* Mensajes ocupan el centro */
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
