@@ -30,6 +30,14 @@ h1 {
   padding: 30px;
   width: 280px;
   border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+/* Hover en toda la card */
+.card:hover {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  transform: translateY(-5px);
 }
 
 .card h2 {
