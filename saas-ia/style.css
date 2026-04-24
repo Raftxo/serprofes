@@ -74,13 +74,28 @@
 .chat-form{
   max-width: 700px;
   margin: 0 auto; /* centra verticalmente el formulario*/
-  display: flex;
+  display: flex; /* El input y el button en fila*/
   background-color: #40414f;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 .chat-form input{
-  flex-grow: 1;
-  padding: 10px
+  flex-grow: 1;  /* el input estira todo lo que puede */ 
+  background-color: transparent;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: text;
+  outline: none; /* quita el borde azul al hacer click en el input */
 }
+.chat-form button{
+  background-color: #19c37d;
+  color: #fff;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+}
+
