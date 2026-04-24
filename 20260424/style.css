@@ -1,8 +1,10 @@
+/* Agregando estilos a las tarjetas */
+/* 1. Reseteo basico con el asterisco */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -21,7 +23,7 @@ h1 {
 .cards {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 40px;
   flex-wrap: wrap;
 }
 
