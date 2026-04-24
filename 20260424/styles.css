@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f5f6f8;
+}
+
+.container {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+h1 {
+  margin-bottom: 40px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #e9ecef;
+  padding: 30px;
+  width: 280px;
+  border-radius: 20px;
+}
+
+.card h2 {
+  margin-bottom: 20px;
+}
+
+.price {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.desc {
+  margin-bottom: 30px;
+  color: #555;
+}
+
+/* Botones con transición suave */
+.btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  background: #dcdfe3;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hover botón básico */
+.btn:hover {
+  background: #3498db;
+  color: white;
+}
+
+/* Botón pro */
+.btn.primary {
+  background: #3498db;
+  color: white;
+}
+
+/* Hover botón pro (más intenso) */
+.btn.primary:hover {
+  background: #217dbb;
+}
