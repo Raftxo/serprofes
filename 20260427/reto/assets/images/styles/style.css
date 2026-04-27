@@ -1,0 +1,187 @@
+/* resets básicos */
+* {
+  margin: 0;                        /* Elimina márgenes por defecto de todos los elementos */
+  padding: 0;                       /* Elimina rellenos por defecto de todos los elementos */
+  box-sizing: border-box;           /* Hace que el ancho/alto incluyan padding y border */
+}
+
+/* layout por grid */
+body {
+  min-height: 100vh;                /* Altura mínima del body igual al alto de la ventana */
+  display: grid;                    /* Convierte el body en un contenedor grid */
+  grid-template-columns: 15% 1fr;   /* Define dos columnas: 15% y el resto (1fr) */
+  grid-template-rows: 60px 1fr 30px;/* Define tres filas: header 60px, contenido flexible, footer 30px */
+  grid-template-areas:               /* Nombra las áreas del grid para asignarlas luego */
+    "header header"
+    "nav    gallery"
+    "footer footer";
+  background: #000;                  /* Fondo negro para todo el body */
+  color: #fff;                       /* Texto en blanco por defecto */
+  font-family: sans-serif;           /* Fuente sans-serif para todo el documento */
+}
+
+header {
+  grid-area: header;                /* Coloca este elemento en el área “header” */
+  background: #1f201f;              /* Fondo gris oscuro */
+  display: flex;                    /* Usa flexbox para centrar contenido */
+  align-items: center;              /* Centra verticalmente */
+  justify-content: center;          /* Centra horizontalmente */
+  font-size: 1.8rem;                /* Tamaño de fuente grande para el título */
+}
+
+nav {
+  max-width: 100%;                  /* No exceder el ancho de su contenedor padre */
+  grid-area: nav;                   /* Coloca este elemento en el área “nav” */
+  background: #272624;              /* Fondo gris medio-oscuro */
+  padding: 1rem;                    /* Relleno interno de 1rem */
+  overflow-wrap: break-word;        /* Permite que el texto se divida si es muy largo */
+}
+
+nav ul {
+  list-style: none;                 /* Elimina viñetas de la lista */
+}
+
+nav li + li {
+  margin-top: 1rem;                 /* Añade espacio superior a cada <li> excepto el primero */
+}
+
+.nav-button {
+  display: inline-block;            /* Para poder aplicar padding y borde */
+  padding: 0.5rem 1rem;             /* Relleno interno (arriba/abajo, izquierda/derecha) */
+  background: #080808;              /* Fondo casi negro */
+  color: #fff;                      /* Texto blanco */
+  text-decoration: none;            /* Sin subrayado en enlaces */
+  border-radius: 0.3rem;            /* Bordes redondeados */
+  transition: background 0.2s;      /* Transición suave al cambiar el fondo */
+}
+
+.nav-button:hover {
+  background: #45a049;              /* Fondo verde al pasar el ratón */
+}
+
+.gallery {
+  display: grid;                    /* Contenedor grid para las miniaturas */
+  gap: 2rem;                        /* Espacio de 2rem entre filas y columnas */
+  grid-auto-rows: auto;            /* Altura fija de 300px para cada fila */
+  justify-content: center;          /* Centra el grid horizontalmente */
+}
+
+/* miniaturas */
+.thumb {
+  width: 100%;                      /* Ancho al 100% del contenedor grid */
+  height: 100%;                     /* Alto al 100% (300px) del contenedor grid */
+  overflow: hidden;                 /* Oculta lo que desborde su contenedor */
+  border: 1px solid #444;           /* Borde gris oscuro */
+  border-radius: 0.5rem;            /* Bordes redondeados de 0.5rem */
+  transition:                         /* Transiciones para efectos hover */
+    border-radius 0.4s ease,        /* Animación del cambio de radio */
+    transform 0.3s ease,            /* Animación del escalado */
+    box-shadow 0.4s ease;           /* Animación de la sombra */
+}
+
+/* al pasar el ratón */
+.thumb:hover {
+  border-radius: 1rem;              /* Aumenta el redondeo al pasar el ratón */
+  transform: scale(1.05);           /* Escala un 5% para efecto zoom */
+  box-shadow: 0 0 15px rgba(100, 255, 100, 0.3); /* Sombra verde tenue */
+}
+
+/* imagen dentro de miniatura */
+.thumb img {
+  display: block;                   /* Elimina espacio en línea */
+  width: 100%;                      /* Ancho completo del contenedor .thumb */
+  height: 100%;                     /* Alto completo del contenedor .thumb */
+  object-fit: contain;              /* Escala la imagen para verla entera */
+  object-position: center;          /* Centra la imagen dentro del contenedor / escalable */
+}
+
+/* para portada (imagen full-width) */
+.portada img {
+  display: block;                   /* Elimina espacio en línea */
+  width: 100%;                      /* Ancho completo del contenedor */
+  height: auto;                     /* Alto proporcional */
+  object-fit: cover;                /* Cubre todo el contenedor recortando si es necesario */
+}
+
+footer {
+  grid-area: footer;                /* Coloca este elemento en el área “footer” */
+  background: #1e1e1e;              /* Fondo gris oscuro */
+  display: flex;                    /* Usa flexbox para alinear contenido */
+  justify-content: flex-end;        /* Sitúa el contenido a la derecha */
+  align-items: center;              /* Centra verticalmente */
+  padding: 0 1rem;                  /* Relleno horizontal de 1rem */
+  font-size: 0.9rem;                /* Fuente ligeramente más pequeña */
+}
+
+/* Centrar imagen de portada dentro de .gallery.portada */
+.gallery.portada {
+  display: flex;                    /* Flexbox para centrar fácil */
+  justify-content: center;          /* Centra horizontalmente */
+  align-items: center;              /* Centra verticalmente si hay altura fija */
+  margin-top: 20px;                 /* Separa la galería del contenido superior */
+}
+
+.gallery.portada img {
+  max-width: 90%;                   /* Máximo ancho del 90% */
+  height: auto;                     /* Alto proporcional */
+  border-radius: 10px;              /* Bordes redondeados de 10px */
+}
+
+/* MEDIA QUERIES para responsividad */
+
+/* Pantallas hasta 600px */
+@media (max-width: 600px) {
+  body {
+    grid-template-columns: 1fr;     /* Una sola columna */
+    grid-template-rows:           /* Filas: header, nav, gallery, footer */
+      60px auto 1fr 30px;
+    grid-template-areas:
+      "header"
+      "nav"
+      "gallery"
+      "footer";
+  }
+  nav ul {
+    list-style: none;               /* Sin viñetas */
+    padding: 0;                     /* Sin relleno */
+    margin: 0;                      /* Sin márgenes */
+    display: flex;                  /* Flex horizontal */
+    justify-content: center;        /* Centrar botones horizontalmente */
+    gap: 1rem;                      /* Espacio entre botones */
+    flex-wrap: wrap;                /* Permite salto de línea si caben justo */
+  }
+
+  nav li + li {
+    margin-top: 0;                  /* Quita espacio superior (ahora es flex) */
+  }
+
+  .gallery {
+    justify-content: center;        /* Centra la galería */
+    grid-template-columns: 1fr;     /* Una sola columna */
+  }
+}
+
+/* Pantallas entre 601px y 900px */
+@media (min-width: 601px) and (max-width: 900px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas iguales */
+  }
+  .nav-button {
+    padding: 0.1rem 0.3rem;         /* Menos padding para ajustar botones */
+    font-size: 0.9rem;              /* Texto ligeramente más pequeño */
+  }
+}
+
+/* Pantallas entre 901px y 1400px */
+@media (min-width: 901px) and (max-width: 1400px) {
+  .gallery {
+    grid-template-columns: repeat(3, 1fr); /* Tres columnas iguales */
+  }
+}
+
+/* Pantallas mayores de 1401px */
+@media (min-width: 1401px) {
+  .gallery {
+    grid-template-columns: repeat(4, 1fr); /* Cuatro columnas iguales */
+  }
+}
