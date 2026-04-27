@@ -1,2 +1,24 @@
-/* joscanoav.netlify.app/assets/projects/project3/greco */
-/* https://joscanoav.netlify.app/assets/projects/project3/ */
+/* SOLUCIÓN: GALERÍA GRID REPETITIVO */
+.gallery{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+    max-width: fit-content;
+    margin: 0 auto;
+}
+
+.thumb img{
+    height: 250px; /* que todas las imágenes midan igual*/
+    overflow: hidden;
+    border-radius: 8px;
+    filter: grayscale(100%);
+    transition: transform 0.4s ease;
+    cursor: pointer;
+}
+
+.thumb:hover img{
+    transform: scale(1.05); /* efecto zoom*/
+    filter: grayscale(0%);
+    box-shadow: 0 0 15px rgba(255, 255, 255, alpha);
+    
+}
