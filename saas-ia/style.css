@@ -114,6 +114,7 @@
   }
   .input-area input::placeholder {
     color: white;
+  }
   .chat-form{
     background-color: #7b7d8f;
     flex-direction: row;
@@ -130,5 +131,13 @@
   
 }
 
-
+@media (max-width:480px){
+  .chat-header h3{
+    font-size: 1.1rem;
+  }
+  .mensaje-ia{
+    font-size: 0.95rem;
+  }
 }
+
+
