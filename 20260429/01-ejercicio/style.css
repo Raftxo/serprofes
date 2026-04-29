@@ -2,7 +2,10 @@
     margin:0px;
     padding: 0px;
     box-sizing: border-box;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: "Audiowide", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
 
 }
 
@@ -30,6 +33,7 @@ body{
 
 .form-container h2{
     margin-bottom: 10px;
+    font-weight: 100;
     color: #333;
 }
 
