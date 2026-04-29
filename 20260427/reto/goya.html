@@ -1,86 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Obras de Goya - Sistema Dinámico</title>
     <link rel="stylesheet" href="assets/styles/style.css">
+    <style>
+        .cuadro {
+            background: #ffffff;
+            color: #1a1a1a;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .cuadro:hover { transform: translateY(-5px); }
+        .cuadro img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .cuadro h2 { font-size: 1.1rem; margin: 15px 0 10px; color: #1a1a1a; }
+        .cuadro p { font-size: 0.9rem; color: #555; line-height: 1.4; }
+    </style>
 </head>
 <body>
-  <header>Obras destacadas de Goya</header>
-  <nav>
-    <ul>
-      <li><a class="nav-button" href="index.html">Inicio</a></li>
-      <li><a class="nav-button" href="goya.html">Goya</a></li>
-      <li><a class="nav-button" href="dynamicGreco.html">El Greco</a></li>
-      <li><a class="nav-button" href="rubens.html">Rubens</a></li>
-      <li><a class="nav-button" href="velazquez.html">Velázquez</a></li>
-    </ul>
-  </nav>
-  <section class="gallery">
-    <div class="thumb">
-        <a href="assets/images/goya-2-de-mayo-1808-madrid.jpg" tar></a>
-            <img src="assets/images/goya-2-de-mayo-1808-madrid.jpg" alt="El 2 de mayo de 1808 en Madrid (Goya)" loading="lazy">
-        </a>
-    </div>
-    <div class="thumb">
-        <a href="assets/images/goya-entierro-sardina.jpg" tar></a>
-            <img src="assets/images/goya-entierro-sardina.jpg" 
-            alt="Entierro Sardina" 
-            loading="lazy"/>
-        </a>
-    </div>
-    <div class="thumb">
-        <a href="assets/images/goya-familia-carlos-iv.jpg" tar></a>
-            <img src="assets/images/goya-familia-carlos-iv.jpg" 
-            alt="Familia Carlos IV" 
-            loading="lazy"/>
-        </a>
-    </div>
-    <div class="thumb">
-        <a href="assets/images/goya-grabado-hombre-volando.jpg" tar></a>
-            <img src="assets/images/goya-grabado-hombre-volando.jpg" 
-            alt="Hombre Volando" 
-            loading="lazy"/>
-        </a>
-    </div>
-    <div class="thumb">
-        <a href="assets/images/goya-maja-desnuda.jpg" tar></a>
-            <img src="assets/images/goya-maja-desnuda.jpg" 
-            alt="Entierro Sardina" 
-            loading="lazy"/>
-        </a>
-    </div>
-    <div class="thumb">
-        <a href="assets/images/goya-maja-vestida.jpg" tar></a>
-            <img src="assets/images/goya-maja-vestida.jpg" 
-            alt="Entierro Sardina" 
-            loading="lazy"/>
-        </a>
-    </div>
-    <div class="thumb">
-        <a href="assets/images/goya-perro-semihundido.jpg" tar></a>
-            <img src="assets/images/goya-perro-semihundido.jpg" 
-            alt="Perro Semihundido" 
-            loading="lazy"/>
-        </a>
-    </div>
-    <div class="thumb">
-        <a href="assets/images/goya-maja-desnuda.jpg" tar></a>
-            <img src="assets/images/goya-maja-desnuda.jpg" 
-            alt="Entierro Sardina" 
-            loading="lazy"/>
-        </a>
-    </div>
-    <div class="thumb">
-        <a href="assets/images/goya-maja-vestida.jpg" tar></a>
-            <img src="assets/images/goya-maja-vestida.jpg" 
-            alt="Entierro Sardina" 
-            loading="lazy"/>
-        </a>
-    </div>
-  </section>
+    <header>Obras destacadas de Goya</header>
+    <nav>
+        <ul>
+          <li><a class="nav-button" href="index.html">Inicio</a></li>
+          <li><a class="nav-button" href="goya.html">Goya</a></li>
+          <li><a class="nav-button" href="dynamicGreco.html">El Greco</a></li>
+          <li><a class="nav-button" href="rubens.html">Rubens</a></li>
+          <li><a class="nav-button" href="velazquez.html">Velázquez</a></li>
+        </ul>
+    </nav>
 
-<footer>@RJW - Abril 2026 </footer>
+    <section id="contenedor-obras" class="gallery">
+        <p>Cargando obras maestras...</p>
+    </section>
+
+    <footer>@RJW - Abril 2026 </footer>
+
+    <script>
+        async function cargarObras() {
+            try {
+                const response = await fetch('./assets/images/obras.json');
+                const data = await response.json();
+                const obras = data['goya'];
+                const contenedor = document.getElementById('contenedor-obras');
+                contenedor.innerHTML = '';
+                obras.forEach(obra => {
+                    const card = document.createElement('div');
+                    card.className = 'cuadro';
+                    card.innerHTML = `
+                        <img src="${obra.imagen}" alt="${obra.titulo}">
+                        <h2>${obra.titulo}</h2>
+                        <p>${obra.descripcion}</p>
+                    `;
+                    contenedor.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error al cargar el JSON:', error);
+                document.getElementById('contenedor-obras').innerHTML =
+                    '<p>No se pudo cargar la galería. Asegúrate de estar usando un servidor local (LiveServer).</p>';
+            }
+        }
+        cargarObras();
+    </script>
 </body>
 </html>
