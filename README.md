@@ -1,11 +1,24 @@
 Proyectos del curso de desarrollador web full stack...  
 
-- https://www.freepik.com/vectors/train-side-view  
-- https://www.vecteezy.com/free-vector/train-side-view
+- https://the-silent-pulse.com/serprofes/20260427/reto/index.html
+
+
 
 - https://joscanoav.netlify.app/assets/projects/project3/  
-- https://flexboxfroggy.com/#es  
-- https://cssgridgarden.com/#es  
+- https://flexboxfroggy.com/#es  Practica flexbox css jugando
+- https://cssgridgarden.com/#es  Practica grid css jugando
+
+--- 
+
+<details>
+<summary>Recursos gráficos trenes...  </summary>  
+
+- https://www.freepik.com/vectors/train-side-view  
+
+- https://www.vecteezy.com/free-vector/train-side-view
+</details>
+
+---  
 
 <details>
 <summary>Spoiler ahead...</summary>
