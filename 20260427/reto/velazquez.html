@@ -1,115 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velázquez</title>
+    <title>Obras de Velázquez - Sistema Dinámico</title>
     <link rel="stylesheet" href="assets/styles/style.css">
+    <style>
+        .cuadro {
+            background: #ffffff;
+            color: #1a1a1a;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .cuadro:hover { transform: translateY(-5px); }
+        .cuadro img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .cuadro h2 { font-size: 1.1rem; margin: 15px 0 10px; color: #1a1a1a; }
+        .cuadro p { font-size: 0.9rem; color: #555; line-height: 1.4; }
+    </style>
 </head>
-
 <body>
     <header>Obras destacadas de Velázquez</header>
-
-
     <nav>
         <ul>
-            <li><a class="nav-button" href="index.html">Inicio</a></li>
-            <li><a class="nav-button" href="goya.html">Goya</a></li>
-            <li><a class="nav-button" href="dynamicGreco.html">El Greco</a></li>
-            <li><a class="nav-button" href="rubens.html">Rubens</a></li>
-            <li><a class="nav-button" href="velazquez.html">Velázquez</a></li>
+          <li><a class="nav-button" href="index.html">Inicio</a></li>
+          <li><a class="nav-button" href="goya.html">Goya</a></li>
+          <li><a class="nav-button" href="dynamicGreco.html">El Greco</a></li>
+          <li><a class="nav-button" href="rubens.html">Rubens</a></li>
+          <li><a class="nav-button" href="velazquez.html">Velázquez</a></li>
         </ul>
     </nav>
-    
-    <section class="gallery">
-        <div class="thumb">
-            <a href="assets/images/velazquez-adoracion-magos.jpg" target="_blank">
-                <img 
-                src="assets/images/velazquez-adoracion-magos.jpg" 
-                alt="Adoración Magos"
-                loading="lazy"
-                />
-            </a>
-        </div>
-        <div class="thumb">
-            <a href="assets/images/velazquez-bufon-sebastian-morra.jpg" target="_blank">
-                <img 
-                src="assets/images/velazquez-bufon-sebastian-morra.jpg" 
-                alt="Bufón"
-                loading="lazy"
-                />
-            </a>
-        </div>
 
-        <div class="thumb">
-            <a href="assets/images/velazquez-cabeza-apostol.jpg" target="_blank">
-                <img 
-                src="assets/images/velazquez-cabeza-apostol.jpg" 
-                alt="Cabeza Apóstol"
-                loading="lazy"
-                />
-            </a>
-        </div>
-
-        <div class="thumb">
-            <a href="assets/images/velazquez-cabeza-venado.jpg" target="_blank">
-                <img 
-                src="assets/images/velazquez-cabeza-venado.jpg" 
-                alt="Cabeza Venado"
-                loading="lazy"
-                />
-            </a>
-        </div>
-
-        <div class="thumb">
-            <a href="assets/images/velazquez-coronacion-virgen.jpg" target="_blank">
-                <img 
-                src="assets/images/velazquez-coronacion-virgen.jpg" 
-                alt="Coronación Virgen"
-                loading="lazy"
-                />
-            </a>
-        </div>
-
-        <div class="thumb">
-            <a href="assets/images/velazquez-cristo-casa-marta-y-maria.jpg" target="_blank">
-                <img 
-                src="assets/images/velazquez-cristo-casa-marta-y-maria.jpg" 
-                alt="Casa Marta"
-                loading="lazy"
-                />
-            </a>
-        </div>
-
-        <div class="thumb">
-            <a href="assets/images/velazquez-cristo-crucificado.jpg" target="_blank">
-                <img 
-                src="assets/images/velazquez-cristo-crucificado.jpg" 
-                alt="Cristo Crucificado"
-                loading="lazy"
-                />
-            </a>
-        </div>
-            <div class="thumb">
-            <a href="assets/images/velazquez-el-principe-baltasar-carlos-a-caballo.jpg" target="_blank">
-                <img 
-                src="assets/images/velazquez-el-principe-baltasar-carlos-a-caballo.jpg" 
-                alt="Príncipe Va a Saltar"
-                loading="lazy"
-                />
-            </a>
-        </div>
-        <div class="thumb">
-            <a href="assets/images/velazquez-fabula-aracne-hilanderas.jpg" target="_blank">
-                <img 
-                src="assets/images/velazquez-fabula-aracne-hilanderas.jpg" 
-                alt="Hilanderas"
-                loading="lazy"
-                />
-            </a>
-        </div>
-
+    <section id="contenedor-obras" class="gallery">
+        <p>Cargando obras maestras...</p>
     </section>
-<footer>@RJW - Abril 2026 </footer>
+
+    <footer>@RJW - Abril 2026 </footer>
+
+    <script>
+        async function cargarObras() {
+            try {
+                const response = await fetch('./assets/images/obras.json');
+                const data = await response.json();
+                const obras = data['velazquez'];
+                const contenedor = document.getElementById('contenedor-obras');
+                contenedor.innerHTML = '';
+                obras.forEach(obra => {
+                    const card = document.createElement('div');
+                    card.className = 'cuadro';
+                    card.innerHTML = `
+                        <img src="${obra.imagen}" alt="${obra.titulo}">
+                        <h2>${obra.titulo}</h2>
+                        <p>${obra.descripcion}</p>
+                    `;
+                    contenedor.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error al cargar el JSON:', error);
+                document.getElementById('contenedor-obras').innerHTML =
+                    '<p>No se pudo cargar la galería. Asegúrate de estar usando un servidor local (LiveServer).</p>';
+            }
+        }
+        cargarObras();
+    </script>
 </body>
 </html>

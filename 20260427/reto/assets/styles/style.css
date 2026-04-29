@@ -9,15 +9,17 @@
 body {
   min-height: 100vh;                /* Altura mínima del body igual al alto de la ventana */
   display: grid;                    /* Convierte el body en un contenedor grid */
-  grid-template-columns: 15% 1fr;   /* Define dos columnas: 15% y el resto (1fr) */
-  grid-template-rows: 60px 1fr 30px;/* Define tres filas: header 60px, contenido flexible, footer 30px */
+  grid-template-columns: minmax(200px, 15%) 1fr;   /* Columna lateral flexible y contenido principal */
+  grid-template-rows: auto 1fr auto;/* Header automático, contenido flexible, footer automático */
   grid-template-areas:               /* Nombra las áreas del grid para asignarlas luego */
     "header header"
     "nav    gallery"
     "footer footer";
-  background-color: #1e1e1e;                  /* Fondo negro para todo el body */
+  gap: 0;
+  background-color: #1e1e1e;        /* Fondo negro para todo el body */
   color: #fff;                       /* Texto en blanco por defecto */
   font-family: sans-serif;           /* Fuente sans-serif para todo el documento */
+  line-height: 1.5;
 }
 
 header {
@@ -86,13 +88,11 @@ nav a:hover{
 .gallery {
   grid-area: gallery;
   display: grid;                    
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   row-gap: 10px;
   padding: 20px;
-  /* grid-template-rows: 300px; */
-  /* cajas de 300px exactos de alto */
-  
+  width: 100%;
 }
 
 /* miniaturas */
@@ -137,5 +137,82 @@ nav a:hover{
   max-width: 90%;                   /* Máximo ancho del 90% */
   height: auto;                     /* Alto proporcional */
   border-radius: 10px;              /* Bordes redondeados de 10px */
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "nav"
+      "gallery"
+      "footer";
+  }
+
+  nav {
+    padding: 16px 14px;
+  }
+
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  nav li {
+    margin-bottom: 0;
+  }
+
+  nav a {
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 16px 14px;
+  }
+
+  header,
+  footer {
+    padding: 18px 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  nav li {
+    margin-bottom: 0;
+  }
+
+  nav a {
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  header {
+    font-size: 1.3rem;
+  }
+
+  footer {
+    font-size: 0.85rem;
+  }
 }
 

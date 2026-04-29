@@ -91,6 +91,54 @@
             "titulo": "Saturno devorando a su hijo",
             "descripcion": "Parte de las sobrecogedoras Pinturas Negras de su etapa final.",
             "imagen": "assets/images/goya-saturno-devorando-hijo.jpg"
+        },
+        {
+            "id": 4,
+            "titulo": "La Maja Vestida",
+            "descripcion": "El contrapunto clásico a La Maja Desnuda dentro de su serie retratos.",
+            "imagen": "assets/images/goya-maja-vestida.jpg"
+        },
+        {
+            "id": 5,
+            "titulo": "El Perro Semihundido",
+            "descripcion": "Un grabado famoso por su tono satírico y oscuro.",
+            "imagen": "assets/images/goya-perro-semihundido.jpg"
+        },
+        {
+            "id": 6,
+            "titulo": "El Entierro de la Sardina",
+            "descripcion": "Obra que muestra el ambiente festivo y grotesco de las tradiciones populares.",
+            "imagen": "assets/images/goya-entierro-sardina.jpg"
+        },
+        {
+            "id": 7,
+            "titulo": "La familia de Carlos IV",
+            "descripcion": "Retrato de grupo que resume la complejidad de la corte borbónica.",
+            "imagen": "assets/images/goya-familia-carlos-iv.jpg"
+        },
+        {
+            "id": 8,
+            "titulo": "El sueño de San José",
+            "descripcion": "Un ejemplo de la sensibilidad religiosa en los últimos años de Goya.",
+            "imagen": "assets/images/goya-sueno-san-jose.jpg"
+        },
+        {
+            "id": 9,
+            "titulo": "San Gregorio Papa",
+            "descripcion": "Representación solemne de un Papa venerado en la tradición católica.",
+            "imagen": "assets/images/goya-san-gregorio-papa.jpg"
+        },
+        {
+            "id": 10,
+            "titulo": "El hombre volando",
+            "descripcion": "Grabado imaginativo que muestra la capacidad creativa de Goya.",
+            "imagen": "assets/images/goya-grabado-hombre-volando.jpg"
+        },
+        {
+            "id": 11,
+            "titulo": "Los fusilamientos del 3 de mayo",
+            "descripcion": "Una de las pinturas más dramáticas sobre la represión de la guerra.",
+            "imagen": "assets/images/goya-tres-mayo-madrid-fusilamientos.jpg"
         }
      ],
      "velazquez": [
@@ -117,6 +165,114 @@
             "titulo": "Vieja friendo huevos",
             "descripcion": "Obra maestra de su etapa sevillana, ejemplo de bodegón español.",
             "imagen": "assets/images/velazquez-vieja-friendo-huevos.jpg"
+        },
+        {
+            "id": 5,
+            "titulo": "La Adoración de los Magos",
+            "descripcion": "Escena religiosa que recoge los detalles del Renacimiento español.",
+            "imagen": "assets/images/velazquez-adoracion-magos.jpg"
+        },
+        {
+            "id": 6,
+            "titulo": "El bufón Sebastián de Morra",
+            "descripcion": "Retrato de uno de los personajes cortesanos más enigmáticos.",
+            "imagen": "assets/images/velazquez-bufon-sebastian-morra.jpg"
+        },
+        {
+            "id": 7,
+            "titulo": "Cabeza de apóstol",
+            "descripcion": "Estudio expresivo de un rostro religioso cargado de emoción.",
+            "imagen": "assets/images/velazquez-cabeza-apostol.jpg"
+        },
+        {
+            "id": 8,
+            "titulo": "Cabeza de venado",
+            "descripcion": "Detalle naturalista de un animal y su presencia simbólica.",
+            "imagen": "assets/images/velazquez-cabeza-venado.jpg"
+        },
+        {
+            "id": 9,
+            "titulo": "La Coronación de la Virgen",
+            "descripcion": "Una obra religiosa que muestra la devoción y la luz barroca.",
+            "imagen": "assets/images/velazquez-coronacion-virgen.jpg"
+        },
+        {
+            "id": 10,
+            "titulo": "Cristo en casa de Marta y María",
+            "descripcion": "Escena bíblica con una composición íntima y serena.",
+            "imagen": "assets/images/velazquez-cristo-casa-marta-y-maria.jpg"
+        },
+        {
+            "id": 11,
+            "titulo": "Cristo crucificado",
+            "descripcion": "Una representación clásica de la pasión con gran tensión dramática.",
+            "imagen": "assets/images/velazquez-cristo-crucificado.jpg"
+        },
+        {
+            "id": 12,
+            "titulo": "El príncipe Baltasar Carlos a caballo",
+            "descripcion": "Retrato ecuestre que muestra la elegancia y el poder de la corte.",
+            "imagen": "assets/images/velazquez-el-principe-baltasar-carlos-a-caballo.jpg"
+        },
+        {
+            "id": 13,
+            "titulo": "La fábula de Aracne",
+            "descripcion": "Obra mitológica que combina drama y virtuosismo pictórico.",
+            "imagen": "assets/images/velazquez-fabula-aracne-hilanderas.jpg"
+        },
+        {
+            "id": 14,
+            "titulo": "Felipe IV",
+            "descripcion": "Retrato del rey que refleja su autoridad y su carácter sombrío.",
+            "imagen": "assets/images/velazquez-felipe-iv.jpg"
+        },
+        {
+            "id": 15,
+            "titulo": "Francisco Lezcano, niño de Vallecas",
+            "descripcion": "Retrato de un joven bufón con un realismo conmovedor.",
+            "imagen": "assets/images/velazquez-francisco-lezcano-nino-vallecas.jpg"
+        },
+        {
+            "id": 16,
+            "titulo": "La fuente de los tritones",
+            "descripcion": "Escena mitológica donde la naturaleza y los detalles destacan.",
+            "imagen": "assets/images/velazquez-fuente-tritones.jpg"
+        },
+        {
+            "id": 17,
+            "titulo": "La infanta Margarita en azul",
+            "descripcion": "Retrato infantil que muestra el refinado estilo cortesano.",
+            "imagen": "assets/images/velazquez-la-infanta-margarita-en-azul.jpg"
+        },
+        {
+            "id": 18,
+            "titulo": "San Antonio Abad y San Pablo",
+            "descripcion": "Composición religiosa que evoca la vida ascética de los santos.",
+            "imagen": "assets/images/velazquez-san-antonio-abad-san-pablo.jpg"
+        },
+        {
+            "id": 19,
+            "titulo": "Los tres hombres en la mesa",
+            "descripcion": "Escena cotidiana que destaca por su naturalismo y claridad.",
+            "imagen": "assets/images/velazquez-tres-hombres-mesa.jpg"
+        },
+        {
+            "id": 20,
+            "titulo": "Las tres músicas",
+            "descripcion": "Figura grupal que muestra el interés por los detalles de la vida cortesana.",
+            "imagen": "assets/images/velazquez-tres-musicos.jpg"
+        },
+        {
+            "id": 21,
+            "titulo": "El triunfo de Baco (Los borrachos)",
+            "descripcion": "Obra de tema festivo que mezcla lo mitológico con lo terrenal.",
+            "imagen": "assets/images/velazquez-triunfo-baco-borrachos.jpg"
+        },
+        {
+            "id": 22,
+            "titulo": "Venus mirando el espejo",
+            "descripcion": "Escena mitológica con una delicada presencia femenina.",
+            "imagen": "assets/images/velazquez-venus-espejo.jpg"
         }
      ],
      "rubens": [
@@ -137,6 +293,66 @@
             "titulo": "El jardín del Amor",
             "descripcion": "Una celebración del cortejo y la alegría de vivir, muy personal para el autor.",
             "imagen": "assets/images/rubens-jardin-amor-el-prado-1635.jpg"
+        },
+        {
+            "id": 4,
+            "titulo": "Adán y Eva",
+            "descripcion": "Escena bíblica que explora el ideal clásico del cuerpo humano.",
+            "imagen": "assets/images/rubens-adan-eva-1629.jpg"
+        },
+        {
+            "id": 5,
+            "titulo": "La caída de Faetón",
+            "descripcion": "Un mito clásico lleno de dramatismo y movimiento barroco.",
+            "imagen": "assets/images/rubens-caida-faeton-b.jpg"
+        },
+        {
+            "id": 6,
+            "titulo": "La caza del león",
+            "descripcion": "Composición dinámica que muestra la fuerza y el peligro del animal.",
+            "imagen": "assets/images/rubens-caza-leon-1621.jpg"
+        },
+        {
+            "id": 7,
+            "titulo": "El descendimiento de Cristo",
+            "descripcion": "Momento solemne de la tradición cristiana, con gran emoción.",
+            "imagen": "assets/images/rubens-descendimiento-cristo-cruz-1612-1614_1.jpg"
+        },
+        {
+            "id": 8,
+            "titulo": "La fiesta de Aqueloo",
+            "descripcion": "Una escena mitológica que combina narrativa y colorido barroco.",
+            "imagen": "assets/images/rubens-fiesta-aqueloo-1615.jpg"
+        },
+        {
+            "id": 9,
+            "titulo": "La masacre de los inocentes",
+            "descripcion": "Momento bíblico intenso y dramático representado con gran fuerza.",
+            "imagen": "assets/images/rubens-masacre-inocentes_1.jpg"
+        },
+        {
+            "id": 10,
+            "titulo": "San Sebastián",
+            "descripcion": "Representación del mártir, con un ideal clásico y fuerza visual.",
+            "imagen": "assets/images/rubens-san-sebastian.jpg"
+        },
+        {
+            "id": 11,
+            "titulo": "Sansón y Dalila",
+            "descripcion": "Obra que aborda el drama bíblico y la traición con gran expresividad.",
+            "imagen": "assets/images/rubens-sanson-dalila-1610.jpg"
+        },
+        {
+            "id": 12,
+            "titulo": "Saturno devorando a su hijo",
+            "descripcion": "Una visión barroca del mito que combina horror y belleza.",
+            "imagen": "assets/images/rubens-saturno-devorando-hijo-1636.jpg"
+        },
+        {
+            "id": 13,
+            "titulo": "La Vía Láctea",
+            "descripcion": "Escena mitológica con una atmósfera cósmica y simbólica.",
+            "imagen": "assets/images/rubens-via-lactea-1636.jpg"
         }
      ]
 }
