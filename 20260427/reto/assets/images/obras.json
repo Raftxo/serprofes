@@ -1,0 +1,79 @@
+{
+  "el-greco": [
+    {
+        "id": 1,
+        "titulo": "El Bautismo de Cristo",
+        "descripcion": "Una de las obras más representativas de su etapa final en Toledo.",
+        "imagen": "assets/images/el-greco-bautismo-cristo.jpg"
+    },
+    {
+        "id": 2,
+        "titulo": "El Caballero de la Mano en el Pecho",
+        "descripcion": "Uno de los retratos españoles más famosos del mundo.",
+        "imagen": "assets/images/el-greco-caballero-mano-pecho.jpg"
+    },
+    {
+        "id": 3,
+        "titulo": "La Dama del Armiño",
+        "descripcion": "Retrato atribuido tradicionalmente al Greco, aunque debatido.",
+        "imagen": "assets/images/el-greco-dama-armino.jpg"
+    },
+    {
+        "id": 4,
+        "titulo": "El Entierro del Conde de Orgaz",
+        "descripcion": "Su obra maestra, ubicada en la iglesia de Santo Tomé.",
+        "imagen": "assets/images/el-greco-entierro-conde-orgaz.jpg"
+    },
+    {
+        "id": 5,
+        "titulo": "El Expolio",
+        "descripcion": "Realizado para la Catedral de Toledo.",
+        "imagen": "assets/images/el-greco-expolio.jpg"
+    },
+    {
+        "id": 6,
+        "titulo": "La Trinidad",
+        "descripcion": "Parte del retablo mayor de Santo Domingo el Antiguo.",
+        "imagen": "assets/images/el-greco-la-trinidad.jpg"
+    },
+    {
+        "id": 7,
+        "titulo": "La Verónica",
+        "descripcion": "Representación intensa del rostro de Cristo.",
+        "imagen": "assets/images/el-greco-la-veronica.jpg"
+    },
+    {
+        "id": 8,
+        "titulo": "El Laocoonte",
+        "descripcion": "Única obra de temática mitológica del artista.",
+        "imagen": "assets/images/el-greco-lacoonte.jpg"
+    },
+    {
+        "id": 9,
+        "titulo": "San Andrés y San Francisco",
+        "descripcion": "Dos santos característicos de su estilo espiritualizado.",
+        "imagen": "assets/images/el-greco-san-andres-san-francisco.jpg"
+    },
+    {
+        "id": 10,
+        "titulo": "El Soplón",
+        "descripcion": "Obra de su periodo italiano, influencia de Bassano.",
+        "imagen": "assets/images/el-greco-soplon.jpg"
+    },
+    {
+        "id": 11,
+        "titulo": "La Visión del Apocalipsis",
+        "descripcion": "También conocido como el Quinto Sello del Apocalipsis.",
+        "imagen": "assets/images/el-greco-vision-apocalipsis.jpg"
+    },
+    {
+        "id": 12,
+        "titulo": "Vista de Toledo",
+        "descripcion": "Uno de los primeros paisajes de la historia del arte europeo.",
+        "imagen": "assets/images/el-greco-vista-toledo.jpg"
+    }
+     ],
+     "goya": [],
+     "velazquez": [],
+     "rubens": []
+}

