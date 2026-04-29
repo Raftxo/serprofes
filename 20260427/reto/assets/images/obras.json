@@ -73,7 +73,70 @@
         "imagen": "assets/images/el-greco-vista-toledo.jpg"
     }
      ],
-     "goya": [],
-     "velazquez": [],
-     "rubens": []
+     "goya": [
+        {
+            "id": 1,
+            "titulo": "El 2 de mayo en Madrid (La carga de los mamelucos)",
+            "descripcion": "Una de las obras más potentes sobre la Guerra de la Independencia Española.",
+            "imagen": "assets/images/goya-2-de-mayo-1808-madrid.jpg"
+        },
+        {
+            "id": 2,
+            "titulo": "La Maja Desnuda",
+            "descripcion": "Famosa obra que supuso un reto a las convenciones de su época.",
+            "imagen": "assets/images/goya-maja-desnuda.jpg"
+        },
+        {
+            "id": 3,
+            "titulo": "Saturno devorando a su hijo",
+            "descripcion": "Parte de las sobrecogedoras Pinturas Negras de su etapa final.",
+            "imagen": "assets/images/goya-saturno-devorando-hijo.jpg"
+        }
+     ],
+     "velazquez": [
+        {
+            "id": 1,
+            "titulo": "Las Meninas",
+            "descripcion": "La obra cumbre de Velázquez, un complejo retrato de la familia real.",
+            "imagen": "assets/images/velazquez-las-meninas.jpg"
+        },
+        {
+            "id": 2,
+            "titulo": "La rendición de Breda",
+            "descripcion": "También conocida como Las Lanzas, destaca por su realismo y humanidad.",
+            "imagen": "assets/images/velazquez-rendicion-breda.jpg"
+        },
+        {
+            "id": 3,
+            "titulo": "La fragua de Vulcano",
+            "descripcion": "Muestra el estilo naturalista del autor en una escena mitológica.",
+            "imagen": "assets/images/velazquez-fragua-vulcano.jpg"
+        },
+        {
+            "id": 4,
+            "titulo": "Vieja friendo huevos",
+            "descripcion": "Obra maestra de su etapa sevillana, ejemplo de bodegón español.",
+            "imagen": "assets/images/velazquez-vieja-friendo-huevos.jpg"
+        }
+     ],
+     "rubens": [
+        {
+            "id": 1,
+            "titulo": "Las tres Gracias",
+            "descripcion": "Obra icónica que representa el ideal de belleza del barroco flamenco.",
+            "imagen": "assets/images/rubens-tres-gracias-prado.jpg"
+        },
+        {
+            "id": 2,
+            "titulo": "El juicio de Paris",
+            "descripcion": "Representación de la famosa competencia de belleza entre diosas.",
+            "imagen": "assets/images/rubens-juicio-paris-1639.jpg"
+        },
+        {
+            "id": 3,
+            "titulo": "El jardín del Amor",
+            "descripcion": "Una celebración del cortejo y la alegría de vivir, muy personal para el autor.",
+            "imagen": "assets/images/rubens-jardin-amor-el-prado-1635.jpg"
+        }
+     ]
 }
