@@ -99,3 +99,36 @@
   outline: none;
 }
 
+/* Magia RESPONSIVE - adaptando el chat a móviles */
+@media (max-width: 768px){
+  .sidebar{
+    /* Hacemos desaparecer la barra lateral */
+    display: none;
+  }
+  .mensajes-container{
+    padding: 20px;
+  }
+  /* Ajustamos el formulario a las pantallas estrechas */
+  .input-area{
+    padding: 15px;
+  }
+  .input-area input::placeholder {
+    color: white;
+  .chat-form{
+    background-color: #7b7d8f;
+    flex-direction: row;
+    padding: 5px;
+  }
+  .chat-form input{
+    /* la letra un poco más pequeña */
+    font-size: 0.9rem;
+  }
+  .chat-form button{
+    /* botón más compacto */
+    padding: 8px 12px;
+  }
+  
+}
+
+
+}
