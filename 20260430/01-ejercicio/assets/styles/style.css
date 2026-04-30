@@ -46,3 +46,84 @@ nav ul li a{
 }
 
 /* botones premium */
+.logn-btn{
+    text-decoration: none;
+    color:#333;
+    margin-right: 15px;
+    font-weight: 400;
+}
+.btn{
+    text-decoration: none;
+    /* creo que sobra esta línea de inline-block */
+    display:inline-block;
+    padding: 14px 40px;
+    color:#fff;
+    /* fondo degradado diagonal */
+    background-image: linear-gradient(45deg, #df4881, #c430d7);
+    font-size: 14px;
+    border-radius: 30px;
+    /* le quita el redondeo a una esquina */
+    border-top-right-radius: 0;
+    transition: 0.5s;
+}
+.btn:hover{
+    border-top-right-radius: 20px;
+}
+
+.content{
+    margin-top: 10%;
+    max-width: 600px;
+}
+.content h1{
+    font-size: 70px;
+    color: #222;
+}
+
+.content p{
+    margin: 10px 0 30px;
+    color:#333;
+}
+.content .btn{
+    padding: 15px 80px;
+    font-size: larger;
+}
+
+/* nos falta la modelo */
+.feature-img{
+    width: 530px;
+    /* saca del flujo */
+    position: absolute;
+    bottom: 0;
+    right: 10%;
+}
+
+/* magia: animaciones */
+/* creamos la película: de transparente y abajo a visible y arriba */
+@keyframes moveup {
+    100%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    
+}
+
+.anim{
+    /* empieza invisibles */
+    opacity: 0;
+    /* empieza 30px más abajo de su sitio normal */
+    transform: translateY(20px);
+    animation: moveup 1.0s linear forwards;
+
+}
+
+.content p{
+    animation-delay: 0.5s;
+}
+
+.content .btn{
+    animation-delay: 1s;
+}
+
+.feature-img .anim{
+    animation-delay: 1.5s;
+}
