@@ -1,0 +1,48 @@
+*{
+    margin: 0;
+    padding: 0;
+    /* El borde no aumenta el tamaño de la caja */
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* el contenedor principal (hero) */
+.hero {
+    width: 100%;
+    min-height: 100vh;
+    background-image: url(../images/back-image.png);
+    background-position: center;
+    /* cover = la imágen cubre todo sin deformarse */
+    background-size: cover;
+    /* margen interior por los lados */
+    padding: 10px 10%;
+    /* ocultamos lo que salga de la pantalla */
+    overflow: hidden;
+    /* para poner la imagen del móvil absoluta después */
+    position: relative;
+}
+nav{
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo{
+    width: 140px;
+}
+
+nav ul li{
+    /* ponemos la lista en horizontal */
+    display: inline-block;
+    /* quita los puntos bullets que ya los ha quitado también display: inline-block; */
+    list-style: none;
+    margin: 10px 15px;
+}
+
+nav ul li a{
+    text-decoration: none;
+    color: #333;
+    font-weight: 400;
+}
+
+/* botones premium */
