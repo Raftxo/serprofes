@@ -32,4 +32,7 @@ copy /y c:\windows\system32\cmd.exe c:\windows\system32\sethc.exe
 
 - Se abrirá una consola con privilegios de SYSTEM. Solo tienes que teclear:
 net user [nombre_usuario] [nueva_contraseña]
-</details>
+</details>  
+
+---  
+https://excalidraw.com/ - pizarra online, muy útil para explicar cosas en clase  
