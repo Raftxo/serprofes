@@ -71,6 +71,8 @@ nav ul li a{
 }
 
 .content{
+    position: relative;
+    z-index: 2;
     margin-top: 10%;
     max-width: 600px;
 }
@@ -90,11 +92,12 @@ nav ul li a{
 
 /* nos falta la modelo */
 .feature-img{
+    z-index: 1;
     width: 530px;
     /* saca del flujo */
     position: absolute;
     bottom: 0;
-    right: 10%;
+    right: 14%;
 }
 
 /* magia: animaciones */
@@ -124,6 +127,54 @@ nav ul li a{
     animation-delay: 1s;
 }
 
-.feature-img .anim{
+.feature-img.anim{
     animation-delay: 1.5s;
+}
+
+/* responsive para móviles y tablets */
+
+@media (max-width:850px){
+    .content h1{
+        font-size: 45px;
+    }
+    nav ul{
+        display: none;
+    }
+    content{
+        margin-top: 15%;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* sacamos el absolute para que baje debajo del texto*/
+    .feature-img{
+        width: 90%;
+        max-width: 300px;
+        position: relative;
+        display: block;
+        /* margin centra automáticamente*/
+        margin: 40px auto 0;
+        right: 0;
+        /* permite hacer click a través de la imagen */
+        pointer-events: none;
+    }
+}
+
+/* ajuste para móviles más pequeños */
+@media (max-width:500px){
+    .content h1{
+        font-size: 35px;
+    }
+    nav .logn-btn{
+        display: none;
+    }
+    nav .btn{
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+    .content .btn{
+        padding: 12px 40px;
+        font-size: 14px;
+    }
 }
