@@ -36,3 +36,4 @@ net user [nombre_usuario] [nueva_contraseña]
 
 ---  
 https://excalidraw.com/ - pizarra online, muy útil para explicar cosas en clase  
+https://miro.com - diagramas de flujo online  
