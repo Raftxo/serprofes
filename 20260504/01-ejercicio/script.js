@@ -13,4 +13,12 @@ function saludar(){
 
 function verificarAcceso(){
     console.log("¡Tú no entras!")
+    let edad = prompt("Introduce tu edad: ");
+
+    if (edad >=18){
+        alert("Acceso permitido");
+    } else {
+        alert("Acceso denegado por falta de mayoría de edad...");
+        console.log("Estado: Menor de edad detectado.");
+    }
 }
