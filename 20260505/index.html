@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora</title>
+    <title>Calculadora de descuentos</title>
+    <!-- 1. Conexión con el diseño CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- 2. Conexión con el cerebro JS usando DEFER -->
+    <script src="script.js" defer></script>
 </head>
 <body>
+    <div class="card">
+        <h2>Calculadora de descuentos</h2>
+        <label>Precio Original (€):</label>
+        <input type="number" id="precio" placeholder="Ej. 100">
+        <br>
+        <label>Descuento (%):</label>
+        <input type="number" id="descuento" placeholder="Ej. 15">
+        <br>
+        <!-- El evento onclick llama a nuestra función en JavaScript -->
+         <button onclick="calcularPrecioFinal()">Calcular Precio Final</button>
+         <br><br>
+         <p>El precio final es:</p>
+         <p class="resultado" id="texto-resultado">0.00 €</p>
+
+    </div>
     
 </body>
 </html>
