@@ -1,6 +1,6 @@
 body {
     background-color: #e2e8f0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,10 +10,10 @@ body {
 
 .card {
     background: white;
-    width: 320px;
+    width: 270px;
     border-radius: 12px;
-    padding: 15px; /* Espaciado interno para que la imagen no toque los bordes */
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 25px; /* Espaciado interno para que la imagen no toque los bordes */
+    box-shadow: 0 4px 20px rgba(200,50,50,0.8);
     text-align: center;
 }
 
@@ -35,14 +35,14 @@ h2 {
 
 .description {
     color: #777;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     line-height: 1.4;
 }
 
 .price {
-    color: #ff4d4d; /* El naranja/rojo del precio */
-    font-size: 1.2rem;
-    font-weight: bold;
+    color: #e72929; /* El naranja/rojo del precio */
+    font-size: 1.5rem;
+    font-weight: bolder;
     margin: 15px 0;
 }
 
