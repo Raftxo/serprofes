@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detector Par o Impar</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- defer para que se cargue en paralelo -->
+    <script src="script.js" defer></script>
+
+</head>
+<body>
+    <main class="container">
+        <article class="card">
+            <!-- <img src="zapatillas-rosa.jpg" alt="Zapatillas Runner Ultra" class="product-img"> -->
+            
+            <div class="card">
+                <h2>¿Par o Impar?</h2>
+                <input type="number" id="numero-input" placeholder="Escribe un número">
+                <!-- nuestro botón -->
+                 <button onclick="comprobarNumero()">Comprobar</button>
+                 <p class="resultado" id="mensaje-salida">Esperando número...</p>
+            </div>
+        </article>
+    </main>
+</body>
+</html>
