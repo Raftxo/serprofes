@@ -18,12 +18,13 @@ body{
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    width: 300px;
+    width: 350px;
 }
 
 input{
     padding: 10px;
     width: 100%;
+    text-align: center;
     background: #3498db;
     color: white;
     margin: 15px 0;
