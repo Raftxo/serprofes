@@ -1,0 +1,79 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #e2e8f0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.card {
+    background: white;
+    width: 370px;
+    border-radius: 12px;
+    padding: 25px; /* Espaciado interno para que la imagen no toque los bordes */
+    box-shadow: 0 4px 20px rgba(200,50,50,0.8);
+    text-align: center;
+}
+
+.foto-perfil {
+    width: 70%;
+    border-radius: 50%; /* Redondeamos la foto del perfíl */
+    /**/
+    justify-content: center;
+}
+
+.content {
+    padding: 15px 5px;
+}
+
+h2 {
+    font-size: 1.3rem;
+    margin: 10px 0;
+    color: #333;
+}
+
+.description {
+    color: #777;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+button {
+    margin-top: 25px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background-color: #2980b9;
+    /* el botón crece un poquito con transform */
+    transform: scale(1.02);
+}
+
+/* ajuste para móviles */
+@media (max-width:500px){
+    .content h2{
+        font-size: 35px;
+    }
+
+    .content button{
+        padding: 12px 40px;
+        font-size: 24px;
+        width: 100%;
+    }
+}
