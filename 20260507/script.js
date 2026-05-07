@@ -8,7 +8,8 @@ function calcularIMC(){
     // fórmula del IMC: peso / altura(al cuadrado)
     // const imc = Math.round((peso / altura ** 2)*100)/100;
     const imc = peso / altura ** 2;
-    const roundedBmi = Math.round(imc * 100) / 100;
+    // const roundedBmi = Math.round(imc * 100) / 100;
+    const roundedBmi = imc.toFixed(2);
     
     console.log(imc);
     console.log(roundedBmi);
@@ -16,15 +17,19 @@ function calcularIMC(){
     if (imc < 18.5) {
         console.log("Delgadez");
         etiqueta.textContent = `Tu IMC es ${roundedBmi}: Delgadez 🦴`;
+        etiqueta.style.color = "blue";
     } else if (imc <= 25) {
         console.log("Saludable");
         etiqueta.textContent = `Tu IMC es ${roundedBmi}: Saludable ✅`;
+        etiqueta.style.color = "green";
     } else if (imc < 30) {
         console.log("Sobrepeso");
         etiqueta.textContent = `Tu IMC es ${roundedBmi}: Sobrepeso ⚠️`;
+        etiqueta.style.color = "orange";
     } else {
         console.log("Obeso");
         etiqueta.textContent = `Tu IMC es ${roundedBmi}: Obeso 🚨`;
+        etiqueta.style.color = "red";
     }
 
 
