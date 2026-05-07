@@ -9,18 +9,17 @@ function calcularIMC(){
     // const imc = Math.round((peso / altura ** 2)*100)/100;
     const imc = peso / altura ** 2;
     const roundedBmi = Math.round(imc * 100) / 100;
-    // const roundedBmi = Math.round(bmi * 100) / 100;
-
+    
     console.log(imc);
     console.log(roundedBmi);
 
-    if (roundedBmi < 18.5) {
+    if (imc < 18.5) {
         console.log("Delgadez");
         etiqueta.textContent = `Tu IMC es ${roundedBmi}: Delgadez 🦴`;
-    } else if (roundedBmi <= 25) {
+    } else if (imc <= 25) {
         console.log("Saludable");
         etiqueta.textContent = `Tu IMC es ${roundedBmi}: Saludable ✅`;
-    } else if (roundedBmi < 30) {
+    } else if (imc < 30) {
         console.log("Sobrepeso");
         etiqueta.textContent = `Tu IMC es ${roundedBmi}: Sobrepeso ⚠️`;
     } else {
