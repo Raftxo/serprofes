@@ -4,7 +4,7 @@
 // le sumamos un uno para que sea entre 1 y 10
 // let numeroSecreto = Math.floor(Math.random())*10+1;
 let numeroSecreto = Math.floor(Math.random() * 10) + 1;
-// las variables del juego:
+// las variables del juego:.....
 let vidas = 3;
 // función principal
 function comprobarNumero(){
@@ -27,9 +27,8 @@ function comprobarNumero(){
         vidas--;
         // Actualizar el texto de vidas:
         textoVidas.textContent = "Vidas: " + vidas + " ❤️";
-    };
 
-    // pistas
+        // pistas
     if (intento < numeroSecreto){
         etiqueta.textContent = " ¡Fallaste! El número es mayor... ⬆️ ";
     } else {
@@ -45,4 +44,7 @@ function comprobarNumero(){
         // desactivamos el botón
         document.getElementById('btn-jugar').disabled = true;
     }
+    };
+
+    
 }
