@@ -81,4 +81,10 @@ button:active {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
-
+.resultado{
+    margin-top: 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #34495e;
+    min-height: 60px;
+}
