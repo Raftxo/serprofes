@@ -14,3 +14,8 @@ function añadirAlCarrito(){
     document.getElementById('nuevo-item').value = "";
 
 }
+
+function borrarUltimo(){
+    carrito.pop()
+    document.getElementById('pantalla-cesta').textContent = carrito;
+}
