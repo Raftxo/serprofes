@@ -17,5 +17,13 @@ function añadirAlCarrito(){
 
 function borrarUltimo(){
     carrito.pop()
-    document.getElementById('pantalla-cesta').textContent = carrito;
+    document.getElementById('pantalla-cesta').textContent = carrito.join(" - ");
 }
+
+// Escuchamos cuando el usuario presiona una tecla en el input
+document.getElementById('nuevo-item').addEventListener('keypress', function (e) {
+    // Comprobamos si la tecla presionada es Enter
+    if (e.key === 'Enter') {
+        añadirAlCarrito();
+    }
+});
