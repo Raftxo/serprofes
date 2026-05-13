@@ -7,3 +7,12 @@ const carrito = [
     {nombre: "🧄 Ajo",precio:0.55},
     {nombre: "🍾 Agua con Gas",precio:0.75}
 ];
+// Javascript DOM
+let listaHTML = document.getElementById('lista-producto');
+for(let i = 0; i<carrito.length;i++){
+    // usamos carrito[i].nombre para sacar el dato
+    listaHTML.innerHTML += `
+    <li><span>${carrito[i].nombre}</span>
+    <span>${carrito[i].precio.toFixed(2)} €</span></li>
+    `
+}
