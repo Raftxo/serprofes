@@ -57,10 +57,26 @@ button:hover{
     background-color: blueviolet;
 }
 
-.total{
-    font-size: 1.8rem;
+.total {
+    /* Mantenemos tu estilo base */
     font-weight: bold;
     color: #b81301;
     text-align: right;
     margin-top: 20px;
+
+    /* Añadimos Flexbox para controlar el espacio */
+    display: flex;
+    flex-direction: column; /* Alinea los elementos uno debajo de otro */
+    gap: 2px; /* <--- AQUÍ controlas el espacio entre líneas (pon 0 si quieres que estén pegadas) */
+}
+
+.total .detalle {
+    font-size: 1rem; /* Más pequeño */
+    font-weight: normal;
+    color: #0a0a0a; /* Un color más suave para que no compita con el total */
+}
+
+.total .monto-final {
+    font-size: 1.8rem; /* El total se queda grande */
+    margin-top: 5px; /* Un pequeño respiro extra antes del total si quieres */
 }
