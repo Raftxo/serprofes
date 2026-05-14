@@ -10,6 +10,7 @@
     <script src="app.js" defer></script>
 </head>
 
+
 <body bgcolor="pink">
     <div class="app-container">
         <aside class="sidebar">
@@ -32,19 +33,35 @@
         </aside>
 
         <main class="chat-area">
+
             <header class="chat-header">
                 <h3>Conversación Actual</h3>
             </header>
 
-            <section class="mensajes-container">
-                <div class="mensaje-ia">¡Hola! ¿En qué puedo ayudarte hoy?</div>
+            <!-- AGREGAR BOTONES 14/05/2026 -->
+            <div class="controles-filtros">
+                <button onclick="mostrarTodo()">Ver Todo</button>
+                <button onclick="verMisMensajes()">Mis Mensajes</button>
+                <button onclick="modoGritar()">Modo Mayúsculas</button>
+            </div>
+
+            <section class="mensajes-container" id="caja-mensajes">
+                <!-- <div class="mensaje-ia">¡Hola! ¿En qué puedo ayudarte hoy?</div> -->
             </section>
 
             <footer class="input-area">
                 <!-- evento form onsubmit añadimos la función enviarPrompt() -->
                 <form class="chat-form" onsubmit="enviarPrompt(event)">
+                     <!-- añadir un label for= que conecta con "mensaje-input" -->
+                     <!-- sr-only significa solo para lectores de pantalla (screen readers) -->
+                     <label for="mensaje-input" class="sr-only">Mensaje</label>
                     <!-- Añadimos un id para que desde javascript lo podamos usar -->
-                    <input type="text" id="mensaje-input" placeholder="Escribe tu pregunta aquí ...">
+                    <input 
+                        type="text" 
+                        id="mensaje-input" 
+                        placeholder="Escribe tu pregunta aquí ..."
+                        autocomplete="off"
+                    >
                     <!-- Añadir tipo submit -->
                     <button type="submit">Enviar</button>
                 </form>
