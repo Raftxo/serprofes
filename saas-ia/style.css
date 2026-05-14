@@ -120,6 +120,21 @@
   align-self: flex-start;
 }
 
+.msg-usuario pre, .msg-ia pre{
+  background-color: #202123;
+  color: #f7f7f8;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.msg-usuario code, .msg-ia code{
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 0.95rem;
+}
+
 /* 5. FORMULARIO DE ENTRADA (input) */
 .input-area{
   padding: 20px 40px;
