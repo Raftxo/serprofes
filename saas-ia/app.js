@@ -73,18 +73,61 @@ function enviarPrompt(event){
     // evitamos que el form recargue la página cada vez que pulsamos el botón Enviar
     event.preventDefault();
 
+    // Atrapamos la cajita de texto donde el usuario escribe:
+    let input = document.getElementById('mensaje-input');
+
     // capturamos el texto (sin espacios gracias a .trim())
-    let mensaje = document.getElementById("mensaje-input").value.trim();
+    // sacamos el texto escrito por el usuario y le quitamos los espacios en blanco
+    let mensaje = input.value.trim();
 
     // condicional
     if (mensaje === ""){
         alert("⚠️ Escribe algo antes de enviar ⚠️");
-    } else {
-        alert("🤖 Mensaje recibido 🤖 \n" + mensaje);
-        historialChat.push({rol: "user", texto: mensaje});
-        pintarChat(historialChat);
-        // limpiar el input
-        document.getElementById("mensaje-input").value = "";
-    
+        // return expulsa al JS de la función para que no siga leyendo
+        return;
+    }
+    // a) Guardamos el mensaje real del usuario
+    let nuevoMensaje = {
+        rol:"user",texto:mensaje
     };
+    // b) y lo metemos al final del Array
+    historialChat.push(nuevoMensaje);
+
+    // c) el truco: simulamos que la IA nos responde al instante
+    //    creando otro objeto:
+
+    let respuestaIA = {
+        rol:"ia", texto:"Los tokens de su plan actual se han acabado... '" + mensaje + "' no puede ser procesado en estos momentos. Compre la suscripción ULTRA."
+    };
+    historialChat.push(respuestaIA);
+
+    // d) como el array ha cambiado, repintamos
+    pintarChat(historialChat);
+
+    input.value = "";
+    input.focus();
+}
+
+function mostrarTodo(){
+    pintarChat(historialChat);
+}
+
+function verMisMensajes(){
+    // revisa todo el historial. A cada mensaje lo llama "msj"
+    // devuelve una lista nueva solo con los que cumplan la regla
+    // rol === "user"
+    let soloUsuario = historialChat.filter(msj => msj.rol === "user");
+    pintarChat(soloUsuario);
+}
+
+function modoGritar(){
+    // por cada msj construye un objeto nuevo
+    let chatGritando = historialChat.map(msj => {
+        return{
+            rol: msj.rol,
+            // aquí está la transformación - convertir a mayúsculas
+            texto: msj.texto.toUpperCase()
+        };
+            });
+    pintarChat(chatGritando);
 }
