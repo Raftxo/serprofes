@@ -118,20 +118,21 @@ function borrarChat(){
 }
 
 function buscarMensaje(){
+    // Atrapar lo que ha escrito el usuario en el input del buscador:
     let input = document.getElementById('buscar-input');
 
     if (input === null){
         alert("No encuentro el input de búsqueda");
         return;
     }
-
+    // transformo lo que ha escrito el usuario a minúsculas
     let palabra = input.value.trim().toLowerCase();
 
     if (palabra === ""){
         alert("Escribe una palabra para buscar");
         return;
     }
-
+    // resultados:
     let mensajesEncontrados = historialChat.filter(msj => {
         return msj.texto.toLowerCase().includes(palabra);
     });
