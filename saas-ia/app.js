@@ -112,6 +112,33 @@ function mostrarTodo(){
     pintarChat(historialChat);
 }
 
+function borrarChat(){
+    historialChat.length = 0;
+    pintarChat(historialChat);
+}
+
+function buscarMensaje(){
+    let input = document.getElementById('buscar-input');
+
+    if (input === null){
+        alert("No encuentro el input de búsqueda");
+        return;
+    }
+
+    let palabra = input.value.trim().toLowerCase();
+
+    if (palabra === ""){
+        alert("Escribe una palabra para buscar");
+        return;
+    }
+
+    let mensajesEncontrados = historialChat.filter(msj => {
+        return msj.texto.toLowerCase().includes(palabra);
+    });
+
+    pintarChat(mensajesEncontrados);
+}
+
 function verMisMensajes(){
     // revisa todo el historial. A cada mensaje lo llama "msj"
     // devuelve una lista nueva solo con los que cumplan la regla
