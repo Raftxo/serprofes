@@ -1,15 +1,20 @@
 // Ejercicio 1. Contador de clics (Gestion de Datos)
-// - identificamos las etiquetas exactas que vamos a manipular
 const btnContar = document.querySelector('#countBtn');
 const spanCount = document.querySelector('#count');
 
-// - variable global para recordar el número de clicks
 let contador = 0;
 
-// - escuchamos el evento click en el botón
-btnContar.addEventListener('click',()=>{
-    contador++; // incrementa en 1 el valor matemático
-    spanCount.textContent = contador; // inyectamos el numerito en el html
+btnContar.addEventListener('click', () => {
+    contador++;
+    spanCount.textContent = contador;
+
+    // 👇 NUEVA LÓGICA
+    if (contador >= 9) {
+        btnContar.disabled = true; // desactiva el botón
+        btnContar.textContent = 'Disabled'; // cambia el texto
+        btnContar.style.backgroundColor = 'gray'; // lo pone en gris
+        btnContar.style.cursor = 'not-allowed'; // efecto visual pro
+    }
 });
 
 // Ejercicio 2. La manipulación de las clases (Toggle Menú)
@@ -55,4 +60,15 @@ toggleOscuro.addEventListener('change', ()=>{
         localStorage.setItem('temaPreferido','claro');
         textoSwitch.textContent = 'Activar Modo Oscuro';
     }
+});
+// BONUS: Botón de pago seguro
+const btnPago = document.querySelector('#payBtn');
+
+btnPago.addEventListener('click', () => {
+    btnPago.textContent = 'Procesando pago... ⏳';
+    btnPago.disabled = true;
+
+    setTimeout(() => {
+        btnPago.textContent = '✅ Pago completado';
+    }, 3000);
 });
