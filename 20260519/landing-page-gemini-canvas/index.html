@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprende Programación Gratis | Cursos Certificados en Tecnología</title>
+    <meta name="description" content="Descubre los mejores cursos gratuitos de programación y tecnología con certificación. Impulsa tu carrera tech hoy mismo.">
+    
+    <!-- Fuentes de Google: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (via CDN para un solo archivo) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuración personalizada de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        },
+                        accent: {
+                            gradientStart: '#3b82f6',
+                            gradientEnd: '#8b5cf6',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- CSS Personalizado para animaciones extra que Tailwind no cubre por defecto fácilmente -->
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #2563eb, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Ocultar elementos antes de la animación de scroll (implementado con JS básico) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased selection:bg-primary-500 selection:text-white">
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 glass-effect border-b border-gray-200/50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-purple-500 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                        T
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-gray-900">Tech<span class="text-primary-600">Cert</span></span>
+                </div>
+                
+                <!-- Enlaces Desktop -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#beneficios" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Beneficios</a>
+                    <a href="#cursos" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Cursos</a>
+                    <a href="#cursos" class="px-5 py-2.5 rounded-full bg-gray-900 text-white font-medium hover:bg-gray-800 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200">
+                        Empezar Ahora
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Elementos decorativos de fondo -->
+        <div class="absolute top-0 left-1/2 w-full -translate-x-1/2 h-full overflow-hidden -z-10">
+            <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary-100 blur-3xl opacity-50"></div>
+            <div class="absolute top-40 -left-20 w-72 h-72 rounded-full bg-purple-100 blur-3xl opacity-50"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-primary-600 text-sm font-semibold mb-8 animate-fade-in-up">
+                <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+                </span>
+                100% Gratis y Certificado
+            </div>
+            
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-gray-900 mb-6 animate-fade-in-up" style="animation-delay: 0.1s;">
+                Aprende programación <br class="hidden md:block">
+                <span class="gradient-text">gratis con certificación</span>
+            </h1>
+            
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-600 mb-10 animate-fade-in-up" style="animation-delay: 0.2s;">
+                Impulsa tu carrera tecnológica con los mejores cursos de universidades e instituciones líderes. Domina habilidades de alta demanda sin coste alguno.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.3s;">
+                <a href="#cursos" class="px-8 py-4 rounded-full bg-gradient-to-r from-primary-600 to-purple-600 text-white font-semibold text-lg hover:shadow-lg hover:shadow-primary-500/30 transition-all transform hover:-translate-y-1">
+                    Explorar Cursos
+                </a>
+                <a href="#beneficios" class="px-8 py-4 rounded-full bg-white border-2 border-gray-200 text-gray-700 font-semibold text-lg hover:border-gray-300 hover:bg-gray-50 transition-all">
+                    Ver Beneficios
+                </a>
+            </div>
+            
+            <!-- Logos de instituciones (Simulados con texto para no depender de imágenes externas) -->
+            <div class="mt-20 pt-10 border-t border-gray-200/60 animate-fade-in-up" style="animation-delay: 0.5s;">
+                <p class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">Aprende de los mejores</p>
+                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 text-gray-400 font-bold text-xl lg:text-2xl opacity-70 grayscale">
+                    <span>Harvard</span>
+                    <span>freeCodeCamp</span>
+                    <span>Cisco</span>
+                    <span>Helsinki</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Beneficios -->
+    <section id="beneficios" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">¿Por qué elegir estos cursos?</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Seleccionamos cuidadosamente recursos de alta calidad que realmente impactarán tu currículum.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Beneficio 1 -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:border-primary-200 transition-colors reveal">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-3xl mb-6 shadow-sm">
+                        🎓
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Certificados Oficiales</h3>
+                    <p class="text-gray-600 leading-relaxed">Obtén credenciales verificables de instituciones prestigiosas para destacar en tu perfil de LinkedIn y CV.</p>
+                </div>
+
+                <!-- Beneficio 2 -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:border-purple-200 transition-colors reveal" style="transition-delay: 0.1s;">
+                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center text-3xl mb-6 shadow-sm">
+                        💸
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Cero Costo</h3>
+                    <p class="text-gray-600 leading-relaxed">Educación de calidad mundial sin barreras económicas. Paga 0$ por aprender habilidades altamente valoradas.</p>
+                </div>
+
+                <!-- Beneficio 3 -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:border-green-200 transition-colors reveal" style="transition-delay: 0.2s;">
+                    <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center text-3xl mb-6 shadow-sm">
+                        🚀
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">A tu propio ritmo</h3>
+                    <p class="text-gray-600 leading-relaxed">Estudia cuando quieras y donde quieras. Adapta el aprendizaje a tu horario y estilo de vida.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Cursos (Grid) -->
+    <section id="cursos" class="py-24 bg-gray-50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
+                <div class="max-w-2xl">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Catálogo de Cursos</h2>
+                    <p class="text-lg text-gray-600">Comienza tu viaje en el desarrollo web, ciencia de datos, ciberseguridad y más.</p>
+                </div>
+            </div>
+
+            <!-- Grid de Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Card 1: freeCodeCamp -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gray-900 text-white rounded-lg flex items-center justify-center text-2xl">
+                            ⛺
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">freeCodeCamp</h3>
+                            <p class="text-sm text-gray-500">Desarrollo Web & Más</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow">Aprende a programar construyendo proyectos. Certificaciones en Responsive Web Design, JS Algorithms, y más.</p>
+                    <a href="https://www.freecodecamp.org" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                        Acceder curso
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Card 2: CS50x -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal" style="transition-delay: 0.1s;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-red-800 text-white rounded-lg flex items-center justify-center text-2xl font-serif font-bold">
+                            H
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">CS50x Harvard</h3>
+                            <p class="text-sm text-gray-500">Ciencias de la Computación</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow">El legendario curso introductorio de Harvard. Aprende C, Python, SQL, y JavaScript de forma rigurosa.</p>
+                    <a href="https://cs50.harvard.edu" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                        Acceder curso
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Card 3: CS50P Python -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal" style="transition-delay: 0.2s;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-yellow-400 text-blue-900 rounded-lg flex items-center justify-center text-2xl">
+                            🐍
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">CS50P Python</h3>
+                            <p class="text-sm text-gray-500">Programación en Python</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow">Introducción de Harvard a la programación exclusivamente enfocada en Python. Ideal para principiantes.</p>
+                    <a href="https://cs50.harvard.edu/python" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                        Acceder curso
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Card 4: Full Stack Open -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-blue-500 text-white rounded-lg flex items-center justify-center text-2xl font-bold">
+                            FSO
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Full Stack Open</h3>
+                            <p class="text-sm text-gray-500">React, Node.js, GraphQL</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow">Curso avanzado de la Universidad de Helsinki enfocado en desarrollo moderno con JavaScript/TypeScript.</p>
+                    <a href="https://fullstackopen.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                        Acceder curso
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Card 5: OpenLearn -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal" style="transition-delay: 0.1s;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-teal-600 text-white rounded-lg flex items-center justify-center text-2xl">
+                            📖
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">OpenLearn</h3>
+                            <p class="text-sm text-gray-500">Tecnología y más</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow">Plataforma de la Open University con cientos de cursos cortos sobre tecnología, redes y ciberseguridad.</p>
+                    <a href="https://www.open.edu/openlearn/" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                        Acceder curso
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Card 6: SoloLearn -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal" style="transition-delay: 0.2s;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-indigo-500 text-white rounded-lg flex items-center justify-center text-2xl">
+                            📱
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">SoloLearn</h3>
+                            <p class="text-sm text-gray-500">Aprendizaje Interactivo</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow">Perfecto para aprender a programar desde tu móvil. Lecciones cortas interactivas en múltiples lenguajes.</p>
+                    <a href="https://www.sololearn.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                        Acceder curso
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Card 7: HackerRank Skills -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-green-500 text-white rounded-lg flex items-center justify-center text-2xl font-bold">
+                            H
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">HackerRank Skills</h3>
+                            <p class="text-sm text-gray-500">Validación de Habilidades</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow">Resuelve retos de código y obtén certificados estandarizados que demuestran tus capacidades a los reclutadores.</p>
+                    <a href="https://www.hackerrank.com/skills-verification" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                        Acceder curso
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Card 8: Great Learning Academy -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal" style="transition-delay: 0.1s;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-blue-700 text-white rounded-lg flex items-center justify-center text-2xl">
+                            🎓
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Great Learning</h3>
+                            <p class="text-sm text-gray-500">Data Science, AI & IT</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow">Cursos gratuitos con certificado en áreas de alta demanda como Inteligencia Artificial, Cloud y Big Data.</p>
+                    <a href="https://www.mygreatlearning.com/academy" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                        Acceder curso
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Card 9: Simplilearn SkillUp -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal" style="transition-delay: 0.2s;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gray-800 text-white rounded-lg flex items-center justify-center text-2xl">
+                            ⚡
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Simplilearn SkillUp</h3>
+                            <p class="text-sm text-gray-500">Upskilling Tecnológico</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow">Programas de aprendizaje fundacionales para mejorar tus habilidades en tecnologías clave de la industria actual.</p>
+                    <a href="https://www.simplilearn.com/skillup-free-online-courses" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                        Acceder curso
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Card 10: Cisco Skills for All -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-cyan-600 text-white rounded-lg flex items-center justify-center text-2xl font-bold">
+                            C
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Cisco Skills for All</h3>
+                            <p class="text-sm text-gray-500">Redes y Ciberseguridad</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow">Aprende de los líderes en redes. Cursos básicos de ciberseguridad, IoT y networking con insignias digitales.</p>
+                    <a href="https://skillsforall.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                        Acceder curso
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Inferior -->
+    <section class="py-20 relative overflow-hidden bg-gray-900 text-white">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary-900 to-gray-900 opacity-90"></div>
+        <div class="max-w-4xl mx-auto px-4 relative z-10 text-center reveal">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">El mejor momento para empezar es ahora</h2>
+            <p class="text-xl text-gray-300 mb-10">No necesitas experiencia previa ni tarjeta de crédito. Solo motivación para aprender.</p>
+            <a href="#cursos" class="inline-block px-8 py-4 rounded-full bg-primary-500 text-white font-bold text-lg hover:bg-primary-400 transition-colors shadow-lg shadow-primary-500/30 transform hover:-translate-y-1">
+                Ver todos los cursos
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer Minimalista -->
+    <footer class="bg-white border-t border-gray-200 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded bg-gradient-to-br from-primary-500 to-purple-500 flex items-center justify-center text-white font-bold text-xs">
+                    T
+                </div>
+                <span class="font-bold text-gray-900">Tech<span class="text-primary-600">Cert</span></span>
+            </div>
+            
+            <p class="text-sm text-gray-500 text-center">
+                © 2024 TechCert. Una recopilación de recursos gratuitos.
+            </p>
+            
+            <div class="flex gap-4">
+                <a href="#" class="text-gray-400 hover:text-gray-900 transition-colors">
+                    <span class="sr-only">Twitter</span>
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-gray-900 transition-colors">
+                    <span class="sr-only">GitHub</span>
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts para interactividad básica -->
+    <script>
+        // Efecto del Navbar al hacer scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                navbar.classList.add('shadow-sm');
+                navbar.classList.remove('border-transparent');
+            } else {
+                navbar.classList.remove('shadow-sm');
+                navbar.classList.add('border-transparent');
+            }
+        });
+
+        // Animación de aparición al hacer scroll (Intersection Observer)
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => {
+            revealOnScroll.observe(el);
+        });
+    </script>
+</body>
+</html>
