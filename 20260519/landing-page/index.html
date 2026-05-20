@@ -2,21 +2,93 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Cursos Gratuitos con Certificado</title>
 
     <style>
+      :root {
+        --bg: #f4f6f8;
+        --text: #222;
+        --card: rgb(252, 230, 230);
+
+        --header1: #1e88e5;
+        --header2: #1565c0;
+
+        --button: #1e88e5;
+        --button-hover: #0d47a1;
+
+        --shadow: rgba(0, 0, 0, 0.1);
+
+        --footer: #222;
+        --footer-text: white;
+      }
+
+      body.dark {
+        --bg: #121212;
+        --text: #f0f0f0;
+        --card: #1e1e1e;
+
+        --header1: #0d47a1;
+        --header2: #1565c0;
+
+        --button: #3949ab;
+        --button-hover: #5c6bc0;
+
+        --shadow: rgba(255, 255, 255, 0.08);
+
+        --footer: #000;
+        --footer-text: #ddd;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: Arial, sans-serif;
         margin: 0;
-        background-color: #f4f6f8;
-        color: #222;
+        font-family: Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        transition: background 0.3s, color 0.3s;
       }
 
       header {
-        background: linear-gradient(135deg, #1e88e5, #1565c0);
+        background: linear-gradient(
+          135deg,
+          var(--header1),
+          var(--header2)
+        );
+
         color: white;
         text-align: center;
         padding: 50px 20px;
+
+        position: relative;
+      }
+
+      .theme-toggle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+
+        border: none;
+        border-radius: 8px;
+
+        padding: 10px 14px;
+
+        cursor: pointer;
+
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+
+        backdrop-filter: blur(4px);
+
+        transition: 0.2s;
+      }
+
+      .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.35);
       }
 
       section {
@@ -33,15 +105,34 @@
 
       .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(260px, 1fr)
+        );
+
         gap: 20px;
       }
 
       .course {
-        background: rgb(252, 230, 230);
+        background: var(--card);
+
         padding: 20px;
+
         border-radius: 12px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+        box-shadow: 0px 4px 10px var(--shadow);
+
+        display: flex;
+        flex-direction: column;
+
+        min-height: 320px;
+
+        transition: 0.25s;
+      }
+
+      .course:hover {
+        transform: translateY(-4px);
       }
 
       .course h3 {
@@ -50,18 +141,34 @@
 
       .course a {
         display: inline-block;
+
         margin-top: 10px;
-        /* margin-top: auto; */
+
         padding: 10px 15px;
-        background-color: #1e88e5;
+
+        background-color: var(--button);
+
         color: white;
+
         text-decoration: none;
+
         border-radius: 6px;
+
         width: 80%;
+
+        align-self: center;
+
+        text-align: center;
+
+        transition: 0.2s;
+      }
+
+      .course a:last-of-type {
+        margin-top: auto;
       }
 
       .course a:hover {
-        background-color: #0d47a1;
+        background-color: var(--button-hover);
       }
 
       .ok {
@@ -75,9 +182,12 @@
 
       .warning::before {
         content: "";
+
         position: absolute;
+
         top: 0;
         left: 0;
+
         width: 100%;
         height: 6px;
 
@@ -96,41 +206,54 @@
       .note {
         font-size: 14px;
         margin-top: 10px;
-        color: #555;
+
+        opacity: 0.85;
       }
 
       footer {
         text-align: center;
+
         padding: 20px;
-        background-color: #222;
-        color: white;
+
         margin-top: 40px;
+
+        background: var(--footer);
+
+        color: var(--footer-text);
       }
     </style>
   </head>
 
   <body>
     <header>
+      <button class="theme-toggle" id="themeBtn">🌙</button>
+
       <h1>🚀 Cursos Gratis con Certificado</h1>
+
       <p>
-        Separados entre certificaciones realmente gratuitas y plataformas donde
-        el certificado puede requerir pago.
+        Separados entre certificaciones realmente gratuitas y
+        plataformas donde el certificado puede requerir pago.
       </p>
     </header>
 
-    <!-- CERTIFICADOS GRATUITOS REALES -->
+    <!-- GRATIS REALES -->
 
     <section>
       <h2>✅ Certificaciones realmente gratuitas</h2>
 
       <div class="grid">
+
         <div class="course ok">
           <h3>freeCodeCamp</h3>
 
-          <p>HTML, CSS, JavaScript, React, Python, APIs, Data Science.</p>
+          <p>
+            HTML, CSS, JavaScript, React, Python, APIs,
+            Data Science.
+          </p>
 
           <p class="note">
-            ✔ Certificaciones gratuitas reales al completar los proyectos.
+            ✔ Certificaciones gratuitas reales al completar
+            proyectos.
           </p>
 
           <a href="https://www.freecodecamp.org" target="_blank">
@@ -139,56 +262,60 @@
         </div>
 
         <div class="course ok">
-          <h3>Web.dev (Google)</h3>
-          <p>
-            Aprende desarrollo web moderno con cursos interactivos de Google.
-          </p>
-          <p class="note">⚠ falta comprobar si los certificados son de pago.</p>
-          <a href="https://web.dev/learn" target="_blank">Ir al curso</a>
-        </div>
-
-        <div class="course ok">
           <h3>The Odin Project</h3>
-          <p>Ruta completa de desarrollo web full-stack totalmente gratis.</p>
-          <p class="note">
-            ✔ Certificaciones gratuitas reales al completar los proyectos.
+
+          <p>
+            Ruta completa de desarrollo web full-stack
+            totalmente gratis.
           </p>
-          <a href="https://www.theodinproject.com" target="_blank">Ir al curso</a>
+
+          <p class="note">
+            ✔ Formación gratuita real y muy valorada.
+          </p>
+
+          <a
+            href="https://www.theodinproject.com"
+            target="_blank"
+          >
+            Ir al curso
+          </a>
         </div>
 
         <div class="course ok">
-          <h3>Microsoft Learn</h3>
-          <p>
-            Plataforma oficial de Microsoft con aprendizaje guiado y
-            certificaciones.
-          </p>
-          <p class="note">⚠ falta comprobar si los certificados son de pago.</p>
-          <a href="https://learn.microsoft.com" target="_blank">Ir al curso</a>
-        </div>
-                <div class="course ok">
           <h3>CS50x Harvard</h3>
 
-          <p>Computer Science, C, Python, SQL y Web.</p>
-
-          <p class="note">
-            ✔ Certificado gratuito propio de CS50.<br />
-            ⚠ El certificado verificado de edX es de pago.
+          <p>
+            Computer Science, C, Python, SQL y Web.
           </p>
 
-          <a href="https://cs50.harvard.edu" target="_blank"> Ir al curso </a>
+          <p class="note">
+            ✔ Certificado gratuito propio de CS50.
+            <br />
+            ⚠ El certificado verified de edX es de pago.
+          </p>
+
+          <a href="https://cs50.harvard.edu" target="_blank">
+            Ir al curso
+          </a>
         </div>
 
         <div class="course ok">
           <h3>CS50P (Python)</h3>
 
-          <p>Curso especializado en Python desde cero con certificación.</p>
-
-          <p class="note">
-            ✔ Certificado gratuito propio de CS50.<br />
-            ⚠ El certificado "verified" de edX sí es de pago.
+          <p>
+            Curso especializado en Python desde cero.
           </p>
 
-          <a href="https://cs50.harvard.edu/python" target="_blank">
+          <p class="note">
+            ✔ Certificado gratuito propio de CS50.
+            <br />
+            ⚠ El certificado verified de edX es de pago.
+          </p>
+
+          <a
+            href="https://cs50.harvard.edu/python"
+            target="_blank"
+          >
             Ir al curso
           </a>
         </div>
@@ -196,64 +323,123 @@
       </div>
     </section>
 
-    <!-- CERTIFICADO NO CONFIRMADO O DE PAGO -->
+    <!-- DUDOSOS / MIXTOS -->
 
     <section>
-      <h2>⚠ Cursos gratis pero con certificado no garantizado o de pago</h2>
+      <h2>
+        ⚠ Cursos gratis pero con certificado no garantizado
+        o de pago
+      </h2>
 
       <div class="grid">
+
         <div class="course warning">
-          <h3>Full Stack Open</h3>
+          <h3>Web.dev (Google)</h3>
 
-          <p>React, Node.js, MongoDB, TypeScript.</p>
-
-          <p class="note">
-            El curso es gratuito, pero la certificación depende del sistema
-            universitario asociado.
+          <p>
+            Aprende desarrollo web moderno con cursos
+            interactivos de Google.
           </p>
 
-          <a href="https://fullstackopen.com" target="_blank"> Ir al curso </a>
+          <p class="note">
+            ⚠ No todos los cursos incluyen certificado oficial.
+          </p>
+
+          <a href="https://web.dev/learn" target="_blank">
+            Ir al curso
+          </a>
         </div>
 
         <div class="course warning">
-          <h3>OpenLearn (Open University)</h3>
+          <h3>Microsoft Learn</h3>
 
-          <p>Cursos de computación con certificación.</p>
-
-          <p class="note">
-            Algunos cursos ofrecen badge o certificado gratuito, otros no.
+          <p>
+            Plataforma oficial de Microsoft con aprendizaje
+            guiado.
           </p>
 
-          <a href="https://www.open.edu/openlearn/" target="_blank">
+          <p class="note">
+            ⚠ El contenido es gratuito, pero muchas
+            certificaciones oficiales son de pago.
+          </p>
+
+          <a
+            href="https://learn.microsoft.com"
+            target="_blank"
+          >
+            Ir al curso
+          </a>
+        </div>
+
+        <div class="course warning">
+          <h3>Full Stack Open</h3>
+
+          <p>
+            React, Node.js, MongoDB y TypeScript.
+          </p>
+
+          <p class="note">
+            Certificación asociada a universidad.
+          </p>
+
+          <a href="https://fullstackopen.com" target="_blank">
+            Ir al curso
+          </a>
+        </div>
+
+        <div class="course warning">
+          <h3>OpenLearn</h3>
+
+          <p>
+            Cursos gratuitos de computación y tecnología.
+          </p>
+
+          <p class="note">
+            Algunos cursos ofrecen badge o certificado y
+            otros no.
+          </p>
+
+          <a
+            href="https://www.open.edu/openlearn/"
+            target="_blank"
+          >
             Página principal
           </a>
+
           <a
             href="https://www.open.edu/openlearn/free-courses/full-catalogue?filter=popular/grid/287/all/all/all/en"
             target="_blank"
           >
-            Cursos gratuitos Digital&Computing
+            Cursos Digital & Computing
           </a>
         </div>
 
         <div class="course warning">
           <h3>SoloLearn</h3>
 
-          <p>Python, JavaScript, Java, SQL.</p>
-
-          <p class="note">
-            Algunas funciones y certificados requieren plan PRO.
+          <p>
+            Python, JavaScript, Java y SQL.
           </p>
 
-          <a href="https://www.sololearn.com" target="_blank"> Ir al curso </a>
+          <p class="note">
+            Algunas funciones requieren plan PRO.
+          </p>
+
+          <a href="https://www.sololearn.com" target="_blank">
+            Ir al curso
+          </a>
         </div>
 
         <div class="course warning">
           <h3>HackerRank</h3>
 
-          <p>Certificación en SQL, JS, Python y algoritmos.</p>
+          <p>
+            Certificación en SQL, JS, Python y algoritmos.
+          </p>
 
           <p class="note">
-            Las skill certifications existen, pero no todas son gratuitas.
+            Algunas evaluaciones/certificados pueden variar
+            según disponibilidad.
           </p>
 
           <a
@@ -267,14 +453,19 @@
         <div class="course warning">
           <h3>Great Learning</h3>
 
-          <p>Python, IA, Data Science y desarrollo web.</p>
-
-          <p class="note">
-            Muchos cursos incluyen certificado, pero las condiciones cambian
-            según el programa.
+          <p>
+            Python, IA, Data Science y desarrollo web.
           </p>
 
-          <a href="https://www.mygreatlearning.com/academy" target="_blank">
+          <p class="note">
+            Algunos certificados son gratuitos y otros
+            dependen del programa.
+          </p>
+
+          <a
+            href="https://www.mygreatlearning.com/academy"
+            target="_blank"
+          >
             Ir al curso
           </a>
         </div>
@@ -282,10 +473,12 @@
         <div class="course warning">
           <h3>Simplilearn SkillUp</h3>
 
-          <p>Frontend, backend, cloud y más.</p>
+          <p>
+            Frontend, backend, cloud y más.
+          </p>
 
           <p class="note">
-            Algunos certificados son gratuitos, otros requieren upgrade.
+            Algunos certificados requieren upgrade.
           </p>
 
           <a
@@ -299,40 +492,88 @@
         <div class="course warning">
           <h3>Cisco Networking Academy</h3>
 
-          <p>Python, Linux y ciberseguridad.</p>
-
-          <p class="note">
-            Muchos cursos sí tienen certificado gratuito, pero depende del curso
-            específico.
+          <p>
+            Python, Linux y ciberseguridad.
           </p>
 
-          <a href="https://skillsforall.com" target="_blank"> Ir al curso </a>
+          <p class="note">
+            Muchos cursos tienen certificado gratuito,
+            depende del curso específico.
+          </p>
+
+          <a href="https://skillsforall.com" target="_blank">
+            Ir al curso
+          </a>
         </div>
 
         <div class="course warning">
-          <h3>Dashboard WebDevOpen (Full Stack Open)</h3>
+          <h3>Dashboard WebDevOpen</h3>
+
           <p>
-            Curso universitario gratuito de desarrollo full-stack con
-            certificación.
+            Curso universitario gratuito de desarrollo
+            full-stack.
           </p>
-          <a href="https://dashboard.webdevopen.com/courses" target="_blank"
-            >...</a
+
+          <p class="note">
+            El sistema de certificación depende de la
+            universidad asociada.
+          </p>
+
+          <a
+            href="https://dashboard.webdevopen.com/courses"
+            target="_blank"
           >
+            Ir al curso
+          </a>
         </div>
 
         <div class="course warning">
           <h3>IBM SkillsBuild</h3>
+
           <p>
-            Cursos gratuitos en tecnología, IA y ciberseguridad con
-            certificados.
+            Cursos gratuitos en IA, tecnología y
+            ciberseguridad.
           </p>
-          <a href="https://skillsbuild.org" target="_blank">Ir al curso</a>
+
+          <p class="note">
+            Algunos cursos incluyen badges y certificados.
+          </p>
+
+          <a href="https://skillsbuild.org" target="_blank">
+            Ir al curso
+          </a>
         </div>
+
       </div>
     </section>
 
     <footer>
       <p>© 2026 Cursos gratuitos con certificado</p>
     </footer>
+
+    <script>
+      const btn = document.getElementById("themeBtn");
+
+      if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark");
+        btn.textContent = "☀️ Modo claro";
+      }
+
+      btn.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+
+        const dark =
+          document.body.classList.contains("dark");
+
+        btn.textContent = dark
+          ? "☀️"
+          : "🌙";
+
+        localStorage.setItem(
+          "theme",
+          dark ? "dark" : "light"
+        );
+      });
+    </script>
   </body>
 </html>
