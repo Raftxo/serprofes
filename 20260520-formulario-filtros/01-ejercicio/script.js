@@ -1,44 +1,44 @@
-// // 1. formulario sin recarga
-
-// const form = document.querySelector('#suscripcionForm');
-// const inputNombre = document.querySelector('#nombreInput');
-// const cajaMensaje = document.querySelector('#mensajeExito');
-
-// // escuchamos el evento 'submit' (cuando se envíe el formulario)
-// form.addEventListener('submit',(evento)=>{
-//     // - la línea mágica que evita que la página se recargue
-//     evento.preventDefault();
-//     // - capturamos lo que el usuario escribió con .trim que quita el espacio
-//     const textoEscrito = inputNombre.value.trim();
-//     // - mostramos el mensaje de éxito
-//     cajaMensaje.textContent = `✔️ Usuario "${textoEscrito}" registrado correctamente en la base de datos.`;
-//     cajaMensaje.classList.remove('oculto');
-// });
-
-// 2. buscador en tabla en tiempo real
+// =====================
+// 1. BUSCADOR DINÁMICO
+// =====================
 const buscador = document.querySelector('#buscadorUsuarios');
-// - seleccionamos todas las filas que están dentro del cuerpo de la tabla (tbody)
-const filas = document.querySelectorAll('#tablaUsuarios tbody tr');
-// - el evento 'input' se dispara cada vez que el usuario pulsa una tecla
-buscador.addEventListener('input',()=>{
-    // - convertimos lo que escribe el usuario a minúsculas para evitar confusiones con mayúsculas
+
+buscador.addEventListener('input', () => {
     const terminoBusqueda = buscador.value.toLowerCase();
-    // - usamos el bucle forEach para revisar fila a fila
-    filas.forEach(fila=>{
-        // obtenemos todo el texto de esa fila en minúsculas
+
+    const filas = document.querySelectorAll('#tablaUsuarios tbody tr');
+
+    filas.forEach(fila => {
         const textFila = fila.textContent.toLowerCase();
-        // 3. condicional: ¿el texto de la fila incluye lo que buscamos?
-        if(textFila.includes(terminoBusqueda)){
-            fila.style.display = '';
-        }else{
-            // si no lo incluye lo ocultamos con display:none
-            fila.style.display = 'none';
-        }
+
+        fila.style.display = textFila.includes(terminoBusqueda)
+            ? ''
+            : 'none';
     });
 });
 
-// 3. añadir usuario nuevo
-// comento el paso 1 para no duplicar 
+
+// =====================
+// 2. ROLES ALEATORIOS SIN REPETIR
+// =====================
+let ultimoRol = null;
+
+function obtenerRolRandom() {
+    const roles = ["Usuario", "Admin", "Editor", "Developer"];
+    let nuevoRol;
+
+    do {
+        nuevoRol = roles[Math.floor(Math.random() * roles.length)];
+    } while (nuevoRol === ultimoRol);
+
+    ultimoRol = nuevoRol;
+    return nuevoRol;
+}
+
+
+// =====================
+// 3. FORMULARIO (AÑADIR USUARIO)
+// =====================
 const form = document.querySelector('#suscripcionForm');
 const inputNombre = document.querySelector('#nombreInput');
 const cajaMensaje = document.querySelector('#mensajeExito');
@@ -47,12 +47,10 @@ form.addEventListener('submit', (evento) => {
     evento.preventDefault();
 
     const nombre = inputNombre.value.trim();
-
     if (!nombre) return;
 
     const email = nombre.toLowerCase().replaceAll(" ", "") + "@agencia.com";
-    const roles = ["Usuario", "Admin", "Editor"];
-    const rol = roles[Math.floor(Math.random() * roles.length)];
+    const rol = obtenerRolRandom();
 
     const nuevaFila = document.createElement("tr");
 
@@ -62,8 +60,10 @@ form.addEventListener('submit', (evento) => {
         <td>${rol}</td>
     `;
 
-    const tbody = document.querySelector("#tablaUsuarios tbody");
-    tbody.appendChild(nuevaFila);
+    document.querySelector("#tablaUsuarios tbody").appendChild(nuevaFila);
+
+    // actualizar gráfico
+    actualizarGrafico();
 
     // mensaje
     cajaMensaje.textContent = `✔️ Usuario "${nombre}" añadido correctamente`;
@@ -75,3 +75,46 @@ form.addEventListener('submit', (evento) => {
 
     form.reset();
 });
+
+
+// =====================
+// 4. GRÁFICO DE ROLES
+// =====================
+function actualizarGrafico() {
+    const filas = document.querySelectorAll("#tablaUsuarios tbody tr");
+
+    let conteo = {
+        Usuario: 0,
+        Admin: 0,
+        Editor: 0,
+        Developer: 0
+    };
+
+    filas.forEach(fila => {
+        const rol = fila.children[2].textContent.trim();
+        if (conteo[rol] !== undefined) {
+            conteo[rol]++;
+        }
+    });
+
+    // actualizar números
+    document.getElementById("countUsuario").textContent = conteo.Usuario;
+    document.getElementById("countAdmin").textContent = conteo.Admin;
+    document.getElementById("countEditor").textContent = conteo.Editor;
+    document.getElementById("countDeveloper").textContent = conteo.Developer;
+
+    // calcular máximo
+    const max = Math.max(...Object.values(conteo), 1);
+
+    // actualizar barras
+    document.getElementById("barraUsuario").style.height = (conteo.Usuario / max) * 100 + "px";
+    document.getElementById("barraAdmin").style.height = (conteo.Admin / max) * 100 + "px";
+    document.getElementById("barraEditor").style.height = (conteo.Editor / max) * 100 + "px";
+    document.getElementById("barraDeveloper").style.height = (conteo.Developer / max) * 100 + "px";
+}
+
+
+// =====================
+// 5. INICIALIZACIÓN
+// =====================
+actualizarGrafico();
