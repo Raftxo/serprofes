@@ -11,12 +11,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS (via CDN para un solo archivo) -->
+    <!-- Tailwind CSS (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Configuración personalizada de Tailwind -->
+    <!-- Configuración personalizada de Tailwind con soporte para Modo Oscuro por clase -->
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -50,31 +51,93 @@
         }
     </script>
 
-    <!-- CSS Personalizado para animaciones extra que Tailwind no cubre por defecto fácilmente -->
+    <!-- CSS de Efectos de Alta Gama (Shining Borders & Transitions) -->
     <style>
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        
-        .card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        /* Registro de propiedad CSS para soportar la animación del ángulo de gradiente en navegadores modernos */
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
         }
 
+        @keyframes rotateShine {
+            0% { --angle: 0deg; }
+            100% { --angle: 360deg; }
+        }
+
+        /* Efecto de Desenfoque y Cristal templado adaptable */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Estructura para la tarjeta con bordes brillantes (Shining borders) */
+        .shining-card {
+            position: relative;
+            background: #ffffff;
+            border-radius: 1rem;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+            z-index: 1;
+        }
+
+        .dark .shining-card {
+            background: #0f172a;
+        }
+
+        /* El pseudoelemento actúa como el anillo de luz exterior */
+        .shining-card::before {
+            content: '';
+            position: absolute;
+            top: -1.5px;
+            left: -1.5px;
+            right: -1.5px;
+            bottom: -1.5px;
+            border-radius: 1.05rem;
+            background: conic-gradient(from var(--angle), var(--shine-color-1, #3b82f6), var(--shine-color-2, #8b5cf6), var(--shine-color-1, #3b82f6));
+            z-index: -1;
+            opacity: 0.15;
+            transition: opacity 0.3s ease, filter 0.3s ease;
+        }
+
+        .dark .shining-card::before {
+            opacity: 0.25;
+        }
+
+        /* Al hacer Hover la tarjeta levanta y el borde empieza a brillar/girar */
+        .shining-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -10px rgba(var(--shadow-color-rgb, 59, 130, 246), 0.2);
+        }
+
+        .shining-card:hover::before {
+            opacity: 1;
+            animation: rotateShine 4s linear infinite;
+            filter: blur(0.5px) drop-shadow(0 0 5px var(--shine-color-1));
+        }
+
+        /* Texto con degradado */
         .gradient-text {
             background: linear-gradient(to right, #2563eb, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        
+        .dark .gradient-text {
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-        /* Ocultar elementos antes de la animación de scroll (implementado con JS básico) */
+        /* Elementos que aparecen con el scroll */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -85,12 +148,26 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Ocultar el cursor original si se desea, o mantenerlo y usar la estela de acompañamiento */
+        canvas#cursor-trail {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans antialiased selection:bg-primary-500 selection:text-white">
+<body class="bg-gray-50 dark:bg-slate-950 text-gray-800 dark:text-slate-200 font-sans antialiased transition-colors duration-300 selection:bg-primary-500 selection:text-white">
+
+    <!-- Canvas para la estela del cursor -->
+    <canvas id="cursor-trail"></canvas>
 
     <!-- Navegación -->
-    <nav class="fixed w-full z-50 glass-effect border-b border-gray-200/50 transition-all duration-300" id="navbar">
+    <nav class="fixed w-full z-50 glass-effect border-b border-gray-200/50 dark:border-slate-800/50 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
@@ -98,14 +175,27 @@
                     <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-purple-500 flex items-center justify-center text-white font-bold text-xl shadow-lg">
                         T
                     </div>
-                    <span class="font-bold text-xl tracking-tight text-gray-900">Tech<span class="text-primary-600">Cert</span></span>
+                    <span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white">Tech<span class="text-primary-600 dark:text-primary-400">Cert</span></span>
                 </div>
                 
-                <!-- Enlaces Desktop -->
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#beneficios" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Beneficios</a>
-                    <a href="#cursos" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Cursos</a>
-                    <a href="#cursos" class="px-5 py-2.5 rounded-full bg-gray-900 text-white font-medium hover:bg-gray-800 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200">
+                <!-- Enlaces Desktop & Botones de Control -->
+                <div class="flex space-x-4 md:space-x-8 items-center">
+                    <a href="#beneficios" class="hidden sm:inline-block text-gray-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">Beneficios</a>
+                    <a href="#cursos" class="hidden sm:inline-block text-gray-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">Cursos</a>
+                    
+                    <!-- Botón Selector de Modo Oscuro -->
+                    <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 transition-all" aria-label="Cambiar modo de tema">
+                        <!-- Icono Luna (Modo Claro activo -> Ir a Oscuro) -->
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                        <!-- Icono Sol (Modo Oscuro activo -> Ir a Claro) -->
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 14.05a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zm-.707-10.6a1 1 0 010 1.414l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 0zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+
+                    <a href="#cursos" class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200 text-sm sm:text-base">
                         Empezar Ahora
                     </a>
                 </div>
@@ -117,12 +207,12 @@
     <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
         <!-- Elementos decorativos de fondo -->
         <div class="absolute top-0 left-1/2 w-full -translate-x-1/2 h-full overflow-hidden -z-10">
-            <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary-100 blur-3xl opacity-50"></div>
-            <div class="absolute top-40 -left-20 w-72 h-72 rounded-full bg-purple-100 blur-3xl opacity-50"></div>
+            <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary-100 dark:bg-blue-950/20 blur-3xl opacity-50"></div>
+            <div class="absolute top-40 -left-20 w-72 h-72 rounded-full bg-purple-100 dark:bg-purple-950/20 blur-3xl opacity-50"></div>
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-primary-600 text-sm font-semibold mb-8 animate-fade-in-up">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 text-primary-600 dark:text-primary-400 text-sm font-semibold mb-8 animate-fade-in-up">
                 <span class="flex h-2 w-2 relative">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
@@ -130,12 +220,12 @@
                 100% Gratis y Certificado
             </div>
             
-            <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-gray-900 mb-6 animate-fade-in-up" style="animation-delay: 0.1s;">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 animate-fade-in-up" style="animation-delay: 0.1s;">
                 Aprende programación <br class="hidden md:block">
                 <span class="gradient-text">gratis con certificación</span>
             </h1>
             
-            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-600 mb-10 animate-fade-in-up" style="animation-delay: 0.2s;">
+            <p class="mt-4 max-w-2xl mx-auto text-lg sm:text-xl text-slate-600 dark:text-slate-300 mb-10 animate-fade-in-up" style="animation-delay: 0.2s;">
                 Impulsa tu carrera tecnológica con los mejores cursos de universidades e instituciones líderes. Domina habilidades de alta demanda sin coste alguno.
             </p>
             
@@ -143,15 +233,15 @@
                 <a href="#cursos" class="px-8 py-4 rounded-full bg-gradient-to-r from-primary-600 to-purple-600 text-white font-semibold text-lg hover:shadow-lg hover:shadow-primary-500/30 transition-all transform hover:-translate-y-1">
                     Explorar Cursos
                 </a>
-                <a href="#beneficios" class="px-8 py-4 rounded-full bg-white border-2 border-gray-200 text-gray-700 font-semibold text-lg hover:border-gray-300 hover:bg-gray-50 transition-all">
+                <a href="#beneficios" class="px-8 py-4 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-semibold text-lg hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all">
                     Ver Beneficios
                 </a>
             </div>
             
-            <!-- Logos de instituciones (Simulados con texto para no depender de imágenes externas) -->
-            <div class="mt-20 pt-10 border-t border-gray-200/60 animate-fade-in-up" style="animation-delay: 0.5s;">
-                <p class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">Aprende de los mejores</p>
-                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 text-gray-400 font-bold text-xl lg:text-2xl opacity-70 grayscale">
+            <!-- Logos de instituciones -->
+            <div class="mt-20 pt-10 border-t border-slate-200/60 dark:border-slate-800/60 animate-fade-in-up" style="animation-delay: 0.5s;">
+                <p class="text-sm font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-6">Aprende de los mejores</p>
+                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 text-slate-400 dark:text-slate-500 font-bold text-xl lg:text-2xl opacity-70 grayscale dark:invert-0 dark:opacity-50">
                     <span>Harvard</span>
                     <span>freeCodeCamp</span>
                     <span>Cisco</span>
@@ -162,232 +252,242 @@
     </section>
 
     <!-- Sección de Beneficios -->
-    <section id="beneficios" class="py-20 bg-white">
+    <section id="beneficios" class="py-20 bg-white dark:bg-slate-900/40 border-y border-slate-200/50 dark:border-slate-800/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">¿Por qué elegir estos cursos?</h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Seleccionamos cuidadosamente recursos de alta calidad que realmente impactarán tu currículum.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">¿Por qué elegir estos cursos?</h2>
+                <p class="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">Seleccionamos cuidadosamente recursos de alta calidad que realmente impactarán tu currículum.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-10">
                 <!-- Beneficio 1 -->
-                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:border-primary-200 transition-colors reveal">
-                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-3xl mb-6 shadow-sm">
+                <div class="bg-gray-50 dark:bg-slate-900 rounded-2xl p-8 border border-gray-100 dark:border-slate-800 hover:border-primary-200 dark:hover:border-primary-800 transition-colors reveal">
+                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-950/50 rounded-xl flex items-center justify-center text-3xl mb-6 shadow-sm">
                         🎓
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Certificados Oficiales</h3>
-                    <p class="text-gray-600 leading-relaxed">Obtén credenciales verificables de instituciones prestigiosas para destacar en tu perfil de LinkedIn y CV.</p>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Certificados Oficiales</h3>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">Obtén credenciales verificables de instituciones prestigiosas para destacar en tu perfil de LinkedIn y CV.</p>
                 </div>
 
                 <!-- Beneficio 2 -->
-                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:border-purple-200 transition-colors reveal" style="transition-delay: 0.1s;">
-                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center text-3xl mb-6 shadow-sm">
+                <div class="bg-gray-50 dark:bg-slate-900 rounded-2xl p-8 border border-gray-100 dark:border-slate-800 hover:border-purple-200 dark:hover:border-purple-800 transition-colors reveal" style="transition-delay: 0.1s;">
+                    <div class="w-14 h-14 bg-purple-100 dark:bg-purple-950/50 rounded-xl flex items-center justify-center text-3xl mb-6 shadow-sm">
                         💸
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Cero Costo</h3>
-                    <p class="text-gray-600 leading-relaxed">Educación de calidad mundial sin barreras económicas. Paga 0$ por aprender habilidades altamente valoradas.</p>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Cero Costo</h3>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">Educación de calidad mundial sin barreras económicas. Paga 0$ por aprender habilidades altamente valoradas.</p>
                 </div>
 
                 <!-- Beneficio 3 -->
-                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:border-green-200 transition-colors reveal" style="transition-delay: 0.2s;">
-                    <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center text-3xl mb-6 shadow-sm">
+                <div class="bg-gray-50 dark:bg-slate-900 rounded-2xl p-8 border border-gray-100 dark:border-slate-800 hover:border-green-200 dark:hover:border-green-800 transition-colors reveal" style="transition-delay: 0.2s;">
+                    <div class="w-14 h-14 bg-green-100 dark:bg-green-950/50 rounded-xl flex items-center justify-center text-3xl mb-6 shadow-sm">
                         🚀
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">A tu propio ritmo</h3>
-                    <p class="text-gray-600 leading-relaxed">Estudia cuando quieras y donde quieras. Adapta el aprendizaje a tu horario y estilo de vida.</p>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">A tu propio ritmo</h3>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">Estudia cuando quieras y donde quieras. Adapta el aprendizaje a tu horario y estilo de vida.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Sección de Cursos (Grid) -->
-    <section id="cursos" class="py-24 bg-gray-50 relative">
+    <section id="cursos" class="py-24 bg-slate-50 dark:bg-slate-950 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
                 <div class="max-w-2xl">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Catálogo de Cursos</h2>
-                    <p class="text-lg text-gray-600">Comienza tu viaje en el desarrollo web, ciencia de datos, ciberseguridad y más.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Catálogo de Cursos</h2>
+                    <p class="text-lg text-slate-600 dark:text-slate-300">Comienza tu viaje en el desarrollo web, ciencia de datos, ciberseguridad y más.</p>
                 </div>
             </div>
 
-            <!-- Grid de Cards -->
+            <!-- Grid de Cards con Shining Borders individualizados por variables CSS -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 <!-- Card 1: freeCodeCamp -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal">
+                <div class="shining-card border border-gray-200 dark:border-slate-800 p-6 shadow-sm flex flex-col h-full reveal"
+                     style="--shine-color-1: #10b981; --shine-color-2: #059669; --shadow-color-rgb: 16, 185, 129;">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-gray-900 text-white rounded-lg flex items-center justify-center text-2xl">
+                        <div class="w-12 h-12 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 rounded-lg flex items-center justify-center text-2xl">
                             ⛺
                         </div>
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">freeCodeCamp</h3>
-                            <p class="text-sm text-gray-500">Desarrollo Web & Más</p>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">freeCodeCamp</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Desarrollo Web & Más</p>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-6 flex-grow">Aprende a programar construyendo proyectos. Certificaciones en Responsive Web Design, JS Algorithms, y más.</p>
-                    <a href="https://www.freecodecamp.org" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 flex-grow">Aprende a programar construyendo proyectos. Certificaciones en Responsive Web Design, JS Algorithms, y más.</p>
+                    <a href="https://www.freecodecamp.org" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-slate-50 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 font-semibold rounded-xl transition-colors border border-gray-100 dark:border-slate-800 hover:border-emerald-200 group">
                         Acceder curso
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
                 </div>
 
                 <!-- Card 2: CS50x -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal" style="transition-delay: 0.1s;">
+                <div class="shining-card border border-gray-200 dark:border-slate-800 p-6 shadow-sm flex flex-col h-full reveal"
+                     style="--shine-color-1: #ef4444; --shine-color-2: #991b1b; --shadow-color-rgb: 239, 68, 68;" style="transition-delay: 0.1s;">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-red-800 text-white rounded-lg flex items-center justify-center text-2xl font-serif font-bold">
+                        <div class="w-12 h-12 bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 rounded-lg flex items-center justify-center text-2xl font-serif font-bold">
                             H
                         </div>
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">CS50x Harvard</h3>
-                            <p class="text-sm text-gray-500">Ciencias de la Computación</p>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">CS50x Harvard</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Ciencias de la Computación</p>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-6 flex-grow">El legendario curso introductorio de Harvard. Aprende C, Python, SQL, y JavaScript de forma rigurosa.</p>
-                    <a href="https://cs50.harvard.edu" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 flex-grow">El legendario curso introductorio de Harvard. Aprende C, Python, SQL, y JavaScript de forma rigurosa.</p>
+                    <a href="https://cs50.harvard.edu" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-slate-50 dark:bg-slate-800/80 hover:bg-red-50 dark:hover:bg-red-950/50 text-red-700 dark:text-red-400 font-semibold rounded-xl transition-colors border border-gray-100 dark:border-slate-800 hover:border-red-200 group">
                         Acceder curso
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
                 </div>
 
                 <!-- Card 3: CS50P Python -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal" style="transition-delay: 0.2s;">
+                <div class="shining-card border border-gray-200 dark:border-slate-800 p-6 shadow-sm flex flex-col h-full reveal"
+                     style="--shine-color-1: #eab308; --shine-color-2: #3b82f6; --shadow-color-rgb: 234, 179, 8;" style="transition-delay: 0.2s;">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-yellow-400 text-blue-900 rounded-lg flex items-center justify-center text-2xl">
+                        <div class="w-12 h-12 bg-yellow-50 dark:bg-yellow-950/40 text-yellow-600 dark:text-yellow-400 rounded-lg flex items-center justify-center text-2xl">
                             🐍
                         </div>
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">CS50P Python</h3>
-                            <p class="text-sm text-gray-500">Programación en Python</p>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">CS50P Python</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Programación en Python</p>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-6 flex-grow">Introducción de Harvard a la programación exclusivamente enfocada en Python. Ideal para principiantes.</p>
-                    <a href="https://cs50.harvard.edu/python" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 flex-grow">Introducción de Harvard a la programación exclusivamente enfocada en Python. Ideal para principiantes.</p>
+                    <a href="https://cs50.harvard.edu/python" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-slate-50 dark:bg-slate-800/80 hover:bg-yellow-50 dark:hover:bg-yellow-950/50 text-yellow-700 dark:text-yellow-400 font-semibold rounded-xl transition-colors border border-gray-100 dark:border-slate-800 hover:border-yellow-200 group">
                         Acceder curso
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
                 </div>
 
                 <!-- Card 4: Full Stack Open -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal">
+                <div class="shining-card border border-gray-200 dark:border-slate-800 p-6 shadow-sm flex flex-col h-full reveal"
+                     style="--shine-color-1: #2563eb; --shine-color-2: #06b6d4; --shadow-color-rgb: 37, 99, 235;">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-blue-500 text-white rounded-lg flex items-center justify-center text-2xl font-bold">
+                        <div class="w-12 h-12 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center text-2xl font-bold">
                             FSO
                         </div>
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">Full Stack Open</h3>
-                            <p class="text-sm text-gray-500">React, Node.js, GraphQL</p>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Full Stack Open</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">React, Node.js, GraphQL</p>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-6 flex-grow">Curso avanzado de la Universidad de Helsinki enfocado en desarrollo moderno con JavaScript/TypeScript.</p>
-                    <a href="https://fullstackopen.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 flex-grow">Curso avanzado de la Universidad de Helsinki enfocado en desarrollo moderno con JavaScript/TypeScript.</p>
+                    <a href="https://fullstackopen.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-slate-50 dark:bg-slate-800/80 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-blue-700 dark:text-blue-400 font-semibold rounded-xl transition-colors border border-gray-100 dark:border-slate-800 hover:border-blue-200 group">
                         Acceder curso
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
                 </div>
 
                 <!-- Card 5: OpenLearn -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal" style="transition-delay: 0.1s;">
+                <div class="shining-card border border-gray-200 dark:border-slate-800 p-6 shadow-sm flex flex-col h-full reveal"
+                     style="--shine-color-1: #0d9488; --shine-color-2: #4f46e5; --shadow-color-rgb: 13, 148, 136;" style="transition-delay: 0.1s;">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-teal-600 text-white rounded-lg flex items-center justify-center text-2xl">
+                        <div class="w-12 h-12 bg-teal-50 dark:bg-teal-950/40 text-teal-600 dark:text-teal-400 rounded-lg flex items-center justify-center text-2xl">
                             📖
                         </div>
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">OpenLearn</h3>
-                            <p class="text-sm text-gray-500">Tecnología y más</p>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">OpenLearn</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Tecnología y más</p>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-6 flex-grow">Plataforma de la Open University con cientos de cursos cortos sobre tecnología, redes y ciberseguridad.</p>
-                    <a href="https://www.open.edu/openlearn/" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 flex-grow">Plataforma de la Open University con cientos de cursos cortos sobre tecnología, redes y ciberseguridad.</p>
+                    <a href="https://www.open.edu/openlearn/" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-slate-50 dark:bg-slate-800/80 hover:bg-teal-50 dark:hover:bg-teal-950/50 text-teal-700 dark:text-teal-400 font-semibold rounded-xl transition-colors border border-gray-100 dark:border-slate-800 hover:border-teal-200 group">
                         Acceder curso
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
                 </div>
 
                 <!-- Card 6: SoloLearn -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal" style="transition-delay: 0.2s;">
+                <div class="shining-card border border-gray-200 dark:border-slate-800 p-6 shadow-sm flex flex-col h-full reveal"
+                     style="--shine-color-1: #6366f1; --shine-color-2: #a855f7; --shadow-color-rgb: 99, 102, 241;" style="transition-delay: 0.2s;">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-indigo-500 text-white rounded-lg flex items-center justify-center text-2xl">
+                        <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-lg flex items-center justify-center text-2xl">
                             📱
                         </div>
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">SoloLearn</h3>
-                            <p class="text-sm text-gray-500">Aprendizaje Interactivo</p>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">SoloLearn</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Aprendizaje Interactivo</p>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-6 flex-grow">Perfecto para aprender a programar desde tu móvil. Lecciones cortas interactivas en múltiples lenguajes.</p>
-                    <a href="https://www.sololearn.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 flex-grow">Perfecto para aprender a programar desde tu móvil. Lecciones cortas interactivas en múltiples lenguajes.</p>
+                    <a href="https://www.sololearn.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-slate-50 dark:bg-slate-800/80 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 text-indigo-700 dark:text-indigo-400 font-semibold rounded-xl transition-colors border border-gray-100 dark:border-slate-800 hover:border-indigo-200 group">
                         Acceder curso
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
                 </div>
 
                 <!-- Card 7: HackerRank Skills -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal">
+                <div class="shining-card border border-gray-200 dark:border-slate-800 p-6 shadow-sm flex flex-col h-full reveal"
+                     style="--shine-color-1: #22c55e; --shine-color-2: #84cc16; --shadow-color-rgb: 34, 197, 94;">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-green-500 text-white rounded-lg flex items-center justify-center text-2xl font-bold">
+                        <div class="w-12 h-12 bg-green-50 dark:bg-green-950/40 text-green-600 dark:text-green-400 rounded-lg flex items-center justify-center text-2xl font-bold">
                             H
                         </div>
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">HackerRank Skills</h3>
-                            <p class="text-sm text-gray-500">Validación de Habilidades</p>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">HackerRank Skills</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Validación de Habilidades</p>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-6 flex-grow">Resuelve retos de código y obtén certificados estandarizados que demuestran tus capacidades a los reclutadores.</p>
-                    <a href="https://www.hackerrank.com/skills-verification" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 flex-grow">Resuelve retos de código y obtén certificados estandarizados que demuestran tus capacidades a los reclutadores.</p>
+                    <a href="https://www.hackerrank.com/skills-verification" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-slate-50 dark:bg-slate-800/80 hover:bg-green-50 dark:hover:bg-green-950/50 text-green-700 dark:text-green-400 font-semibold rounded-xl transition-colors border border-gray-100 dark:border-slate-800 hover:border-green-200 group">
                         Acceder curso
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
                 </div>
 
                 <!-- Card 8: Great Learning Academy -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal" style="transition-delay: 0.1s;">
+                <div class="shining-card border border-gray-200 dark:border-slate-800 p-6 shadow-sm flex flex-col h-full reveal"
+                     style="--shine-color-1: #1d4ed8; --shine-color-2: #1e3a8a; --shadow-color-rgb: 29, 78, 216;" style="transition-delay: 0.1s;">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-blue-700 text-white rounded-lg flex items-center justify-center text-2xl">
+                        <div class="w-12 h-12 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center text-2xl">
                             🎓
                         </div>
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">Great Learning</h3>
-                            <p class="text-sm text-gray-500">Data Science, AI & IT</p>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Great Learning</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Data Science, AI & IT</p>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-6 flex-grow">Cursos gratuitos con certificado en áreas de alta demanda como Inteligencia Artificial, Cloud y Big Data.</p>
-                    <a href="https://www.mygreatlearning.com/academy" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 flex-grow">Cursos gratuitos con certificado en áreas de alta demanda como Inteligencia Artificial, Cloud y Big Data.</p>
+                    <a href="https://www.mygreatlearning.com/academy" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-slate-50 dark:bg-slate-800/80 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-blue-700 dark:text-blue-400 font-semibold rounded-xl transition-colors border border-gray-100 dark:border-slate-800 hover:border-blue-200 group">
                         Acceder curso
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
                 </div>
 
                 <!-- Card 9: Simplilearn SkillUp -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal" style="transition-delay: 0.2s;">
+                <div class="shining-card border border-gray-200 dark:border-slate-800 p-6 shadow-sm flex flex-col h-full reveal"
+                     style="--shine-color-1: #f97316; --shine-color-2: #ea580c; --shadow-color-rgb: 249, 115, 22;" style="transition-delay: 0.2s;">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-gray-800 text-white rounded-lg flex items-center justify-center text-2xl">
+                        <div class="w-12 h-12 bg-orange-50 dark:bg-orange-950/40 text-orange-600 dark:text-orange-400 rounded-lg flex items-center justify-center text-2xl">
                             ⚡
                         </div>
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">Simplilearn SkillUp</h3>
-                            <p class="text-sm text-gray-500">Upskilling Tecnológico</p>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Simplilearn SkillUp</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Upskilling Tecnológico</p>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-6 flex-grow">Programas de aprendizaje fundacionales para mejorar tus habilidades en tecnologías clave de la industria actual.</p>
-                    <a href="https://www.simplilearn.com/skillup-free-online-courses" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 flex-grow">Programas de aprendizaje fundacionales para mejorar tus habilidades en tecnologías clave de la industria actual.</p>
+                    <a href="https://www.simplilearn.com/skillup-free-online-courses" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-slate-50 dark:bg-slate-800/80 hover:bg-orange-50 dark:hover:bg-orange-950/50 text-orange-700 dark:text-orange-400 font-semibold rounded-xl transition-colors border border-gray-100 dark:border-slate-800 hover:border-orange-200 group">
                         Acceder curso
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
                 </div>
 
                 <!-- Card 10: Cisco Skills for All -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm card-hover flex flex-col h-full reveal">
+                <div class="shining-card border border-gray-200 dark:border-slate-800 p-6 shadow-sm flex flex-col h-full reveal"
+                     style="--shine-color-1: #06b6d4; --shine-color-2: #0891b2; --shadow-color-rgb: 6, 182, 212;">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-cyan-600 text-white rounded-lg flex items-center justify-center text-2xl font-bold">
+                        <div class="w-12 h-12 bg-cyan-50 dark:bg-cyan-950/40 text-cyan-600 dark:text-cyan-400 rounded-lg flex items-center justify-center text-2xl font-bold">
                             C
                         </div>
                         <div>
-                            <h3 class="text-lg font-bold text-gray-900">Cisco Skills for All</h3>
-                            <p class="text-sm text-gray-500">Redes y Ciberseguridad</p>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Cisco Skills for All</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Redes y Ciberseguridad</p>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-6 flex-grow">Aprende de los líderes en redes. Cursos básicos de ciberseguridad, IoT y networking con insignias digitales.</p>
-                    <a href="https://skillsforall.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-primary-50 text-primary-700 font-semibold rounded-xl transition-colors border border-gray-100 hover:border-primary-200 group">
+                    <p class="text-slate-600 dark:text-slate-300 mb-6 flex-grow">Aprende de los líderes en redes. Cursos básicos de ciberseguridad, IoT y networking con insignias digitales.</p>
+                    <a href="https://skillsforall.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 px-4 py-3 bg-slate-50 dark:bg-slate-800/80 hover:bg-cyan-50 dark:hover:bg-cyan-950/50 text-cyan-700 dark:text-cyan-400 font-semibold rounded-xl transition-colors border border-gray-100 dark:border-slate-800 hover:border-cyan-200 group">
                         Acceder curso
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
@@ -398,11 +498,11 @@
     </section>
 
     <!-- Call to Action Inferior -->
-    <section class="py-20 relative overflow-hidden bg-gray-900 text-white">
-        <div class="absolute inset-0 bg-gradient-to-br from-primary-900 to-gray-900 opacity-90"></div>
+    <section class="py-20 relative overflow-hidden bg-slate-900 dark:bg-black text-white border-t border-slate-800">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary-900/50 to-slate-950 opacity-90"></div>
         <div class="max-w-4xl mx-auto px-4 relative z-10 text-center reveal">
             <h2 class="text-3xl md:text-5xl font-bold mb-6">El mejor momento para empezar es ahora</h2>
-            <p class="text-xl text-gray-300 mb-10">No necesitas experiencia previa ni tarjeta de crédito. Solo motivación para aprender.</p>
+            <p class="text-xl text-slate-300 mb-10">No necesitas experiencia previa ni tarjeta de crédito. Solo motivación para aprender.</p>
             <a href="#cursos" class="inline-block px-8 py-4 rounded-full bg-primary-500 text-white font-bold text-lg hover:bg-primary-400 transition-colors shadow-lg shadow-primary-500/30 transform hover:-translate-y-1">
                 Ver todos los cursos
             </a>
@@ -410,59 +510,84 @@
     </section>
 
     <!-- Footer Minimalista -->
-    <footer class="bg-white border-t border-gray-200 py-12">
+    <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="flex items-center gap-2">
                 <div class="w-6 h-6 rounded bg-gradient-to-br from-primary-500 to-purple-500 flex items-center justify-center text-white font-bold text-xs">
                     T
                 </div>
-                <span class="font-bold text-gray-900">Tech<span class="text-primary-600">Cert</span></span>
+                <span class="font-bold text-slate-900 dark:text-white">Tech<span class="text-primary-600 dark:text-primary-400">Cert</span></span>
             </div>
             
-            <p class="text-sm text-gray-500 text-center">
-                © 2024 TechCert. Una recopilación de recursos gratuitos.
+            <p class="text-sm text-slate-500 dark:text-slate-400 text-center">
+                © 2026 TechCert. Una recopilación de recursos gratuitos.
             </p>
             
             <div class="flex gap-4">
-                <a href="#" class="text-gray-400 hover:text-gray-900 transition-colors">
-                    <span class="sr-only">Twitter</span>
+                <a href="#" class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="Twitter">
                     <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
                 </a>
-                <a href="#" class="text-gray-400 hover:text-gray-900 transition-colors">
-                    <span class="sr-only">GitHub</span>
+                <a href="#" class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="GitHub">
                     <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/></svg>
                 </a>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts para interactividad básica -->
+    <!-- Scripts para interactividad, Modo Claro/Oscuro y Estela de Cursor -->
     <script>
-        // Efecto del Navbar al hacer scroll
+        // --- 1. CONFIGURACIÓN DEL NAVBAR AL HACER SCROLL ---
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 10) {
-                navbar.classList.add('shadow-sm');
-                navbar.classList.remove('border-transparent');
+                navbar.classList.add('shadow-md', 'border-slate-200', 'dark:border-slate-800');
             } else {
-                navbar.classList.remove('shadow-sm');
-                navbar.classList.add('border-transparent');
+                navbar.classList.remove('shadow-md');
             }
         });
 
-        // Animación de aparición al hacer scroll (Intersection Observer)
+        // --- 2. CONTROL DEL MODO CLARO / OSCURO ---
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        const themeToggleBtn = document.getElementById('theme-toggle');
+
+        // Determinar el tema inicial (basado en localStorage o preferencia del sistema)
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        // Listener para alternar el modo
+        themeToggleBtn.addEventListener('click', function() {
+            // Intercambiar iconos
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            // Alternar clase dark en <html>
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        });
+
+
+        // --- 3. ANIMACIONES DE APARICIÓN AL HACER SCROLL (INTERSECTION OBSERVER) ---
         const revealElements = document.querySelectorAll('.reveal');
         
         const revealOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
+            threshold: 0.05,
+            rootMargin: "0px 0px -40px 0px"
         };
 
         const revealOnScroll = new IntersectionObserver(function(entries, observer) {
             entries.forEach(entry => {
-                if (!entry.isIntersecting) {
-                    return;
-                } else {
+                if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                     observer.unobserve(entry.target);
                 }
@@ -472,6 +597,110 @@
         revealElements.forEach(el => {
             revealOnScroll.observe(el);
         });
+
+
+        // --- 4. STREAMING_CHUNK:Inicializando motor gráfico de la estela del cursor... ---
+        // --- CANVAS CURSOR TRAIL ENGINE (Optimizado y Responsivo) ---
+        const canvas = document.getElementById('cursor-trail');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        let mouse = { x: undefined, y: undefined };
+
+        // Ajustar el canvas al tamaño completo de la ventana
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Controlar si el dispositivo tiene capacidades táctiles nativas (para desactivar estela si es touch)
+        const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+
+        if (!isTouchDevice) {
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+                
+                // Spawnear partículas nuevas al mover el mouse
+                for (let i = 0; i < 2; i++) {
+                    particles.push(new Particle(mouse.x, mouse.y));
+                }
+            });
+        }
+
+        // Clase para modelar las partículas de la estela
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                // Velocidad aleatoria dispersa de forma natural
+                this.size = Math.random() * 6 + 4;
+                this.speedX = (Math.random() - 0.5) * 1.5;
+                this.speedY = (Math.random() - 0.5) * 1.5;
+                this.life = 1.0; // Opacidad/vida que decae
+                this.decay = Math.random() * 0.02 + 0.015;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= this.decay;
+                if (this.size > 0.2) this.size -= 0.1;
+            }
+
+            draw() {
+                const isDark = document.documentElement.classList.contains('dark');
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                
+                if (isDark) {
+                    // Modo oscuro: partículas neón brillantes (azules/púrpuras de fusión ligera)
+                    ctx.fillStyle = `rgba(139, 92, 246, ${this.life})`;
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = 'rgba(59, 130, 246, 0.5)';
+                } else {
+                    // Modo claro: partículas oscuras, limpias y elegantes (pizarra/antracita)
+                    ctx.fillStyle = `rgba(30, 41, 59, ${this.life * 0.6})`;
+                    ctx.shadowBlur = 0; // Desactivar desenfoque pesado en claro para un look nítido
+                }
+                
+                ctx.fill();
+            }
+        }
+
+        // Bucle de animación
+        function animateTrail() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Establecer modo de mezcla adecuado para el modo oscuro
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                ctx.globalCompositeOperation = 'screen'; // Efecto acumulativo de luz
+            } else {
+                ctx.globalCompositeOperation = 'source-over'; // Pintado tradicional
+            }
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                // Eliminar partículas cansadas/muertas
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animateTrail);
+        }
+
+        // Asegurar la inicialización al cargar la ventana
+        window.onload = function() {
+            if (!isTouchDevice) {
+                animateTrail();
+            }
+        };
     </script>
 </body>
 </html>
