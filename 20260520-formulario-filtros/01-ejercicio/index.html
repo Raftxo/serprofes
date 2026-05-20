@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agencia - Formularios y Filtros</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!-- <h1>Hello World</h1>
+    <h1>El Manuscrito de Saragossa</h1> -->
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <h1>Being Rafael</h1>
+        <p>Gestión de usuarios y suscripciones</p>
+      </header>
+      <!-- Práctica 1: Formulario sin recarga -->
+      <section class="card">
+        <h2>1. Añadir Suscriptor</h2>
+        <form id="suscripcionForm" class="formulario">
+          <div class="input-group">
+            <label for="nombreInput">Nombre completo</label>
+            <input
+              type="text"
+              id="nombreInput"
+              placeholder="Ej. Ada Lovelace"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Suscribir Usuario
+          </button>
+        </form>
+        <!-- Aquí insertamos un "toast" mensajito informativo tipo mensaje de sistema -->
+        <div id="mensajeExito" class="alerta oculto"></div>
+      </section>
+
+      <!-- Práctica 2: Buscador en tabla a tiempo real -->
+      <section class="card">
+        <h2>2. Base de Datos de Usuarios</h2>
+        <div class="input-group">
+            <input type="text" id="buscadorUsuarios" placeholder="🔍️ Buscar por el nombre, email o rol...">
+        </div>
+        <table id="tablaUsuario" class="tabla-admin">
+            <thead>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Rol</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Jorge Rafael</td>
+                    <td>jorger@agencia.com</td>
+                    <td>Admin</td>
+                </tr>
+                <tr>
+                    <td>Laura Rafaela</td>
+                    <td>laurelar@agencia.com</td>
+                    <td>Editor</td>
+                </tr>
+                <tr>
+                    <td>José Rafael</td>
+                    <td>joser@agencia.com</td>
+                    <td>Usuario</td>
+                </tr>
+                <tr>
+                    <td>Rafal Rafael</td>
+                    <td>rafaler@agencia.com</td>
+                    <td>Editor</td>
+                </tr>
+                <tr>
+                    <td>Lewis Rafael</td>
+                    <td>layoner@agencia.com</td>
+                    <td>Usuario</td>
+                </tr>
+            </tbody>
+        </table>
+      </section>
+
+    </main>
+  </body>
+</html>
