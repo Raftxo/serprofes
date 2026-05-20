@@ -1,135 +1,338 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Cursos Gratuitos con Certificado</title>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f6f8;
-        }
-        header {
-            background: linear-gradient(135deg, #1e88e5, #1565c0);
-            color: white;
-            text-align: center;
-            padding: 50px 20px;
-        }
-        section {
-            padding: 40px 20px;
-            max-width: 1100px;
-            margin: auto;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
-        .course {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-        }
-        .course h3 {
-            margin-top: 0;
-        }
-        .course a {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 15px;
-            background-color: #1e88e5;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-        }
-        .course a:hover {
-            background-color: #0d47a1;
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #222;
-            color: white;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background-color: #f4f6f8;
+        color: #222;
+      }
+
+      header {
+        background: linear-gradient(135deg, #1e88e5, #1565c0);
+        color: white;
+        text-align: center;
+        padding: 50px 20px;
+      }
+
+      section {
+        padding: 40px 20px;
+        max-width: 1100px;
+        margin: auto;
+      }
+
+      h2 {
+        margin-bottom: 25px;
+        border-left: 6px solid #1e88e5;
+        padding-left: 12px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+      }
+
+      .course {
+        background: rgb(252, 230, 230);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .course h3 {
+        margin-top: 0;
+      }
+
+      .course a {
+        display: inline-block;
+        margin-top: 10px;
+        /* margin-top: auto; */
+        padding: 10px 15px;
+        background-color: #1e88e5;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        width: 80%;
+      }
+
+      .course a:hover {
+        background-color: #0d47a1;
+      }
+
+      .ok {
+        border-top: 6px solid #00ff32;
+      }
+
+      .warning {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .warning::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+
+        background: linear-gradient(
+          to right,
+          red,
+          orange,
+          yellow,
+          white,
+          yellow,
+          orange,
+          red
+        );
+      }
+
+      .note {
+        font-size: 14px;
+        margin-top: 10px;
+        color: #555;
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #222;
+        color: white;
+        margin-top: 40px;
+      }
     </style>
-</head>
-<body>
+  </head>
 
-<header>
-    <h1>🚀 Cursos Gratis con Certificado</h1>
-    <p>Aprende programación y tecnología sin pagar</p>
-</header>
+  <body>
+    <header>
+      <h1>🚀 Cursos Gratis con Certificado</h1>
+      <p>
+        Separados entre certificaciones realmente gratuitas y plataformas donde
+        el certificado puede requerir pago.
+      </p>
+    </header>
 
-<section>
-<div class="grid">
+    <!-- CERTIFICADOS GRATUITOS REALES -->
 
-<div class="course">
-<h3>freeCodeCamp</h3>
-<p>HTML, CSS, JavaScript, React, Python, APIs, Data Science.</p>
-<a href="https://www.freecodecamp.org" target="_blank">Ir al curso</a>
-</div>
+    <section>
+      <h2>✅ Certificaciones realmente gratuitas</h2>
 
-<div class="course">
-<h3>CS50x Harvard</h3>
-<p>Computer Science, C, Python, SQL y Web.</p>
-<a href="https://cs50.harvard.edu" target="_blank">Ir al curso</a>
-</div>
+      <div class="grid">
+        <div class="course ok">
+          <h3>freeCodeCamp</h3>
 
-<div class="course">
-<h3>CS50P Python</h3>
-<p>Curso de Python desde cero con certificado.</p>
-<a href="https://cs50.harvard.edu/python" target="_blank">Ir al curso</a>
-</div>
+          <p>HTML, CSS, JavaScript, React, Python, APIs, Data Science.</p>
 
-<div class="course">
-<h3>Full Stack Open</h3>
-<p>React, Node.js, MongoDB, TypeScript.</p>
-<a href="https://fullstackopen.com" target="_blank">Ir al curso</a>
-</div>
+          <p class="note">
+            ✔ Certificaciones gratuitas reales al completar los proyectos.
+          </p>
 
-<div class="course">
-<h3>OpenLearn (Open University)</h3>
-<p>Cursos de computación con certificación gratuita.</p>
-<a href="https://www.open.edu/openlearn/" target="_blank">Ir al curso</a>
-</div>
+          <a href="https://www.freecodecamp.org" target="_blank">
+            Ir al curso
+          </a>
+        </div>
 
-<div class="course">
-<h3>SoloLearn</h3>
-<p>Python, JavaScript, Java, SQL.</p>
-<a href="https://www.sololearn.com" target="_blank">Ir al curso</a>
-</div>
+        <div class="course ok">
+          <h3>Web.dev (Google)</h3>
+          <p>
+            Aprende desarrollo web moderno con cursos interactivos de Google.
+          </p>
+          <p class="note">⚠ falta comprobar si los certificados son de pago.</p>
+          <a href="https://web.dev/learn" target="_blank">Ir al curso</a>
+        </div>
 
-<div class="course">
-<h3>HackerRank</h3>
-<p>Certificación en SQL, JS, Python y algoritmos.</p>
-<a href="https://www.hackerrank.com/skills-verification" target="_blank">Ir al curso</a>
-</div>
+        <div class="course ok">
+          <h3>The Odin Project</h3>
+          <p>Ruta completa de desarrollo web full-stack totalmente gratis.</p>
+          <p class="note">
+            ✔ Certificaciones gratuitas reales al completar los proyectos.
+          </p>
+          <a href="https://www.theodinproject.com" target="_blank">Ir al curso</a>
+        </div>
 
-<div class="course">
-<h3>Great Learning</h3>
-<p>Python, IA, Data Science y desarrollo web.</p>
-<a href="https://www.mygreatlearning.com/academy" target="_blank">Ir al curso</a>
-</div>
+        <div class="course ok">
+          <h3>Microsoft Learn</h3>
+          <p>
+            Plataforma oficial de Microsoft con aprendizaje guiado y
+            certificaciones.
+          </p>
+          <p class="note">⚠ falta comprobar si los certificados son de pago.</p>
+          <a href="https://learn.microsoft.com" target="_blank">Ir al curso</a>
+        </div>
+                <div class="course ok">
+          <h3>CS50x Harvard</h3>
 
-<div class="course">
-<h3>Simplilearn SkillUp</h3>
-<p>Frontend, backend, cloud y más.</p>
-<a href="https://www.simplilearn.com/skillup-free-online-courses" target="_blank">Ir al curso</a>
-</div>
+          <p>Computer Science, C, Python, SQL y Web.</p>
 
-<div class="course">
-<h3>Cisco Networking Academy</h3>
-<p>Python, Linux y ciberseguridad.</p>
-<a href="https://skillsforall.com" target="_blank">Ir al curso</a>
-</div>
+          <p class="note">
+            ✔ Certificado gratuito propio de CS50.<br />
+            ⚠ El certificado verificado de edX es de pago.
+          </p>
 
-</div>
-</section>
+          <a href="https://cs50.harvard.edu" target="_blank"> Ir al curso </a>
+        </div>
 
-<footer>
-<p>© 2026 Cursos gratuitos con certificado</p>
-</footer>
+        <div class="course ok">
+          <h3>CS50P (Python)</h3>
 
-</body>
+          <p>Curso especializado en Python desde cero con certificación.</p>
+
+          <p class="note">
+            ✔ Certificado gratuito propio de CS50.<br />
+            ⚠ El certificado "verified" de edX sí es de pago.
+          </p>
+
+          <a href="https://cs50.harvard.edu/python" target="_blank">
+            Ir al curso
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CERTIFICADO NO CONFIRMADO O DE PAGO -->
+
+    <section>
+      <h2>⚠ Cursos gratis pero con certificado no garantizado o de pago</h2>
+
+      <div class="grid">
+        <div class="course warning">
+          <h3>Full Stack Open</h3>
+
+          <p>React, Node.js, MongoDB, TypeScript.</p>
+
+          <p class="note">
+            El curso es gratuito, pero la certificación depende del sistema
+            universitario asociado.
+          </p>
+
+          <a href="https://fullstackopen.com" target="_blank"> Ir al curso </a>
+        </div>
+
+        <div class="course warning">
+          <h3>OpenLearn (Open University)</h3>
+
+          <p>Cursos de computación con certificación.</p>
+
+          <p class="note">
+            Algunos cursos ofrecen badge o certificado gratuito, otros no.
+          </p>
+
+          <a href="https://www.open.edu/openlearn/" target="_blank">
+            Página principal
+          </a>
+          <a
+            href="https://www.open.edu/openlearn/free-courses/full-catalogue?filter=popular/grid/287/all/all/all/en"
+            target="_blank"
+          >
+            Cursos gratuitos Digital&Computing
+          </a>
+        </div>
+
+        <div class="course warning">
+          <h3>SoloLearn</h3>
+
+          <p>Python, JavaScript, Java, SQL.</p>
+
+          <p class="note">
+            Algunas funciones y certificados requieren plan PRO.
+          </p>
+
+          <a href="https://www.sololearn.com" target="_blank"> Ir al curso </a>
+        </div>
+
+        <div class="course warning">
+          <h3>HackerRank</h3>
+
+          <p>Certificación en SQL, JS, Python y algoritmos.</p>
+
+          <p class="note">
+            Las skill certifications existen, pero no todas son gratuitas.
+          </p>
+
+          <a
+            href="https://www.hackerrank.com/skills-verification"
+            target="_blank"
+          >
+            Ir al curso
+          </a>
+        </div>
+
+        <div class="course warning">
+          <h3>Great Learning</h3>
+
+          <p>Python, IA, Data Science y desarrollo web.</p>
+
+          <p class="note">
+            Muchos cursos incluyen certificado, pero las condiciones cambian
+            según el programa.
+          </p>
+
+          <a href="https://www.mygreatlearning.com/academy" target="_blank">
+            Ir al curso
+          </a>
+        </div>
+
+        <div class="course warning">
+          <h3>Simplilearn SkillUp</h3>
+
+          <p>Frontend, backend, cloud y más.</p>
+
+          <p class="note">
+            Algunos certificados son gratuitos, otros requieren upgrade.
+          </p>
+
+          <a
+            href="https://www.simplilearn.com/skillup-free-online-courses"
+            target="_blank"
+          >
+            Ir al curso
+          </a>
+        </div>
+
+        <div class="course warning">
+          <h3>Cisco Networking Academy</h3>
+
+          <p>Python, Linux y ciberseguridad.</p>
+
+          <p class="note">
+            Muchos cursos sí tienen certificado gratuito, pero depende del curso
+            específico.
+          </p>
+
+          <a href="https://skillsforall.com" target="_blank"> Ir al curso </a>
+        </div>
+
+        <div class="course warning">
+          <h3>Dashboard WebDevOpen (Full Stack Open)</h3>
+          <p>
+            Curso universitario gratuito de desarrollo full-stack con
+            certificación.
+          </p>
+          <a href="https://dashboard.webdevopen.com/courses" target="_blank"
+            >...</a
+          >
+        </div>
+
+        <div class="course warning">
+          <h3>IBM SkillsBuild</h3>
+          <p>
+            Cursos gratuitos en tecnología, IA y ciberseguridad con
+            certificados.
+          </p>
+          <a href="https://skillsbuild.org" target="_blank">Ir al curso</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 Cursos gratuitos con certificado</p>
+    </footer>
+  </body>
 </html>
