@@ -1,19 +1,19 @@
-// 1. formulario sin recarga
+// // 1. formulario sin recarga
 
-const form = document.querySelector('#suscripcionForm');
-const inputNombre = document.querySelector('#nombreInput');
-const cajaMensaje = document.querySelector('#mensajeExito');
+// const form = document.querySelector('#suscripcionForm');
+// const inputNombre = document.querySelector('#nombreInput');
+// const cajaMensaje = document.querySelector('#mensajeExito');
 
-// escuchamos el evento 'submit' (cuando se envíe el formulario)
-form.addEventListener('submit',(evento)=>{
-    // - la línea mágica que evita que la página se recargue
-    evento.preventDefault();
-    // - capturamos lo que el usuario escribió con .trim que quita el espacio
-    const textoEscrito = inputNombre.value.trim();
-    // - mostramos el mensaje de éxito
-    cajaMensaje.textContent = `✔️ Usuario "${textoEscrito}" registrado correctamente en la base de datos.`;
-    cajaMensaje.classList.remove('oculto');
-});
+// // escuchamos el evento 'submit' (cuando se envíe el formulario)
+// form.addEventListener('submit',(evento)=>{
+//     // - la línea mágica que evita que la página se recargue
+//     evento.preventDefault();
+//     // - capturamos lo que el usuario escribió con .trim que quita el espacio
+//     const textoEscrito = inputNombre.value.trim();
+//     // - mostramos el mensaje de éxito
+//     cajaMensaje.textContent = `✔️ Usuario "${textoEscrito}" registrado correctamente en la base de datos.`;
+//     cajaMensaje.classList.remove('oculto');
+// });
 
 // 2. buscador en tabla en tiempo real
 const buscador = document.querySelector('#buscadorUsuarios');
@@ -35,4 +35,43 @@ buscador.addEventListener('input',()=>{
             fila.style.display = 'none';
         }
     });
+});
+
+// 3. añadir usuario nuevo
+// comento el paso 1 para no duplicar 
+const form = document.querySelector('#suscripcionForm');
+const inputNombre = document.querySelector('#nombreInput');
+const cajaMensaje = document.querySelector('#mensajeExito');
+
+form.addEventListener('submit', (evento) => {
+    evento.preventDefault();
+
+    const nombre = inputNombre.value.trim();
+
+    if (!nombre) return;
+
+    const email = nombre.toLowerCase().replaceAll(" ", "") + "@agencia.com";
+    const roles = ["Usuario", "Admin", "Editor"];
+    const rol = roles[Math.floor(Math.random() * roles.length)];
+
+    const nuevaFila = document.createElement("tr");
+
+    nuevaFila.innerHTML = `
+        <td>${nombre}</td>
+        <td>${email}</td>
+        <td>${rol}</td>
+    `;
+
+    const tbody = document.querySelector("#tablaUsuarios tbody");
+    tbody.appendChild(nuevaFila);
+
+    // mensaje
+    cajaMensaje.textContent = `✔️ Usuario "${nombre}" añadido correctamente`;
+    cajaMensaje.classList.remove("oculto");
+
+    setTimeout(() => {
+        cajaMensaje.classList.add("oculto");
+    }, 2500);
+
+    form.reset();
 });
