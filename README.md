@@ -37,3 +37,23 @@ net user [nombre_usuario] [nueva_contraseña]
 ---  
 https://excalidraw.com/ - pizarra online, muy útil para explicar cosas en clase  
 https://miro.com - diagramas de flujo online  
+
+---  
+
+CAT FLOWCHART:
+```mermaid
+flowchart TD
+    Sleep[Sleep]
+    Wake{Awake?}
+
+    Sleep --> Wake
+
+    Wake -->|NO| Sleep
+    Wake -->|Hungry| Snack[Get treat]
+    Wake -->|Human is typing| Keyboard[Sleep on keyboard]
+    Wake -->|Not in sun?| Move[Move to sun]
+    
+
+    Snack --> Sleep
+    Move --> Sleep
+    Keyboard --> Sleep
