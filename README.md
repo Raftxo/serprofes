@@ -40,7 +40,7 @@ https://miro.com - diagramas de flujo online
 
 ---  
 
-CAT FLOWCHART:
+Finite State Machine of a Cat:
 ```mermaid
 flowchart TD
     Sleep[Sleep]
@@ -50,7 +50,8 @@ flowchart TD
 
     Wake -->|NO| Sleep
     Wake -->|Hungry| Snack[Get treat]
-    Wake -->|Human is typing| Keyboard[Sleep on keyboard]
+    Wake -->|Human is typing| ...
+    ... --> Keyboard[Sleep on keyboard]
     Wake -->|Not in sun?| Move[Move to sun]
     
 
