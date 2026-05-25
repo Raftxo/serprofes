@@ -4,7 +4,7 @@ Proyectos del curso de desarrollador web full stack...
 
 
 
-- https://joscanoav.netlify.app/assets/projects/project3/  
+- https://thumbnail.ws/ Captura la portada de tu web...  
 - https://flexboxfroggy.com/#es  Practica flexbox css jugando
 - https://cssgridgarden.com/#es  Practica grid css jugando
 
