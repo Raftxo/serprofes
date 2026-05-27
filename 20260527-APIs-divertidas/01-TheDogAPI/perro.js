@@ -1,46 +1,58 @@
-async function cargaFoto() {
-    container.innerHTML = "buscando perrito ...";
-    try {
-        // 1. Llamamos al endpoint de razas (cada objeto aquí es una raza garantizada)
-        const respuesta = await fetch(
-            "https://api.thedogapi.com/v1/breeds", 
-            {
-                headers: {
-                    "x-api-key": "live_IPrNTHqFGz9016zWDtyameHVz7VkXgU2OPEWWT2lUGFv9QpzdblJEkUg5CxsKFAw" 
-                }
-            }
-        );
-        
-        if (!respuesta.ok) {
-            throw new Error(`Error en el servidor: ${respuesta.status}`);
-        }
-        
-        const razas = await respuesta.json();
-        
-        // 2. Elegimos una raza al azar de todo el catálogo que nos devuelve
-        const razaAleatoria = razas[Math.floor(Math.random() * razas.length)];
-        
-        // 3. Extraemos el nombre y la URL de la imagen asociada a esa raza
-        const nombreRaza = razaAleatoria.name;
-        const urlImagen = razaAleatoria.image?.url;
+const btn = document.getElementById("btn-nueva");
+const container = document.getElementById("foto-container");
 
-        // Si por algún motivo esa raza no tuviera foto asignada, disparamos un plan B
-        if (!urlImagen) {
-            throw new Error("La raza seleccionada no tenía foto, reintentando...");
+async function cargaFoto() {
+    // Mensaje mientras carga
+    container.innerHTML = "⌛ Buscando perrito por internet ..."
+    try {
+        //1. Perición a la nueva API
+        const respuesta = await fetch(
+            "https://dog.ceo/api/breeds/image/random"
+        );
+
+        //Petición a la API
+        // const respuesta = await fetch(
+        //     "https://api.thedogapi.com/v1/images/search"
+        // );
+        // Verificamos si hubo error
+        if(!respuesta.ok){
+            throw new Error("Fallo en el servidor");
         }
+        // Convertimos la respuesta a JSON
+        const datos = await respuesta.json();
+        // La API devuelve un array
+        // const data = datos[0];
+        // Nombre de la raza
+        // const nombreRaza = 
+        //     data.breeds?.[0]?.name ||
+        //     "Raza desconocida (Mestizo)";
         
-        // 4. Pintamos en el HTML
+        //2. Extraemos la URL de la imagen (Dog CEO la envía en "message")
+        const urlImagen = datos.message;
+        //3. Nombre de la raza (Lo extramos cortando la URL)
+        const nombreRaza = urlImagen.split('/')[4].replace("-", " ");
+        
+                
+        // Mostramos imagen + raza
         container.innerHTML = `
-        <img src="${urlImagen}" alt="${nombreRaza}" style="max-width: 100%; height: auto;" />
-        <p><strong>Raza:</strong> ${nombreRaza}</p>
+            <img
+                src="${urlImagen}"
+                alt="Perro aletorio"
+            />
+            <p>
+                <strong>Raza: </strong>${nombreRaza}
+            </p>
         `;
-    } catch (error) {
+    } catch (error){
+        //Si algo falla
         container.innerHTML = `
-        <p style="color:red"> ❌ Error: ${error.message}</p>
+            <p style="color:red;">
+            ❌ Error al cargar la imagen:
+            ${error.message}
         `;
-        // Si falló porque justo tocó una raza sin foto, volvemos a intentar automáticamente
-        if (error.message.includes("La raza seleccionada")) {
-            cargaFoto();
-        }
     }
 }
+//Evento del botón
+btn.addEventListener("click",cargaFoto);
+//Cargar una foto al iniciar
+cargaFoto();
