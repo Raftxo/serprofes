@@ -34,3 +34,25 @@ p{
     font-size: 18px;
     color: #444;
 }
+
+.navegacion{
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.btn-nav{
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #6c5ce7;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-nav:hover{
+    background-color: #a29bfe;
+    color: #2d3436;
+    transform: translateY(-2px);
+}
