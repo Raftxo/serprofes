@@ -5,15 +5,37 @@
     box-sizing: border-box;
 }
 
+/* Variables CSS para colores del plasma (se actualizan dinámicamente) */
+:root {
+    --plasma-color-1: #667eea;
+    --plasma-color-2: #764ba2;
+    --plasma-color-3: #f093fb;
+    --plasma-color-4: #667eea;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(-45deg, var(--plasma-color-1), var(--plasma-color-2), var(--plasma-color-3), var(--plasma-color-4));
+    background-size: 400% 400%;
+    animation: plasmaGradient 15s ease infinite;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
+}
+
+@keyframes plasmaGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 /* Contenedor principal */
@@ -84,7 +106,7 @@ h1 {
     border-radius: 20px;
     padding: 30px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    max-width: 500px;
+    max-width: 600px;
     width: 100%;
     min-height: 300px;
     text-align: center;
@@ -124,14 +146,15 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 25px;
     margin-top: 20px;
 }
 
 /* Columnas de estadísticas */
 .stats-column {
     flex: 1;
-    max-width: 180px;
+    max-width: 200px;
+    min-width: 150px;
 }
 
 .stats-column ul {
@@ -150,6 +173,7 @@ h1 {
     border-left: 4px solid #667eea;
     transition: all 0.3s ease;
     font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .stats-column ul li:hover {
