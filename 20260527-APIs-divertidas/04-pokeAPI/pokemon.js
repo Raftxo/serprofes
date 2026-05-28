@@ -86,47 +86,52 @@ async function buscarPokemon() {
     }
 }
 
-// Función para actualizar el fondo plasma según el tipo de Pokémon
+// Función para actualizar el color de la franja según el tipo de Pokémon
 function actualizarFondoPlasma(tipos) {
     const coloresPorTipo = {
-        'grass': ['#4CAF50', '#8BC34A', '#CDDC39'],
-        'fire': ['#FF5722', '#FF9800', '#F44336'],
-        'water': ['#2196F3', '#03A9F4', '#00BCD4'],
-        'bug': ['#8BC34A', '#CDDC39', '#FFEB3B'],
-        'normal': ['#9E9E9E', '#BDBDBD', '#E0E0E0'],
-        'poison': ['#9C27B0', '#BA68C8', '#CE93D8'],
-        'electric': ['#FFEB3B', '#FFC107', '#FF9800'],
-        'ground': ['#795548', '#8D6E63', '#A1887F'],
-        'fairy': ['#E91E63', '#F48FB1', '#F8BBD0'],
-        'fighting': ['#F44336', '#FF5722', '#FF9800'],
-        'psychic': ['#9C27B0', '#673AB7', '#3F51B5'],
-        'rock': ['#795548', '#9E9E9E', '#607D8B'],
-        'ghost': ['#673AB7', '#512DA8', '#311B92'],
-        'ice': ['#03A9F4', '#E1F5FE', '#B3E5FC'],
-        'dragon': ['#3F51B5', '#673AB7', '#9C27B0'],
-        'flying': ['#2196F3', '#64B5F6', '#90CAF9'],
-        'steel': ['#9E9E9E', '#78909C', '#607D8B'],
-        'dark': ['#424242', '#616161', '#757575']
+        'normal': '#9fa19f',
+        'fire': '#e62829',
+        'fighting': '#ff8000',
+        'water': '#2980ef',
+        'flying': '#81b9ef',
+        'grass': '#3fa129',
+        'poison': '#9141cb',
+        'electric': '#fac000',
+        'ground': '#915121',
+        'psychic': '#ef4179',
+        'rock': '#afa981',
+        'ice': '#3dcef3',
+        'bug': '#91a119',
+        'dragon': '#5060e1',
+        'ghost': '#704170',
+        'dark': '#624d4e',
+        'steel': '#60a1b8',
+        'fairy': '#ef70ef',
+        'stellar': '#40b5a5',
     };
     
-    // Obtener colores para los tipos del Pokémon
-    let colores = [];
-    tipos.forEach(tipo => {
-        if (coloresPorTipo[tipo]) {
-            colores = colores.concat(coloresPorTipo[tipo]);
-        }
-    });
-    
-    // Si no hay colores específicos, usar colores por defecto
-    if (colores.length === 0) {
-        colores = ['#667eea', '#764ba2', '#f093fb'];
+    // Obtener color para el primer tipo del Pokémon
+    let colorTipo = null;
+    if (tipos.length > 0) {
+        const primerTipo = tipos[0];
+    colorTipo = coloresPorTipo[primerTipo] || coloresPorTipo['unknown'];
     }
     
-    // Actualizar variables CSS para la animación plasma
-    document.documentElement.style.setProperty('--plasma-color-1', colores[0] || '#667eea');
-    document.documentElement.style.setProperty('--plasma-color-2', colores[1] || '#764ba2');
-    document.documentElement.style.setProperty('--plasma-color-3', colores[2] || '#f093fb');
-    document.documentElement.style.setProperty('--plasma-color-4', colores[3] || colores[0] || '#667eea');
+    // Si no hay color específico, usar color por defecto (#68a090)
+    if (!colorTipo) {
+        colorTipo = '#FF0000';
+    }
+    
+    // Actualizar variable CSS para el color de la franja
+    document.documentElement.style.setProperty('--tipo-color', colorTipo);
+    
+    // Reiniciar la animación de la franja
+    const franja = document.getElementById('franja-fondo');
+    if (franja) {
+        franja.style.animation = 'none';
+        franja.offsetHeight; // Forzar reflow
+        franja.style.animation = '';
+    }
 }
 
 // Evento click en el botón

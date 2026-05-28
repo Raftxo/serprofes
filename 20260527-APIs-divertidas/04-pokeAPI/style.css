@@ -5,36 +5,54 @@
     box-sizing: border-box;
 }
 
-/* Variables CSS para colores del plasma (se actualizan dinámicamente) */
+/* Variables CSS para colores (se actualizan dinámicamente) */
 :root {
-    --plasma-color-1: #667eea;
-    --plasma-color-2: #764ba2;
-    --plasma-color-3: #f093fb;
-    --plasma-color-4: #667eea;
+    --tipo-color: #ffffff;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(-45deg, var(--plasma-color-1), var(--plasma-color-2), var(--plasma-color-3), var(--plasma-color-4));
-    background-size: 400% 400%;
-    animation: plasmaGradient 15s ease infinite;
+    background-color: #1a1a2e;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    position: relative;
+    overflow: hidden;
 }
 
-@keyframes plasmaGradient {
+/* Franja de color que se mueve */
+#franja-fondo {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 35%,
+        var(--tipo-color) 50%,
+        transparent 65%,
+        transparent 100%
+    );
+    animation: barralateral 8s ease-in-out infinite;
+    z-index: -1;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+@keyframes barralateral {
     0% {
-        background-position: 0% 50%;
+        left: -100%;
     }
     50% {
-        background-position: 100% 50%;
+        left: 100%;
     }
     100% {
-        background-position: 0% 50%;
+        left: -100%;
     }
 }
 
