@@ -8,6 +8,9 @@
 /* Variables CSS para colores (se actualizan dinámicamente) */
 :root {
     --tipo-color: #ffffff;
+    --tipo-secundario-color: transparent;
+    --franja-angulo: 90deg;
+    --franja-secundaria-angulo: 135deg;
 }
 
 body {
@@ -28,32 +31,43 @@ body {
 #franja-fondo {
     position: fixed;
     top: 0;
-    left: -100%;
+    left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        transparent 35%,
-        var(--tipo-color) 50%,
-        transparent 65%,
-        transparent 100%
-    );
-    animation: barralateral 8s ease-in-out infinite;
+    background:
+        linear-gradient(
+            var(--franja-angulo),
+            transparent 0%,
+            transparent 35%,
+            var(--tipo-color) 50%,
+            transparent 65%,
+            transparent 100%
+        ),
+        linear-gradient(
+            var(--franja-secundaria-angulo),
+            transparent 0%,
+            transparent 38%,
+            var(--tipo-secundario-color) 50%,
+            transparent 62%,
+            transparent 100%
+        );
+    background-size: 220% 220%, 220% 220%;
+    background-position: 0% 50%, 100% 50%;
+    animation: moverFranjas 8s ease-in-out infinite;
     z-index: -1;
     opacity: 0.6;
     pointer-events: none;
 }
 
-@keyframes barralateral {
+@keyframes moverFranjas {
     0% {
-        left: -100%;
+        background-position: 0% 50%, 100% 50%;
     }
     50% {
-        left: 100%;
+        background-position: 100% 50%, 0% 50%;
     }
     100% {
-        left: -100%;
+        background-position: 0% 50%, 100% 50%;
     }
 }
 
@@ -78,21 +92,33 @@ h1 img {
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
+    max-width: 520px;
+    width: 100%;
 }
 
-#poke-input {
+#poke-number,
+#poke-name {
     padding: 12px 20px;
     font-size: 16px;
     border: none;
     border-radius: 25px;
     outline: none;
-    width: 300px;
-    max-width: 100%;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+    min-width: 0;
 }
 
-#poke-input:focus {
+#poke-number {
+    width: 110px;
+    flex: 0 0 110px;
+}
+
+#poke-name {
+    flex: 1;
+}
+
+#poke-number:focus,
+#poke-name:focus {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
 }
@@ -275,12 +301,17 @@ h1 img {
     }
     
     .search-container {
-        flex-direction: column;
-        gap: 10px;
+        gap: 8px;
     }
-    
-    #poke-input {
-        width: 100%;
+
+    #poke-number,
+    #poke-name {
+        padding: 12px 14px;
+    }
+
+    #poke-number {
+        width: 90px;
+        flex-basis: 90px;
     }
     
     #btn-buscar {

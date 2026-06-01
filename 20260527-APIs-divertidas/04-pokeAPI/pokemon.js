@@ -1,13 +1,28 @@
-const input = document.getElementById("poke-input");
+const inputNumero = document.getElementById("poke-number");
+const inputNombre = document.getElementById("poke-name");
 const btn = document.getElementById("btn-buscar");
 const out = document.getElementById("resultado");
+let ultimoInputEditado = "number";
+
+function obtenerTerminoBusqueda() {
+    if (ultimoInputEditado === "name") {
+        return inputNombre.value.trim().toLowerCase();
+    }
+
+    const numero = Number(inputNumero.value);
+    if (!Number.isInteger(numero) || numero < 1 || numero > 1025) {
+        return "";
+    }
+
+    return String(numero);
+}
 
 // Función asíncrona para buscar Pokémon
 async function buscarPokemon() {
     // Limpiamos el texto del input y lo pasamos a minúsculas (la API falla si le envías mayúsculas)
-    const termino = input.value.trim().toLowerCase();
+    const termino = obtenerTerminoBusqueda();
     if (termino===""){
-        out.textContent="⚠️ Por favor, escribe un nombre o ID. ⚠️";
+        out.textContent="⚠️ Escribe un número entre 1 y 1025 o un nombre de Pokémon. ⚠️";
         return;
     }
     out.textContent = "⌛️ Cargando datos desde la PokéAPI... ⌛️";
@@ -17,6 +32,8 @@ async function buscarPokemon() {
     
     if (!respuesta.ok) throw new Error("Mal");
     const pokemon = await respuesta.json();
+    inputNumero.value = pokemon.id;
+    inputNombre.value = pokemon.name;
 
     // Dividir estadísticas en dos columnas (primeras 3 a la izquierda, últimas 3 a la derecha)
     const estadisticasIzquierda = pokemon.stats.slice(0, 3).map(stat => {
@@ -105,21 +122,17 @@ function actualizarFondoPlasma(tipos) {
         'fairy': '#ef70ef',
         'stellar': '#40b5a5',
     };
-    
-    // Obtener color para el primer tipo del Pokémon
-    let colorTipo = null;
-    if (tipos.length > 0) {
-        const primerTipo = tipos[0];
-    colorTipo = coloresPorTipo[primerTipo] || coloresPorTipo['unknown'];
-    }
-    
-    // Si no hay color específico, usar color por defecto (#68a090)
-    if (!colorTipo) {
-        colorTipo = '#FF0000';
-    }
-    
-    // Actualizar variable CSS para el color de la franja
+
+    const colorTipo = coloresPorTipo[tipos[0]] || '#68a090';
+    const colorTipoSecundario = coloresPorTipo[tipos[1]] || 'transparent';
+    const angulo = Math.floor(Math.random() * 360);
+    const anguloSecundario = (angulo + 45 + Math.floor(Math.random() * 90)) % 360;
+
+    // Actualizar variables CSS para las franjas de color
     document.documentElement.style.setProperty('--tipo-color', colorTipo);
+    document.documentElement.style.setProperty('--tipo-secundario-color', colorTipoSecundario);
+    document.documentElement.style.setProperty('--franja-angulo', `${angulo}deg`);
+    document.documentElement.style.setProperty('--franja-secundaria-angulo', `${anguloSecundario}deg`);
     
     // Reiniciar la animación de la franja
     const franja = document.getElementById('franja-fondo');
@@ -134,8 +147,24 @@ function actualizarFondoPlasma(tipos) {
 btn.addEventListener("click", buscarPokemon);
 
 // Evento tecla Enter en el input
-input.addEventListener("keypress", (e) => {
+inputNumero.addEventListener("input", () => {
+    ultimoInputEditado = "number";
+});
+
+inputNombre.addEventListener("input", () => {
+    ultimoInputEditado = "name";
+});
+
+inputNumero.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
         buscarPokemon();
     }
 });
+
+inputNombre.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        buscarPokemon();
+    }
+});
+
+buscarPokemon();
