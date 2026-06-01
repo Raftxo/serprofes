@@ -9,6 +9,7 @@ Proyecto educativo que muestra diferentes implementaciones de APIs de animales, 
 ├── 01-TheDogAPI/           # Versión básica (Dog CEO API)
 ├── 02-TheDogAPI-Pro/       # Versión mejorada (TheDogAPI)
 ├── 03-TheCatAPI-Pro/       # Versión felina (TheCatAPI)
+├── 04-pokeAPI/             # Otra API divertida con imágenes y sonidos de pokémon.
 └── README.md               # Este archivo
 ```
 

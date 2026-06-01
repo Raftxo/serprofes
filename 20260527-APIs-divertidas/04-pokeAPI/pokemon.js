@@ -34,6 +34,7 @@ async function buscarPokemon() {
     }).join("");
     
     const tipos = pokemon.types.map(t => t.type.name).join(", ");
+    actualizarFondoPlasma(pokemon.types.map(t => t.type.name));
     
     // Obtener URL del sonido (cries.latest)
     const sonidoUrl = pokemon.cries && pokemon.cries.latest ? pokemon.cries.latest : null;
@@ -78,11 +79,6 @@ async function buscarPokemon() {
     }
     }catch{
         out.textContent = "❌ Error garrafal ❌";
-    }
-    
-    // Actualizar fondo con animación plasma según tipo de Pokémon
-    if (pokemon.types && pokemon.types.length > 0) {
-        actualizarFondoPlasma(pokemon.types.map(t => t.type.name));
     }
 }
 

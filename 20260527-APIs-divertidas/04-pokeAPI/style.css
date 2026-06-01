@@ -20,7 +20,8 @@ body {
     justify-content: center;
     padding: 20px;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* Franja de color que se mueve */
@@ -64,6 +65,11 @@ h1 {
     margin-bottom: 30px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     letter-spacing: 1px;
+}
+
+h1 img {
+    max-width: 100%;
+    height: auto;
 }
 
 /* Contenedor de búsqueda */
@@ -258,8 +264,14 @@ h1 {
 
 /* Responsive */
 @media (max-width: 600px) {
+    body {
+        justify-content: flex-start;
+        padding: 16px;
+    }
+
     h1 {
         font-size: 1.8rem;
+        margin-bottom: 20px;
     }
     
     .search-container {
@@ -280,6 +292,7 @@ h1 {
         padding: 20px;
         margin-top: 20px;
         min-height: 250px;
+        margin-bottom: 24px;
     }
     
     /* En móviles, volver a una sola columna */
