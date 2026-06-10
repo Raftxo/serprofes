@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agencia - Formularios y Filtros</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!-- <h1>Hello World</h1>
+    <h1>El Manuscrito de Saragossa</h1> -->
+    <main class="dashboard">
+      <!-- <header class="dashboard-header">
+        <h1>Being Rafael</h1>
+        <p>Gestión de usuarios y suscripciones</p>
+      </header> -->
+      <!-- Práctica 1: Formulario sin recarga -->
+      <section class="card">
+        <h2>Control de Acceso</h2>
+        <form id="suscripcionForm" class="formulario">
+          <div class="input-group">
+            <!-- <label for="nombreInput">Nombre completo</label> -->
+            <input
+              type="text"
+              id="nombreInput"
+              placeholder="Nombre completo"
+              required
+            />
+            <input
+              type="text"
+              id="profesionInput"
+              placeholder="Profesión (Ej. Frontend)"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Registrar Entrada
+          </button>
+        </form>
+        <!-- Aquí insertamos un "toast" mensajito informativo tipo mensaje de sistema -->
+        <div id="mensajeExito" class="alerta oculto"></div>
+      </section>
+
+      <!-- Práctica 2: Lista de Llegadas -->
+      <section class="card">
+        <h2>Lista de Llegadas</h2>
+        <ul id="listaLlegadas"></ul>
+        <p class="contador">Total Asistentes: <span id="contadorAsistentes">0</span></p>
+      </section>
+
+      <!-- 3. Gráfico de roles -->
+<!-- <section class="card">
+  <h2>3. Distribución de Roles</h2>
+
+  <div class="grafico-vertical">
+
+    <div class="columna">
+      <div id="barraUsuario" class="barra"></div>
+      <span id="countUsuario">0</span>
+      <p>Usuario</p>
+    </div>
+
+    <div class="columna">
+      <div id="barraAdmin" class="barra"></div>
+      <span id="countAdmin">0</span>
+      <p>Admin</p>
+    </div>
+
+    <div class="columna">
+      <div id="barraEditor" class="barra"></div>
+      <span id="countEditor">0</span>
+      <p>Editor</p>
+    </div>
+
+    <div class="columna">
+      <div id="barraDeveloper" class="barra"></div>
+      <span id="countDeveloper">0</span>
+      <p>Developer</p>
+    </div>
+
+  </div>
+</section> -->
+
+    </main>
+  </body>
+</html>

@@ -1,0 +1,125 @@
+// // 1. formulario sin recarga
+
+// const form = document.querySelector('#suscripcionForm');
+// const inputNombre = document.querySelector('#nombreInput');
+// const cajaMensaje = document.querySelector('#mensajeExito');
+
+// // escuchamos el evento 'submit' (cuando se envíe el formulario)
+// form.addEventListener('submit',(evento)=>{
+//     // - la línea mágica que evita que la página se recargue
+//     evento.preventDefault();
+//     // - capturamos lo que el usuario escribió con .trim que quita el espacio
+//     const textoEscrito = inputNombre.value.trim();
+//     // - mostramos el mensaje de éxito
+//     cajaMensaje.textContent = `✔️ Usuario "${textoEscrito}" registrado correctamente en la base de datos.`;
+//     cajaMensaje.classList.remove('oculto');
+// });
+
+// 2. buscador en tabla en tiempo real
+const buscador = document.querySelector('#buscadorUsuarios');
+// - seleccionamos todas las filas que están dentro del cuerpo de la tabla (tbody)
+const filas = document.querySelectorAll('#tablaUsuarios tbody tr');
+// - el evento 'input' se dispara cada vez que el usuario pulsa una tecla
+buscador.addEventListener('input',()=>{
+    // - convertimos lo que escribe el usuario a minúsculas para evitar confusiones con mayúsculas
+    const terminoBusqueda = buscador.value.toLowerCase();
+    // - usamos el bucle forEach para revisar fila a fila
+    filas.forEach(fila=>{
+        // obtenemos todo el texto de esa fila en minúsculas
+        const textFila = fila.textContent.toLowerCase();
+        // 3. condicional: ¿el texto de la fila incluye lo que buscamos?
+        if(textFila.includes(terminoBusqueda)){
+            fila.style.display = '';
+        }else{
+            // si no lo incluye lo ocultamos con display:none
+            fila.style.display = 'none';
+        }
+    });
+});
+
+// 3. añadir usuario nuevo
+// comento el paso 1 para no duplicar 
+const form = document.querySelector('#suscripcionForm');
+const inputNombre = document.querySelector('#nombreInput');
+const cajaMensaje = document.querySelector('#mensajeExito');
+
+form.addEventListener('submit', (evento) => {
+    evento.preventDefault();
+
+    const nombre = inputNombre.value.trim();
+
+    if (!nombre) return;
+
+    let ultimoRol = null;
+
+    const email = nombre.toLowerCase().replaceAll(" ", "") + "@agencia.com";
+    
+    function obtenerRolRandom(){
+        const roles = ["Usuario", "Admin", "Editor", "Developer"];
+        let nuevoRol;
+
+        do {
+            nuevoRol = roles[Math.floor(Math.random() * roles.length)];
+        } while (nuevoRol === ultimoRol);
+        ultimoRol = nuevoRol;
+        return nuevoRol;
+    }
+    const rol = obtenerRolRandom();
+
+    const nuevaFila = document.createElement("tr");
+
+    nuevaFila.innerHTML = `
+        <td>${nombre}</td>
+        <td>${email}</td>
+        <td>${rol}</td>
+    `;
+
+    const tbody = document.querySelector("#tablaUsuarios tbody");
+    tbody.appendChild(nuevaFila);
+    actualizarGrafico();
+
+    // mensaje
+    cajaMensaje.textContent = `✔️ Usuario "${nombre}" añadido correctamente`;
+    cajaMensaje.classList.remove("oculto");
+
+    setTimeout(() => {
+        cajaMensaje.classList.add("oculto");
+    }, 2500);
+
+    form.reset();
+});
+
+function actualizarGrafico() {
+    const filas = document.querySelectorAll("#tablaUsuarios tbody tr");
+
+    let conteo = {
+        Usuario: 0,
+        Admin: 0,
+        Editor: 0,
+        Developer: 0
+    };
+
+    filas.forEach(fila => {
+        const rol = fila.children[2].textContent.trim();
+        if (conteo[rol] !== undefined) {
+            conteo[rol]++;
+        }
+    });
+
+    // actualizar números
+    document.getElementById("countUsuario").textContent = conteo.Usuario;
+    document.getElementById("countAdmin").textContent = conteo.Admin;
+    document.getElementById("countEditor").textContent = conteo.Editor;
+    document.getElementById("countDeveloper").textContent = conteo.Developer;
+
+    // encontrar el máximo (para escalar barras)
+    const max = Math.max(...Object.values(conteo), 1);
+
+    // actualizar ancho (porcentaje)
+    document.getElementById("barraUsuario").style.width = (conteo.Usuario / max) * 100 + "%";
+    document.getElementById("barraAdmin").style.width = (conteo.Admin / max) * 100 + "%";
+    document.getElementById("barraEditor").style.width = (conteo.Editor / max) * 100 + "%";
+    document.getElementById("barraDeveloper").style.width = (conteo.Developer / max) * 100 + "%";
+}
+
+actualizarGrafico();
