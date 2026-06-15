@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Cyberpunk</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* ✅ CARDS (glass + cyberpunk) */
+    .cards {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin: 20px;
+    }
+
+    .card {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 16px;
+      width: 200px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+      transform: translateY(-5px);
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #38bdf8;
+    }
+
+    .card span {
+      font-size: 32px;
+      font-weight: bold;
+      color: #22c55e;
+    }
+
+    /* ✅ TABLAS */
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(6px);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    th {
+      background: rgba(255,255,255,0.1);
+      color: #38bdf8;
+    }
+
+    tr:hover {
+      background: rgba(0,255,255,0.1);
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>⚡ Cyberpunk Dashboard</h1>
+
+<!-- ✅ CONTADORES -->
+<div class="cards">
+  <div class="card">
+    <h2>Alumnos</h2>
+    <span id="count-alumnos">0</span>
+  </div>
+
+  <div class="card">
+    <h2>Cursos</h2>
+    <span id="count-cursos">0</span>
+  </div>
+
+  <div class="card">
+    <h2>Profesores</h2>
+    <span id="count-profesores">0</span>
+  </div>
+</div>
+
+<!-- ✅ TABLAS -->
+<h2 style="text-align:center;">Cursos</h2>
+<table id="tabla-cursos">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Duración</th>
+      <th>Tecnologías</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<h2 style="text-align:center;">Alumnos</h2>
+<table id="tabla-alumnos">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Edad</th>
+      <th>Sexo</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<h2 style="text-align:center;">Profesores</h2>
+<table id="tabla-profesores">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Edad</th>
+      <th>Sexo</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+
+// ✅ CURSOS
+fetch("http://localhost:3000/curso")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("count-cursos").textContent = data.length;
+
+    const tbody = document.querySelector("#tabla-cursos tbody");
+    data.forEach(curso => {
+      tbody.innerHTML += `
+        <tr>
+          <td>${curso.id}</td>
+          <td>${curso.nombre}</td>
+          <td>${curso.duracion}</td>
+          <td>${curso.tecnologias.join(", ")}</td>
+        </tr>
+      `;
+    });
+  });
+
+// ✅ ALUMNOS
+fetch("http://localhost:3000/alumno")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("count-alumnos").textContent = data.length;
+
+    const tbody = document.querySelector("#tabla-alumnos tbody");
+    data.forEach(alumno => {
+      tbody.innerHTML += `
+        <tr>
+          <td>${alumno.id}</td>
+          <td>${alumno.nombre}</td>
+          <td>${alumno.apellido}</td>
+          <td>${alumno.edad}</td>
+          <td>${alumno.sexo}</td>
+        </tr>
+      `;
+    });
+  });
+
+// ✅ PROFESORES
+fetch("http://localhost:3000/profesor")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("count-profesores").textContent = data.length;
+
+    const tbody = document.querySelector("#tabla-profesores tbody");
+    data.forEach(profesor => {
+      tbody.innerHTML += `
+        <tr>
+          <td>${profesor.id}</td>
+          <td>${profesor.nombre}</td>
+          <td>${profesor.apellido}</td>
+          <td>${profesor.edad}</td>
+          <td>${profesor.sexo}</td>
+        </tr>
+      `;
+    });
+  });
+
+</script>
+
+</body>
+</html>
