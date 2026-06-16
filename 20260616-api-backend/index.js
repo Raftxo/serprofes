@@ -1,21 +1,13 @@
-// 1. IMPORTACIÓN DE MÓDULOS
-// Importamos el módulo express
+// 1. IMPORTACIÓN
 const express = require('express');
 
 // 2. CREACIÓN DEL SERVIDOR
 const app = express();
 
-// 3. MIDDLEWARE (la línea mágica)
-// Esto es un traductor de peticiones y respuestas
-// Le dice a Node si alguien te envía datos desde fuera; tradúcelos a formato JSON
-// Si falta esto el POST falla
-
+// 3. MIDDLEWARE
 app.use(express.json());
 
-// Nuestra base de datos
-// Guardamos información temporalmente en una lista array
-// dentro de la memoria del servidor
-
+// ===== BASE DE DATOS =====
 let estudiantes = [
     { id: 1, nombre: 'Aroa', curso: 'MongoDB' },
     { id: 2, nombre: 'Jose', curso: 'Express' },
@@ -23,32 +15,58 @@ let estudiantes = [
     { id: 4, nombre: 'Alexa', curso: 'Node' },
 ];
 
-//  📌 ruta get: para leer datos
-// cuando alguien pregunte por "api/estudiantes", el servidor muestra la lista de estudiantes
-
+// ===== GET ESTUDIANTES =====
 app.get('/api/estudiantes', (req, res) => {
     res.json(estudiantes);
 });
 
-// ruta para escribir datos (guardar datos nuevos)
-// ruta post: para escribir datos
-// cuando alguien envíe datos a "api/estudiantes", el servidor guarda el nuevo estudiante
+// ===== POST ESTUDIANTES =====
 app.post('/api/estudiantes', (req, res) => {
-    // atrapamos los datos que vienen de fuera (viven dentro de req.body)
-    const nuevoEstudiante = req.body;
-    // agregamos el nuevo estudiante a la base de datos
+    const { nombre, curso } = req.body;
+
+    const nuevoEstudiante = {
+        id: estudiantes.length + 1,
+        nombre,
+        curso
+    };
+
     estudiantes.push(nuevoEstudiante);
-    // respondemos con un mensajito de confirmación
-    res.json({ 
+
+    res.status(201).json({
         mensaje: 'Estudiante creado correctamente',
-        listaActualizada: estudiantes
-     });
-    // respondemos con la base de datos actualizada
-    res.json(estudiantes);
+        estudiante: nuevoEstudiante
+    });
 });
 
-// X. CREACIÓN DEL SERVIDOR 🚂 (encendemos los motores)
+// ===== PROFESORES =====
+let profesores = [
+    { id: 1, nombre: 'Señorita Aroa', asignatura: 'MongoDB advanced' },
+    { id: 2, nombre: 'Profesor Jose', asignatura: 'Express Orient' },
+    { id: 3, nombre: 'Profesora Laura', asignatura: 'React vs React Native' },
+    { id: 4, nombre: 'Profesora Alexa', asignatura: 'Node vs Deno' },
+];
+
+// ===== GET PROFESORES =====
+app.get('/api/profesores', (req, res) => {
+    res.json(profesores);
+});
+
+// ===== POST PROFESORES =====
+app.post('/api/profesores', (req, res) => {
+    const { nombre, asignatura } = req.body;
+
+    const nuevoProfesor = {
+        id: profesores.length + 1,
+        nombre,
+        asignatura
+    };
+
+    profesores.push(nuevoProfesor);
+
+    res.status(201).json(nuevoProfesor);
+});
+
+// ===== SERVIDOR =====
 app.listen(3000, () => {
     console.log('Servidor corriendo en http://localhost:3000');
 });
-

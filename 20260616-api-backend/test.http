@@ -1,0 +1,18 @@
+POST http://localhost:3000/api/estudiantes
+Content-Type: application/json
+
+{
+  "id": "5",
+  "name": "Rafaelito",
+  "curso": "Postman"
+}
+
+###
+
+POST http://localhost:3000/api/profesores
+Content-Type: application/json
+
+{
+  "nombre": "Profesor Pocholito",
+  "asignatura": "Quiromancia"
+}
