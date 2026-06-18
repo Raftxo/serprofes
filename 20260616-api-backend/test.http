@@ -15,3 +15,6 @@ Content-Type: application/json
   "nombre": "Don Quijote",
   "asignatura": "Lectura Medieval"
 }
+
+###
+GET http://localhost:3000/api/estudiantes/5

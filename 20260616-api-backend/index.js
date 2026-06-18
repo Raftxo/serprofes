@@ -44,6 +44,21 @@ app.post('/api/estudiantes', (req, res) => {
     });
 });
 
+// RUTAS DINÁMICAS (CRUD COMPLETO)
+
+// ===== GET ESTUDIANTES POR ID =====
+// al usar early return se corta la ejecución de la función por lo cual no hace falta el else
+app.get('/api/estudiantes/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const estudiante = estudiantes.find(estudiante => estudiante.id === id);
+
+    if (!estudiante) {
+        return res.status(404).json({ error: 'Estudiante no encontrado' });
+    }
+
+    res.json(estudiante);
+});
+
 // ===== PROFESORES =====
 let profesores = [
     { id: 1, nombre: 'Señorita Aroa', asignatura: 'MongoDB advanced' },
