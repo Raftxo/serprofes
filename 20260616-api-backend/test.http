@@ -2,9 +2,8 @@ POST http://localhost:3000/api/estudiantes
 Content-Type: application/json
 
 {
-  "id": "5",
-  "name": "Rafaelito",
-  "curso": "Postman"
+  "nombre": "Pocholo",
+  "curso": "Bim Bada Boom"
 }
 
 ###
@@ -13,6 +12,6 @@ POST http://localhost:3000/api/profesores
 Content-Type: application/json
 
 {
-  "nombre": "Profesor Pocholito",
-  "asignatura": "Quiromancia"
+  "nombre": "Don Quijote",
+  "asignatura": "Lectura Medieval"
 }

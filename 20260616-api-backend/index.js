@@ -24,6 +24,12 @@ app.get('/api/estudiantes', (req, res) => {
 app.post('/api/estudiantes', (req, res) => {
     const { nombre, curso } = req.body;
 
+    // RETO 3: VALIDACIÓN
+    if (!nombre || !curso || nombre.trim() === '' || curso.trim() === '') {
+        return res.status(400).json({ error: 'El nombre y el curso son obligatorios' });
+    }
+
+    // RETO 2: ID AUTOMÁTICO
     const nuevoEstudiante = {
         id: estudiantes.length + 1,
         nombre,
@@ -55,6 +61,11 @@ app.get('/api/profesores', (req, res) => {
 app.post('/api/profesores', (req, res) => {
     const { nombre, asignatura } = req.body;
 
+    // RETO 3: VALIDACIÓN
+    if (!nombre || !asignatura || nombre.trim() === '' || asignatura.trim() === '') {
+        return res.status(400).json({ error: 'El nombre y la asignatura son obligatorios' });
+    }
+
     const nuevoProfesor = {
         id: profesores.length + 1,
         nombre,
@@ -66,7 +77,7 @@ app.post('/api/profesores', (req, res) => {
     res.status(201).json(nuevoProfesor);
 });
 
-// ===== SERVIDOR =====
+// PASO FINAL: ===== SERVIDOR =====
 app.listen(3000, () => {
     console.log('Servidor corriendo en http://localhost:3000');
 });
