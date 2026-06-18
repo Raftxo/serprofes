@@ -18,3 +18,14 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/api/estudiantes/5
+
+@baseUrl = http://localhost:3000/api
+
+### Actualizar estudiante
+PUT {{baseUrl}}/estudiantes/1
+Content-Type: application/json
+
+{
+    "nombre": "María García",
+    "curso": "Matemáticas Semi Avanzadas"
+}

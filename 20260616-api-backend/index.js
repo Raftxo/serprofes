@@ -59,6 +59,48 @@ app.get('/api/estudiantes/:id', (req, res) => {
     res.json(estudiante);
 });
 
+// ✏️ actualizar estudiante: PUT
+app.put('/api/estudiantes/:id', (req, res) => {
+    const idActualizar = parseInt(req.params.id);
+    const indice = estudiantes.findIndex(estudiante => estudiante.id === idActualizar);
+// otra vez usamos early return
+    if (indice === -1) {
+        return res.status(404).json({ error: 'Estudiante no encontrado' });
+    }
+
+    const { nombre, curso } = req.body;
+
+    // RETO 3: VALIDACIÓN
+    if (!nombre || !curso || nombre.trim() === '' || curso.trim() === '') {
+        return res.status(400).json({ error: 'El nombre y el curso son obligatorios' });
+    }
+
+    estudiantes[indice].nombre = nombre;
+    estudiantes[indice].curso = curso;
+
+    res.json({
+        mensaje: 'Estudiante actualizado correctamente',
+        estudiante: estudiantes[indice]
+    });
+});
+
+// 🗑️ eliminar estudiante: DELETE
+app.delete('/api/estudiantes/:id', (req, res) => {
+    const idEliminar = parseInt(req.params.id);
+    const indice = estudiantes.findIndex(estudiante => estudiante.id === idEliminar);
+
+    if (indice === -1) {
+        return res.status(404).json({ error: 'Estudiante no encontrado' });
+    }
+
+    estudiantes.splice(indice, 1);
+
+    res.json({
+        mensaje: 'Estudiante eliminado correctamente',
+        estudiantes
+    });
+});
+
 // ===== PROFESORES =====
 let profesores = [
     { id: 1, nombre: 'Señorita Aroa', asignatura: 'MongoDB advanced' },
