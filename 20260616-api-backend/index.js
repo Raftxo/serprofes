@@ -15,6 +15,29 @@ let estudiantes = [
     { id: 4, nombre: 'Alexa', curso: 'Node' },
 ];
 
+// ===== RESUMEN DE ENDPOINTS =====
+app.get('/', (req, res) => {
+    res.json({
+        mensaje: 'API de estudiantes y profesores',
+        endpoints: {
+            estudiantes: [
+                'GET /api/estudiantes',
+                'POST /api/estudiantes',
+                'GET /api/estudiantes/:id',
+                'PUT /api/estudiantes/:id',
+                'DELETE /api/estudiantes/:id'
+            ],
+            profesores: [
+                'GET /api/profesores',
+                'POST /api/profesores',
+                'GET /api/profesores/:id',
+                'PUT /api/profesores/:id',
+                'DELETE /api/profesores/:id'
+            ]
+        }
+    });
+});
+
 // ===== GET ESTUDIANTES =====
 app.get('/api/estudiantes', (req, res) => {
     res.json(estudiantes);
@@ -134,7 +157,61 @@ app.post('/api/profesores', (req, res) => {
     res.status(201).json(nuevoProfesor);
 });
 
+// ===== GET PROFESORES POR ID =====
+app.get('/api/profesores/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const profesor = profesores.find(profesor => profesor.id === id);
+
+    if (!profesor) {
+        return res.status(404).json({ error: 'Profesor no encontrado' });
+    }
+
+    res.json(profesor);
+});
+
+// ✏️ actualizar profesor: PUT
+app.put('/api/profesores/:id', (req, res) => {
+    const idActualizar = parseInt(req.params.id);
+    const indice = profesores.findIndex(profesor => profesor.id === idActualizar);
+
+    if (indice === -1) {
+        return res.status(404).json({ error: 'Profesor no encontrado' });
+    }
+
+    const { nombre, asignatura } = req.body;
+
+    // RETO 3: VALIDACIÓN
+    if (!nombre || !asignatura || nombre.trim() === '' || asignatura.trim() === '') {
+        return res.status(400).json({ error: 'El nombre y la asignatura son obligatorios' });
+    }
+
+    profesores[indice].nombre = nombre;
+    profesores[indice].asignatura = asignatura;
+
+    res.json({
+        mensaje: 'Profesor actualizado correctamente',
+        profesor: profesores[indice]
+    });
+});
+
+// 🗑️ eliminar profesor: DELETE
+app.delete('/api/profesores/:id', (req, res) => {
+    const idEliminar = parseInt(req.params.id);
+    const indice = profesores.findIndex(profesor => profesor.id === idEliminar);
+
+    if (indice === -1) {
+        return res.status(404).json({ error: 'Profesor no encontrado' });
+    }
+
+    profesores.splice(indice, 1);
+
+    res.json({
+        mensaje: 'Profesor eliminado correctamente',
+        profesores
+    });
+});
+
 // PASO FINAL: ===== SERVIDOR =====
 app.listen(3000, () => {
-    console.log('Servidor corriendo en http://localhost:3000');
+    console.log('🏃‍♀️‍➡️🏃‍♀️‍➡️🏃‍♂️‍➡️ Servidor corriendo en http://localhost:3000 🏃‍♀️🏃‍♂️🏃‍♀️');
 });

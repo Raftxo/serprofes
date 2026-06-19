@@ -1,31 +1,83 @@
-POST http://localhost:3000/api/estudiantes
+@host = http://localhost:3000
+@baseUrl = {{host}}/api
+
+### Resumen de endpoints
+GET {{host}}/
+
+### Listar estudiantes
+GET {{baseUrl}}/estudiantes
+
+### Crear estudiante
+POST {{baseUrl}}/estudiantes
 Content-Type: application/json
 
 {
-  "nombre": "Pocholo",
-  "curso": "Bim Bada Boom"
+    "nombre": "Pocholo",
+    "curso": "Bim Bada Boom"
 }
 
-###
-
-POST http://localhost:3000/api/profesores
-Content-Type: application/json
-
-{
-  "nombre": "Don Quijote",
-  "asignatura": "Lectura Medieval"
-}
-
-###
-GET http://localhost:3000/api/estudiantes/5
-
-@baseUrl = http://localhost:3000/api
+### Obtener estudiante por ID
+GET {{baseUrl}}/estudiantes/1
 
 ### Actualizar estudiante
 PUT {{baseUrl}}/estudiantes/1
 Content-Type: application/json
 
 {
-    "nombre": "María García",
-    "curso": "Matemáticas Semi Avanzadas"
+    "nombre": "Maria Garcia",
+    "curso": "Matematicas Semi Avanzadas"
 }
+
+### Eliminar estudiante
+DELETE {{baseUrl}}/estudiantes/4
+
+### Error al crear estudiante sin datos obligatorios
+POST {{baseUrl}}/estudiantes
+Content-Type: application/json
+
+{
+    "nombre": "",
+    "curso": ""
+}
+
+### Error al buscar estudiante inexistente
+GET {{baseUrl}}/estudiantes/999
+
+### Listar profesores
+GET {{baseUrl}}/profesores
+
+### Crear profesor
+POST {{baseUrl}}/profesores
+Content-Type: application/json
+
+{
+    "nombre": "Don Quijote",
+    "asignatura": "Lectura Medieval"
+}
+
+### Obtener profesor por ID
+GET {{baseUrl}}/profesores/1
+
+### Actualizar profesor
+PUT {{baseUrl}}/profesores/1
+Content-Type: application/json
+
+{
+    "nombre": "Profesora Aroa",
+    "asignatura": "MongoDB Expert"
+}
+
+### Eliminar profesor
+DELETE {{baseUrl}}/profesores/4
+
+### Error al crear profesor sin datos obligatorios
+POST {{baseUrl}}/profesores
+Content-Type: application/json
+
+{
+    "nombre": "",
+    "asignatura": ""
+}
+
+### Error al buscar profesor inexistente
+GET {{baseUrl}}/profesores/999
