@@ -1,11 +1,13 @@
 // 1. IMPORTACIÓN
 const express = require('express');
+const cors = require('cors');
 
 // 2. CREACIÓN DEL SERVIDOR
 const app = express();
 
-// 3. MIDDLEWARE
+// 3. MIDDLEWARE (damos permiso a recibir JSON y cors)
 app.use(express.json());
+app.use(cors());
 
 // ===== BASE DE DATOS =====
 let estudiantes = [
