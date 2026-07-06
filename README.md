@@ -30,6 +30,11 @@ Aquí encontrarás:
 
 ---
 
+## Más recursos experimentales:
+- Cohere — North Mini Code (free) con Warp Terminal y OpenRouter.ai 
+- https://openrouter.ai/models?q=(free)&order=latency-low-to-high
+
+
 ```mermaid
 flowchart TD
     Sleep[Sleep]
