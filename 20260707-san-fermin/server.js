@@ -7,7 +7,7 @@ const misDatosInteres = [
 ];
 // Ruta Principal (Mensaje de bienvenida en texto plano)
 app.get('/', (req, res) => {
-res.send('Bienvenido a mi servidor personalizado ��');
+res.send('🔥Bienvenido a mi servidor personalizado🔥');
 });
 // Ruta de la API (Entrega tu lista de datos en formato JSON para internet)
 app.get('/api/datos', (req, res) => {
