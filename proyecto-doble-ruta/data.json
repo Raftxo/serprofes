@@ -1,0 +1,22 @@
+{
+  "listaA": [
+    {
+      "id": 1,
+      "item": "Elemento A1"
+    },
+    {
+      "id": 2,
+      "item": "Elemento A2"
+    }
+  ],
+  "listaB": [
+    {
+      "id": 1,
+      "item": "Elemento B1"
+    },
+    {
+      "id": 2,
+      "item": "Elemento B2"
+    }
+  ]
+}
