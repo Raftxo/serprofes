@@ -23,6 +23,7 @@ const PORT = 3000;
 // req.body
 //cuando el cliente envíe información mediate POST o PUT.
 app.use(express.json());
+app.use(express.static('public'));
 
 //=========================================
 //BASE DE DATOS EN MEMORIA

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Tareas - Frontend</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { margin-bottom: 20px; color: #333; }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h2 { margin-bottom: 12px; font-size: 16px; color: #555; }
+        input[type="text"] {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            width: 70%;
+            margin-right: 8px;
+        }
+        button {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            background: #007bff;
+            color: white;
+        }
+        button:hover { background: #0056b3; }
+        button.danger { background: #dc3545; }
+        button.danger:hover { background: #a71d2a; }
+        button.success { background: #28a745; }
+        button.success:hover { background: #1e7e34; }
+        ul { list-style: none; }
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        li:last-child { border-bottom: none; }
+        .tarea-info { display: flex; align-items: center; gap: 10px; flex: 1; }
+        .tarea-info input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+        .tarea-info span.done { text-decoration: line-through; color: #888; }
+        .tarea-info span { flex: 1; }
+        .actions { display: flex; gap: 6px; }
+        .actions button { padding: 4px 10px; font-size: 12px; }
+        #log {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .log-ok { color: #4ec9b0; }
+        .log-err { color: #f48771; }
+        .log-info { color: #569cd6; }
+    </style>
+</head>
+<body>
+    <h1>🚀 API REST de Tareas</h1>
+
+    <div class="card">
+        <h2>➕ Crear tarea (POST /api/tareas)</h2>
+        <input type="text" id="nuevaTarea" placeholder="Título de la tarea" onkeydown="if(event.key==='Enter') crearTarea()">
+        <button onclick="crearTarea()">Crear</button>
+    </div>
+
+    <div class="card">
+        <h2>📋 Listar tareas (GET /api/tareas)</h2>
+        <button onclick="cargarTareas()" class="success">Refrescar</button>
+        <ul id="listaTareas" style="margin-top: 12px;"></ul>
+    </div>
+
+    <div class="card">
+        <h2>🔍 Obtener por ID (GET /api/tareas/:id)</h2>
+        <input type="number" id="buscarId" placeholder="ID" style="width: 80px;">
+        <button onclick="buscarTarea()">Buscar</button>
+        <div id="resultadoBuscar" style="margin-top: 10px; font-size: 13px;"></div>
+    </div>
+
+    <div class="card">
+        <h2>📝 Log de peticiones</h2>
+        <div id="log"></div>
+    </div>
+
+    <script>
+        const API = '/api/tareas';
+        const log = document.getElementById('log');
+
+        function addLog(msg, type = 'info') {
+            const line = document.createElement('div');
+            line.className = 'log-' + type;
+            line.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            log.prepend(line);
+        }
+
+        async function cargarTareas() {
+            try {
+                const res = await fetch(API);
+                const data = await res.json();
+                addLog(`GET ${API} → ${res.status} (${data.length} tareas)`, 'ok');
+                renderTareas(data);
+            } catch (e) {
+                addLog(`Error: ${e.message}`, 'err');
+            }
+        }
+
+        function renderTareas(tareas) {
+            const ul = document.getElementById('listaTareas');
+            ul.innerHTML = '';
+            tareas.forEach(t => {
+                const li = document.createElement('li');
+                li.id = `tarea-${t.id}`;
+                li.innerHTML = `
+                    <div class="tarea-info">
+                        <input type="checkbox" ${t.completada ? 'checked' : ''} onchange="toggleTarea(${t.id}, this.checked)">
+                        <span id="titulo-${t.id}" class="${t.completada ? 'done' : ''}">${t.titulo} <small style="color:#999;">(id: ${t.id})</small></span>
+                    </div>
+                    <div class="actions" id="acciones-${t.id}">
+                        <button onclick="iniciarEdicion(${t.id}, '${t.titulo.replace(/'/g, "\\'")}')">Editar</button>
+                        <button class="danger" onclick="eliminarTarea(${t.id})">Eliminar</button>
+                    </div>
+                `;
+                ul.appendChild(li);
+            });
+        }
+
+        async function crearTarea() {
+            const input = document.getElementById('nuevaTarea');
+            const titulo = input.value.trim();
+            if (!titulo) return;
+            try {
+                const res = await fetch(API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ titulo })
+                });
+                const data = await res.json();
+                addLog(`POST ${API} → ${res.status} (creada: "${data.tarea?.titulo}")`, res.ok ? 'ok' : 'err');
+                if (res.ok) {
+                    input.value = '';
+                    cargarTareas();
+                }
+            } catch (e) {
+                addLog(`Error: ${e.message}`, 'err');
+            }
+        }
+
+        async function toggleTarea(id, completada) {
+            try {
+                const res = await fetch(`${API}/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ completada })
+                });
+                const data = await res.json();
+                addLog(`PUT ${API}/${id} → ${res.status}`, res.ok ? 'ok' : 'err');
+                if (res.ok) cargarTareas();
+            } catch (e) {
+                addLog(`Error: ${e.message}`, 'err');
+            }
+        }
+
+        function iniciarEdicion(id, tituloActual) {
+            const span = document.getElementById(`titulo-${id}`);
+            const acciones = document.getElementById(`acciones-${id}`);
+            span.innerHTML = `<input type="text" id="input-${id}" value="${tituloActual}" style="width:200px;font-size:14px;" onkeydown="if(event.key==='Enter') guardarEdicion(${id})">`;
+            acciones.innerHTML = `
+                <button onclick="guardarEdicion(${id})" class="success">Guardar</button>
+                <button onclick="cancelarEdicion(${id}, '${tituloActual.replace(/'/g, "\\'")}')">Cancelar</button>
+            `;
+            document.getElementById(`input-${id}`).focus();
+        }
+
+        async function guardarEdicion(id) {
+            const nuevoTitulo = document.getElementById(`input-${id}`).value.trim();
+            if (!nuevoTitulo) return;
+            try {
+                const res = await fetch(`${API}/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ titulo: nuevoTitulo })
+                });
+                addLog(`PUT ${API}/${id} → ${res.status}`, res.ok ? 'ok' : 'err');
+                if (res.ok) cargarTareas();
+            } catch (e) {
+                addLog(`Error: ${e.message}`, 'err');
+            }
+        }
+
+        function cancelarEdicion(id, tituloOriginal) {
+            const span = document.getElementById(`titulo-${id}`);
+            const acciones = document.getElementById(`acciones-${id}`);
+            span.innerHTML = `${tituloOriginal} <small style="color:#999;">(id: ${id})</small>`;
+            acciones.innerHTML = `
+                <button onclick="iniciarEdicion(${id}, '${tituloOriginal.replace(/'/g, "\\'")}')">Editar</button>
+                <button class="danger" onclick="eliminarTarea(${id})">Eliminar</button>
+            `;
+        }
+
+        async function eliminarTarea(id) {
+            if (!confirm(`¿Eliminar tarea ${id}?`)) return;
+            try {
+                const res = await fetch(`${API}/${id}`, { method: 'DELETE' });
+                const data = await res.json();
+                addLog(`DELETE ${API}/${id} → ${res.status}`, res.ok ? 'ok' : 'err');
+                if (res.ok) cargarTareas();
+            } catch (e) {
+                addLog(`Error: ${e.message}`, 'err');
+            }
+        }
+
+        async function buscarTarea() {
+            const id = document.getElementById('buscarId').value;
+            if (!id) return;
+            const div = document.getElementById('resultadoBuscar');
+            try {
+                const res = await fetch(`${API}/${id}`);
+                const data = await res.json();
+                addLog(`GET ${API}/${id} → ${res.status}`, res.ok ? 'ok' : 'err');
+                if (res.ok) {
+                    div.innerHTML = `<strong>${data.titulo}</strong> — ${data.completada ? '✅ completada' : '⏳ pendiente'}`;
+                } else {
+                    div.innerHTML = `<span style="color:red;">${data.mensaje}</span>`;
+                }
+            } catch (e) {
+                addLog(`Error: ${e.message}`, 'err');
+            }
+        }
+
+        // Cargar tareas al iniciar
+        cargarTareas();
+    </script>
+</body>
+</html>
