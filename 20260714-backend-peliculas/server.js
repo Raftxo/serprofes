@@ -16,6 +16,28 @@ const app = express();
 app.use(cors());// Da permiso a React para entrar sin que el navegador lo bloquee
 app.use(express.json());// Traduce el texto entrante a formato JSON
 
+// 3 y medio: función para obtener portadas
+const fetch = (...args) =>
+  import('node-fetch').then(({ default: fetch }) => fetch(...args));
+
+
+async function obtenerPortada(titulo) {
+    const apiKey = "TU_API_KEY"; // pon aquí tu API Key de TMDb
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(titulo)}`;
+
+    const respuesta = await fetch(url);
+    const datos = await respuesta.json();
+
+    if (!datos.results || datos.results.length === 0) {
+        return null;
+    }
+
+    const pelicula = datos.results[0];
+
+    return `https://image.tmdb.org/t/p/w500${pelicula.poster_path}`;
+}
+
+
 //===============================================
 //4. NUESTRA BASE DE DATOS
 //===============================================
@@ -33,46 +55,55 @@ app.get("/api/peliculas", (req,res)=>{
 });
 
 //Añadir una película nueva (POST)
-app.post("/api/peliculas", (req, res) => {
+app.post("/api/peliculas", async (req, res) => {
     const { titulo, director } = req.body;
-    //Validación básica para evitar guardar datos vacíos
-    if(!titulo || !director) {
-        return res.status(400).json({ error: "Faltan datos obligatorios"});
+
+    if (!titulo || !director) {
+        return res.status(400).json({ error: "Faltan datos obligatorios" });
     }
+
+    const portada = await obtenerPortada(titulo);
 
     const nuevaPelicula = {
         id: peliculas.length > 0 ? peliculas[peliculas.length - 1].id + 1 : 1,
-        titulo: titulo,
-        director: director
-
+        titulo,
+        director,
+        portada
     };
 
     peliculas.push(nuevaPelicula);
     res.status(201).json(nuevaPelicula);
-})
+});
+
 
 //Actualizar una película existente (PUT)
-app.put("/api/peliculas/:id", (req, res) => {
+app.put("/api/peliculas/:id", async (req, res) => {
     const id = parseInt(req.params.id);
     const { titulo, director } = req.body;
 
-    //Validación básica: no permitimos guardar datos vacíos
     if (!titulo || !director) {
-        return res.status(400).json({ error: "Faltan datos obligatorios"});
+        return res.status(400).json({ error: "Faltan datos obligatorios" });
     }
 
     const pelicula = peliculas.find(p => p.id === id);
 
-    if(!pelicula){
-        return res.status(404).json({ error: "Película no encontrada"});
+    if (!pelicula) {
+        return res.status(404).json({ error: "Película no encontrada" });
     }
 
-    //Actualizamos solo los campos, manteniendo el mismo id
+    // Si el título ha cambiado, buscamos una nueva portada
+    let nuevaPortada = pelicula.portada;
+    if (pelicula.titulo !== titulo) {
+        nuevaPortada = await obtenerPortada(titulo);
+    }
+
     pelicula.titulo = titulo;
     pelicula.director = director;
+    pelicula.portada = nuevaPortada;
 
     res.json(pelicula);
 });
+
 
 //Eliminar una película (DELETE)
 
@@ -93,12 +124,17 @@ app.delete("/api/peliculas/:id", (req,res) => {
 
 
 
+async function completarPortadasIniciales() {
+    for (let pelicula of peliculas) {
+        const portada = await obtenerPortada(pelicula.titulo);
+        pelicula.portada = portada;
+    }
 
+    console.log("🎨 Portadas iniciales cargadas desde TMDb");
+}
 
-
-//==========================================
-//6. ENCENDIDO DEL SERVIDOR
-//==========================================
-app.listen(3000, () => {
-    console.log("🎬 Servidor de películas listo en el puerto 3000 (CORS Activado)");
+completarPortadasIniciales().then(() => {
+    app.listen(3000, () => {
+        console.log("🎬 Servidor de películas listo en el puerto 3000 (CORS Activado)");
+    });
 });

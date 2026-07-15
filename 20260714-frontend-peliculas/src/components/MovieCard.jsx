@@ -1,12 +1,20 @@
 // ==========================================================
 // MovieCard.jsx
 // Representa UNA película dentro del catálogo.
-// Recibe la película por props y avisa al padre (App.jsx)
-// cuando el usuario pulsa "Editar" o "Eliminar".
 // ==========================================================
 function MovieCard({ movie, onEdit, onDelete }) {
   return (
     <div className="movie-card">
+
+      {/* Portada de la película */}
+      {movie.portada && (
+        <img
+          src={movie.portada}
+          alt={movie.titulo}
+          className="movie-poster"
+        />
+      )}
+
       <div className="movie-card-info">
         <h3 className="movie-title">{movie.titulo}</h3>
         <p className="movie-director">🎬 {movie.director}</p>
