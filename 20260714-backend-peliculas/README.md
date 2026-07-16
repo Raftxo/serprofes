@@ -56,7 +56,7 @@ http://localhost:3000
 
 ## Notas Adicionales
 
-- Si el proyecto requiere una base de datos, asegúrate de configurar la conexión en el archivo `server.js` o en un archivo de configuración separado.
-- Si hay archivos de configuración o entornos (como `.env`), asegúrate de crearlos y configurarlos según tus necesidades.
+- Por el momento el proyecto no usa ninguna base de datos.
+- En la carpeta del proyecto tienes que crear archivo `.env` y configurarlo con tu propia API key.
 
-¡Esperamos que disfrutes trabajando en este proyecto! Si tienes alguna pregunta o necesitas ayuda adicional, no dudes en preguntar.
+¡Esperamos que disfrutes trabajando en este proyecto! Si tienes alguna pregunta o necesitas ayuda adicional, no dudes en preguntar al profesor Jorge.
