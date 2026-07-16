@@ -3,11 +3,14 @@
 //==================================
 const express = require("express");
 const cors = require("cors");// Importamos nuestro guardián de seguridad
+const path = require('path');
+require('dotenv').config(); // llamamos a 'dotenv' que maneja el archivo .env con la clave api en local sin subirla a repo en github
 
 //=============================================
 //2. INICIALIZACIÓN
 //=============================================
 const app = express();
+app.use(express.static(path.join(__dirname, 'public')));
 
 //=============================================
 //3. MIDDLEWARES (CONFIGURACIÓN GLOBAL)
@@ -20,21 +23,59 @@ app.use(express.json());// Traduce el texto entrante a formato JSON
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
+const PORTADA_GENERICA = '/img/sin-portada.svg';
 
 async function obtenerPortada(titulo) {
-    const apiKey = "TU_API_KEY"; // pon aquí tu API Key de TMDb
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(titulo)}`;
-
-    const respuesta = await fetch(url);
-    const datos = await respuesta.json();
-
-    if (!datos.results || datos.results.length === 0) {
-        return null;
+    const apiKey = process.env.TMDB_API_KEY;
+    if (!apiKey) {
+        console.error("Error: TMDB_API_KEY no está configurada en el archivo .env fistro pecador");
+        return PORTADA_GENERICA;
     }
 
-    const pelicula = datos.results[0];
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(titulo)}`;
+    console.log(`[TMDb] Buscando portada para: "${titulo}"`);
 
-    return `https://image.tmdb.org/t/p/w500${pelicula.poster_path}`;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+    try {
+        const respuesta = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeoutId);
+
+        console.log(`[TMDb] Status para "${titulo}": ${respuesta.status}`);
+
+        if (!respuesta.ok) {
+            const errorText = await respuesta.text();
+            console.error(`[TMDb] Error para "${titulo}": ${respuesta.status} ${errorText}`);
+            return PORTADA_GENERICA;
+        }
+
+        const datos = await respuesta.json();
+        console.log(`[TMDb] Resultados para "${titulo}": ${datos.results ? datos.results.length : 0}`);
+
+        if (!datos.results || datos.results.length === 0) {
+            console.warn(`[TMDb] No se encontraron resultados para "${titulo}"`);
+            return PORTADA_GENERICA;
+        }
+
+        const pelicula = datos.results[0];
+
+        if (!pelicula.poster_path) {
+            console.warn(`[TMDb] No hay poster para "${titulo}"`);
+            return PORTADA_GENERICA;
+        }
+
+        return `https://image.tmdb.org/t/p/w500${pelicula.poster_path}`;
+    } catch (error) {
+        if (error.name === 'AbortError') {
+            console.error(`[TMDb] Timeout al obtener "${titulo}"`);
+        } else {
+            console.error(`[TMDb] Error al obtener "${titulo}":`, error.message);
+        }
+        return PORTADA_GENERICA;
+    } finally {
+        clearTimeout(timeoutId);
+    }
 }
 
 
