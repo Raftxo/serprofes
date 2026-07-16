@@ -21,7 +21,7 @@ Bienvenido al proyecto backend para la gestión de películas. Este proyecto est
 Para clonar el repositorio, ejecuta el siguiente comando en tu terminal:
 
 ```bash
-git clone https://github.com/tu-usuario/20260714-backend-peliculas.git
+git clone https://github.com/raftxo/20260714-backend-peliculas.git
 ```
 
 ### 2. Accede al Directorio del Proyecto
