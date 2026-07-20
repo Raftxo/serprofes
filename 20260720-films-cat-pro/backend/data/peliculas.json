@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "titulo": "Matrix",
+    "director": "Lana Wachowski",
+    "portada": "https://image.tmdb.org/t/p/w500/dXNAPwY7VrqMAo51EKhhCJfaGb5.jpg"
+  },
+  {
+    "id": 2,
+    "titulo": "Interstellar",
+    "director": "Christopher Nolan",
+    "portada": "https://image.tmdb.org/t/p/w500/yQvGrMoipbRoddT0ZR8tPoR7NfX.jpg"
+  },
+  {
+    "id": 3,
+    "titulo": "Atasco en la nacional",
+    "director": "Josetxo San Mateo",
+    "portada": "https://image.tmdb.org/t/p/w500/5cRSkInUJcOvTBzglrZfwhiWpH9.jpg"
+  }
+]

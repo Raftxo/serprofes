@@ -1,0 +1,21 @@
+{
+  "name": "films-cat-pro-backend",
+  "version": "1.0.0",
+  "description": "Backend mejorado con protecciones para catálogo de películas",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["movies", "api", "express"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^7.5.0",
+    "node-fetch": "^3.3.2"
+  }
+}

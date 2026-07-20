@@ -1,0 +1,346 @@
+/* ==========================================================
+   App.css - Estilos del catálogo de películas
+   ========================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #1a1a2e;
+  color: #eee;
+  min-height: 100vh;
+}
+
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Header */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.app-header h1 {
+  font-size: 2rem;
+  color: #e94560;
+}
+
+.status {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-online {
+  background: rgba(46, 213, 115, 0.15);
+  color: #2ed573;
+}
+
+.status-offline {
+  background: rgba(255, 71, 87, 0.15);
+  color: #ff4757;
+}
+
+.status-checking {
+  background: rgba(255, 165, 2, 0.15);
+  color: #ffa502;
+}
+
+/* Offline banner */
+.offline-banner {
+  background: rgba(255, 71, 87, 0.1);
+  border: 1px solid #ff4757;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #ff6b7a;
+  line-height: 1.6;
+}
+
+.offline-banner code {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+/* Error Banner */
+.error-banner {
+  margin-bottom: 1.5rem;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.error-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 165, 2, 0.1);
+  border: 1px solid #ffa502;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+.error-icon {
+  font-size: 1.3rem;
+}
+
+.error-text {
+  flex: 1;
+  color: #ffc048;
+}
+
+.error-text strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.error-details {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.error-close {
+  background: none;
+  border: none;
+  color: #ffc048;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.error-close:hover {
+  background: rgba(255, 192, 72, 0.15);
+}
+
+/* Form */
+.movie-form {
+  background: #16213e;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid #0f3460;
+}
+
+.form-title {
+  font-size: 1.3rem;
+  margin-bottom: 1.25rem;
+  color: #e94560;
+}
+
+.form-error {
+  background: rgba(255, 71, 87, 0.1);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  color: #ff6b7a;
+  font-size: 0.9rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1px solid #0f3460;
+  border-radius: 8px;
+  background: #1a1a2e;
+  color: #eee;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #e94560;
+}
+
+.form-group input::placeholder {
+  color: #555;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.65rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: #e94560;
+  color: #fff;
+}
+
+.btn-cancel {
+  background: #333;
+  color: #ccc;
+}
+
+.btn-edit {
+  background: #0f3460;
+  color: #7ec8e3;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.btn-delete {
+  background: rgba(255, 71, 87, 0.15);
+  color: #ff4757;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+}
+
+/* Movie List */
+.movie-list {
+  margin-top: 1rem;
+}
+
+.list-title {
+  font-size: 1.2rem;
+  margin-bottom: 1.25rem;
+  color: #7ec8e3;
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Movie Card */
+.movie-card {
+  background: #16213e;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #0f3460;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.movie-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(233, 69, 96, 0.15);
+}
+
+.movie-poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: #0f3460;
+}
+
+.movie-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movie-info {
+  padding: 1rem;
+}
+
+.movie-title {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+  color: #eee;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-director {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 0.75rem;
+}
+
+.movie-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Empty & Loading states */
+.empty-state,
+.loading-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .app-container {
+    padding: 1rem;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .movies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+}
