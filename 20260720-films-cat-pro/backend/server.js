@@ -38,7 +38,7 @@ async function obtenerPortada(titulo) {
         return PORTADA_GENERICA;
     }
 
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(titulo)}`;
+    const url = const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(titulo)}&language=es-ES`;
     console.log(`[TMDb] Buscando portada para: "${titulo}"`);
 
     const controller = new AbortController();

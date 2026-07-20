@@ -16,5 +16,23 @@
     "titulo": "Atasco en la nacional",
     "director": "Josetxo San Mateo",
     "portada": "https://image.tmdb.org/t/p/w500/5cRSkInUJcOvTBzglrZfwhiWpH9.jpg"
+  },
+  {
+    "id": 5,
+    "titulo": "La  flaqueza del     bolchevique",
+    "director": "Manuel Martín Cuenca",
+    "portada": "https://image.tmdb.org/t/p/w500/tFmFyW3aCTRXCnQ0skIdmntlji7.jpg"
+  },
+  {
+    "id": 6,
+    "titulo": "El señor de los anillos",
+    "director": "peter jackson",
+    "portada": "https://image.tmdb.org/t/p/w500/uj2hbjGswf4iAVfwZbdi7md5H1c.jpg"
+  },
+  {
+    "id": 7,
+    "titulo": "amanece que no es poco",
+    "director": "Jose Luis Cuerda",
+    "portada": "https://image.tmdb.org/t/p/w500/lQX1gTROwLPFVWrXBy2uCHOLyby.jpg"
   }
 ]
