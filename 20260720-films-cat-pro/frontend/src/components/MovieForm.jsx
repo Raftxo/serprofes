@@ -3,18 +3,20 @@
 // Formulario unico que sirve tanto para CREAR como para EDITAR.
 // Incluye validacion de duplicados en el cliente.
 // ==========================================================
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function MovieForm({ editingMovie, onSubmit, onCancelEdit, existingMovies }) {
   const [titulo, setTitulo] = useState("");
   const [director, setDirector] = useState("");
   const [localError, setLocalError] = useState("");
+  const formRef = useRef(null);
 
   useEffect(() => {
     if (editingMovie) {
       setTitulo(editingMovie.titulo);
       setDirector(editingMovie.director);
       setLocalError("");
+      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
       setTitulo("");
       setDirector("");
@@ -53,7 +55,7 @@ function MovieForm({ editingMovie, onSubmit, onCancelEdit, existingMovies }) {
   const isEditing = editingMovie !== null;
 
   return (
-    <form className="movie-form" onSubmit={handleSubmit}>
+    <form className="movie-form" ref={formRef} onSubmit={handleSubmit}>
       <h2 className="form-title">
         {isEditing ? "Editar pelicula" : "Agregar pelicula"}
       </h2>

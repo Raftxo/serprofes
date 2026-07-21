@@ -2,7 +2,7 @@
   {
     "id": 1,
     "titulo": "Matrix",
-    "director": "Lana Wachowski",
+    "director": "Lana Wachowski, Lilly Wachowski",
     "portada": "https://image.tmdb.org/t/p/w500/dXNAPwY7VrqMAo51EKhhCJfaGb5.jpg"
   },
   {
@@ -44,7 +44,7 @@
   {
     "id": 15,
     "titulo": "Les Anarchistes",
-    "director": "Inconú",
+    "director": "Elie Wajeman",
     "portada": "https://image.tmdb.org/t/p/w500/meavCzAaEsWk1Vmu5HxwAEvSPd2.jpg"
   }
 ]
