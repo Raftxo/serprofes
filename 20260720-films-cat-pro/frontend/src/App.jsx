@@ -24,6 +24,9 @@ function App() {
   const [editingMovie, setEditingMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showProtections, setShowProtections] = useState(false);
+
+  const toggleProtections = () => setShowProtections((prev) => !prev);
 
   const cargarPeliculas = useCallback(async () => {
     try {
@@ -124,26 +127,36 @@ function App() {
 
   return (
     <div className="app-container">
-      <div className="app-layout">
+      <div className={`app-layout ${showProtections ? "" : "app-layout--single"}`}>
         <main className="app-main">
           <header className="app-header">
             <h1>🎬 Catálogo de Películas</h1>
 
-            {backendStatus === "online" && (
-              <span className="status status-online">
-                🟢 Backend conectado en :{BACKEND_PORT}
-              </span>
-            )}
-            {backendStatus === "offline" && (
-              <span className="status status-offline">
-                🔴 Backend desconectado (:{BACKEND_PORT})
-              </span>
-            )}
-            {backendStatus === "checking" && (
-              <span className="status status-checking">
-                🟡 Comprobando conexión...
-              </span>
-            )}
+            <div className="status-group">
+              {backendStatus === "online" && (
+                <span className="status status-online">
+                  🟢 Backend conectado en :{BACKEND_PORT}
+                </span>
+              )}
+              {backendStatus === "offline" && (
+                <span className="status status-offline">
+                  🔴 Backend desconectado (:{BACKEND_PORT})
+                </span>
+              )}
+              {backendStatus === "checking" && (
+                <span className="status status-checking">
+                  🟡 Comprobando conexión...
+                </span>
+              )}
+              <button
+                className="shield-button"
+                onClick={toggleProtections}
+                title={showProtections ? "Ocultar protecciones" : "Mostrar protecciones"}
+                aria-label={showProtections ? "Ocultar protecciones" : "Mostrar protecciones"}
+              >
+                🛡️
+              </button>
+            </div>
           </header>
 
           <ErrorBanner
@@ -180,7 +193,7 @@ function App() {
           )}
         </main>
 
-        <ProjectInfo />
+        {showProtections && <ProjectInfo />}
       </div>
     </div>
   );

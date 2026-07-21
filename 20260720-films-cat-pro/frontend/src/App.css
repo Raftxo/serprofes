@@ -32,6 +32,16 @@ body {
     grid-template-columns: 1fr 380px;
     align-items: start;
   }
+
+  .app-layout--single {
+    display: flex;
+    justify-content: center;
+  }
+
+  .app-layout--single .app-main {
+    max-width: 900px;
+    width: 100%;
+  }
 }
 
 .app-main {
@@ -79,6 +89,29 @@ body {
 
 .status-checking {
   color: #fbbf24;
+}
+
+.status-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.shield-button {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  line-height: 1;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.shield-button:hover {
+  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .offline-banner {
