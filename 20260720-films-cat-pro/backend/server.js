@@ -265,6 +265,11 @@ app.put("/api/peliculas/:id", validateMovieData, async (req, res) => {
     res.json(pelicula);
 });
 
+// Endpoint de health check para detectar si el backend está vivo
+app.get("/api/health", (req, res) => {
+    res.json({ status: "ok" });
+});
+
 // Eliminar una película (DELETE)
 app.delete("/api/peliculas/:id", (req, res) => {
     const id = parseInt(req.params.id);

@@ -31,6 +31,17 @@ export async function getMovies() {
 }
 
 // ------------------------------------------------------------
+// GET /api/health -> Comprobar si el backend está vivo
+// ------------------------------------------------------------
+export async function checkBackendHealth() {
+  const response = await fetch("/api/health");
+  if (!response.ok) {
+    throw new Error("Backend no disponible");
+  }
+  return response.json();
+}
+
+// ------------------------------------------------------------
 // POST /api/peliculas -> Crear una película nueva
 // ------------------------------------------------------------
 export async function createMovie(movie) {

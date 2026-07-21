@@ -8,7 +8,15 @@ import MovieList from "./components/MovieList.jsx";
 import MovieForm from "./components/MovieForm.jsx";
 import ErrorBanner from "./components/ErrorBanner.jsx";
 import ProjectInfo from "./components/ProjectInfo.jsx";
-import { getMovies, createMovie, updateMovie, deleteMovie } from "./services/movieService.js";
+import {
+  getMovies,
+  createMovie,
+  updateMovie,
+  deleteMovie,
+  checkBackendHealth,
+} from "./services/movieService.js";
+
+const BACKEND_PORT = 3000;
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -38,6 +46,22 @@ function App() {
   useEffect(() => {
     cargarPeliculas();
   }, [cargarPeliculas]);
+
+  useEffect(() => {
+    const checkHealth = async () => {
+      try {
+        await checkBackendHealth();
+        setBackendStatus("online");
+      } catch (err) {
+        setBackendStatus("offline");
+      }
+    };
+
+    checkHealth();
+    const interval = setInterval(checkHealth, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleFormSubmit = async (movieData) => {
     try {
@@ -106,13 +130,19 @@ function App() {
             <h1>🎬 Catálogo de Películas</h1>
 
             {backendStatus === "online" && (
-              <span className="status status-online">🟢 Backend conectado</span>
+              <span className="status status-online">
+                🟢 Backend conectado en :{BACKEND_PORT}
+              </span>
             )}
             {backendStatus === "offline" && (
-              <span className="status status-offline">🔴 Backend desconectado</span>
+              <span className="status status-offline">
+                🔴 Backend desconectado (:{BACKEND_PORT})
+              </span>
             )}
             {backendStatus === "checking" && (
-              <span className="status status-checking">🟡 Comprobando conexión...</span>
+              <span className="status status-checking">
+                🟡 Comprobando conexión...
+              </span>
             )}
           </header>
 
@@ -124,7 +154,7 @@ function App() {
 
           {backendStatus === "offline" && (
             <div className="offline-banner">
-              No se puede conectar con <strong>http://localhost:3000</strong>.
+              No se puede conectar con <strong>http://localhost:{BACKEND_PORT}</strong>.
               <br />
               Comprueba que tu servidor Express esté encendido (<code>npm run dev</code>).
             </div>
