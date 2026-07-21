@@ -42,15 +42,15 @@
     "portada": "https://image.tmdb.org/t/p/w500/meavCzAaEsWk1Vmu5HxwAEvSPd2.jpg"
   },
   {
-    "id": 16,
-    "titulo": "El Señor de los Anillos: la comunidad del anillo",
-    "director": "Peter Jackson",
-    "portada": "https://image.tmdb.org/t/p/w500/9xtH1RmAzQ0rrMBNUMXstb2s3er.jpg"
+    "id": 17,
+    "titulo": "Pelham 1, 2, 3",
+    "director": "Maquinista",
+    "portada": "https://image.tmdb.org/t/p/w500/rEnyQiBu6goqJfvQXpUZQjpoHVp.jpg"
   },
   {
-    "id": 17,
-    "titulo": "Sibyl",
-    "director": "Justine Triet",
-    "portada": "https://image.tmdb.org/t/p/w500/9W4pznUF8Np6qHExgclaRHVHzom.jpg"
+    "id": 18,
+    "titulo": "The Taking of Pelham 1, 2, 3",
+    "director": "El Revisor",
+    "portada": "https://image.tmdb.org/t/p/w500/rEnyQiBu6goqJfvQXpUZQjpoHVp.jpg"
   }
 ]
