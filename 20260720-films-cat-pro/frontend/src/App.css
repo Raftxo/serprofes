@@ -16,9 +16,30 @@ body {
 }
 
 .app-container {
-  max-width: 900px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 40px 20px 80px;
+}
+
+.app-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+@media (min-width: 1024px) {
+  .app-layout {
+    grid-template-columns: 1fr 380px;
+    align-items: start;
+  }
+}
+
+.app-main {
+  min-width: 0;
+}
+
+.app-sidebar {
+  min-width: 0;
 }
 
 /* ---------------- HEADER ---------------- */
@@ -267,13 +288,20 @@ body {
   transform: translateY(-3px);
 }
 
+.movie-poster-wrapper {
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
 .movie-poster {
   width: 100%;
   border-radius: 8px;
-  margin-bottom: 12px;
   aspect-ratio: 2/3;
   object-fit: cover;
   background-color: #333;
+  display: block;
 }
 
 .movie-info {
@@ -320,4 +348,149 @@ body {
   text-align: center;
   padding: 40px 0;
   font-size: 15px;
+}
+
+/* ---------------- MODAL DE PORTADA ---------------- */
+.movie-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 40px 20px;
+  overflow: auto;
+}
+
+.movie-modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.movie-modal-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 32px;
+  cursor: pointer;
+  padding: 4px 12px;
+  z-index: 10000;
+}
+
+.movie-modal-image {
+  width: 500px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.movie-modal-title {
+  margin-top: 16px;
+  font-size: 20px;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* ---------------- PANEL INFORMATIVO ---------------- */
+.project-info {
+  background-color: #1f1f1f;
+  border-radius: 12px;
+  padding: 24px;
+  color: #e5e5e5;
+  height: fit-content;
+  position: sticky;
+  top: 24px;
+}
+
+.project-info-title {
+  margin: 0 0 12px;
+  font-size: 20px;
+  color: #e50914;
+}
+
+.project-info-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #b3b3b3;
+  margin: 0 0 20px;
+}
+
+.project-info-section {
+  margin-bottom: 24px;
+}
+
+.project-info-section h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.project-info-list {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 0;
+  font-size: 14px;
+  color: #b3b3b3;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-example {
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.project-example code {
+  display: block;
+  color: #fbbf24;
+  margin: 4px 0;
+  word-break: break-all;
+}
+
+.project-example p {
+  margin: 6px 0 0;
+  color: #b3b3b3;
+}
+
+.method {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 6px;
+  text-transform: uppercase;
+}
+
+.method.get {
+  background-color: #22c55e;
+  color: #000000;
+}
+
+.method.post {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.method.put {
+  background-color: #f59e0b;
+  color: #000000;
+}
+
+.method.del {
+  background-color: #ef4444;
+  color: #ffffff;
 }

@@ -5,7 +5,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require('path');
 const fs = require('fs');
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const { validateMovieData } = require('./middleware/validate');
 const { apiLimiter } = require('./middleware/rateLimiter');
@@ -31,6 +31,47 @@ const fetch = (...args) =>
 
 const PORTADA_GENERICA = '/img/sin-portada.svg';
 
+/**
+ * Detecta el idioma del título para buscar la portada localizada.
+ * Soporta español, francés e inglés. Cualquier otro idioma cae en inglés.
+ */
+function detectarIdioma(titulo) {
+    const lower = titulo.toLowerCase();
+
+    const palabrasFrances = ['le', 'la', 'les', 'un', 'une', 'l\'', 'd\'', 'du', 'des', 'et', 'est', 'pour', 'dans', 'avec'];
+    const caracteresFrances = /[çèéêàâôîëüï]/;
+
+    const palabrasEspanol = ['el', 'la', 'los', 'las', 'un', 'una', 'de', 'del', 'en', 'y', 'o', 'que', 'por', 'con'];
+    const caracteresEspanol = /[áéíóúñü]/;
+
+    const palabrasIngles = ['the', 'a', 'an', 'of', 'in', 'on', 'and', 'is', 'for', 'to', 'from'];
+
+    let puntosFrances = 0;
+    let puntosEspanol = 0;
+    let puntosIngles = 0;
+
+    // Caracteres propios de cada idioma (muy determinantes)
+    if (caracteresFrances.test(titulo)) puntosFrances += 10;
+    if (caracteresEspanol.test(titulo)) puntosEspanol += 10;
+
+    // Palabras comunes (menos determinantes porque se solapan)
+    palabrasFrances.forEach(p => {
+        if (lower.includes(` ${p} `) || lower.startsWith(`${p} `) || lower.endsWith(` ${p}`)) puntosFrances += 1;
+    });
+    palabrasEspanol.forEach(p => {
+        if (lower.includes(` ${p} `) || lower.startsWith(`${p} `) || lower.endsWith(` ${p}`)) puntosEspanol += 1;
+    });
+    palabrasIngles.forEach(p => {
+        if (lower.includes(` ${p} `) || lower.startsWith(`${p} `) || lower.endsWith(` ${p}`)) puntosIngles += 1;
+    });
+
+    if (puntosFrances > puntosEspanol && puntosFrances > puntosIngles) return 'fr-FR';
+    if (puntosEspanol > puntosFrances && puntosEspanol > puntosIngles) return 'es-ES';
+    if (puntosIngles > puntosFrances && puntosIngles > puntosEspanol) return 'en-US';
+
+    return 'en-US';
+}
+
 async function obtenerPortada(titulo) {
     const apiKey = process.env.TMDB_API_KEY;
     if (!apiKey) {
@@ -38,46 +79,62 @@ async function obtenerPortada(titulo) {
         return PORTADA_GENERICA;
     }
 
-    const url = const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(titulo)}&language=es-ES`;
-    console.log(`[TMDb] Buscando portada para: "${titulo}"`);
+    const idioma = detectarIdioma(titulo);
+    const idiomaFallback = 'en-US';
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    async function buscarPortada(language) {
+        const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(titulo)}&language=${language}`;
+        console.log(`[TMDb] Buscando portada para: "${titulo}" (${language})`);
 
-    try {
-        const respuesta = await fetch(url, { signal: controller.signal });
-        clearTimeout(timeoutId);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
 
-        if (!respuesta.ok) {
-            console.error(`[TMDb] Error para "${titulo}": ${respuesta.status}`);
-            return PORTADA_GENERICA;
+        try {
+            const respuesta = await fetch(url, { signal: controller.signal });
+            clearTimeout(timeoutId);
+
+            if (!respuesta.ok) {
+                console.error(`[TMDb] Error para "${titulo}": ${respuesta.status}`);
+                return null;
+            }
+
+            const datos = await respuesta.json();
+
+            if (!datos.results || datos.results.length === 0) {
+                console.warn(`[TMDb] No se encontraron resultados para "${titulo}" (${language})`);
+                return null;
+            }
+
+            const pelicula = datos.results[0];
+
+            if (!pelicula.poster_path) {
+                console.warn(`[TMDb] No hay poster para "${titulo}" (${language})`);
+                return null;
+            }
+
+            return `https://image.tmdb.org/t/p/w500${pelicula.poster_path}`;
+        } catch (error) {
+            if (error.name === 'AbortError') {
+                console.error(`[TMDb] Timeout al obtener "${titulo}"`);
+            } else {
+                console.error(`[TMDb] Error al obtener "${titulo}":`, error.message);
+            }
+            return null;
+        } finally {
+            clearTimeout(timeoutId);
         }
-
-        const datos = await respuesta.json();
-
-        if (!datos.results || datos.results.length === 0) {
-            console.warn(`[TMDb] No se encontraron resultados para "${titulo}"`);
-            return PORTADA_GENERICA;
-        }
-
-        const pelicula = datos.results[0];
-
-        if (!pelicula.poster_path) {
-            console.warn(`[TMDb] No hay poster para "${titulo}"`);
-            return PORTADA_GENERICA;
-        }
-
-        return `https://image.tmdb.org/t/p/w500${pelicula.poster_path}`;
-    } catch (error) {
-        if (error.name === 'AbortError') {
-            console.error(`[TMDb] Timeout al obtener "${titulo}"`);
-        } else {
-            console.error(`[TMDb] Error al obtener "${titulo}":`, error.message);
-        }
-        return PORTADA_GENERICA;
-    } finally {
-        clearTimeout(timeoutId);
     }
+
+    const portada = await buscarPortada(idioma);
+    if (portada) return portada;
+
+    if (idioma !== idiomaFallback) {
+        console.log(`[TMDb] Intentando fallback a inglés para "${titulo}"`);
+        const portadaFallback = await buscarPortada(idiomaFallback);
+        if (portadaFallback) return portadaFallback;
+    }
+
+    return PORTADA_GENERICA;
 }
 
 //=============================================
@@ -167,8 +224,12 @@ app.post("/api/peliculas", validateMovieData, async (req, res) => {
 // Actualizar una película existente (PUT) - CON VALIDACIÓN Y PROTECCIÓN ANTIDUPLICADOS
 app.put("/api/peliculas/:id", validateMovieData, async (req, res) => {
     const id = parseInt(req.params.id);
-    const { titulo, director } = req.body;
 
+    if (Number.isNaN(id)) {
+        return res.status(400).json({ error: "El ID debe ser un número válido" });
+    }
+
+    const { titulo, director } = req.body;
     const pelicula = peliculas.find(p => p.id === id);
 
     if (!pelicula) {
@@ -207,6 +268,11 @@ app.put("/api/peliculas/:id", validateMovieData, async (req, res) => {
 // Eliminar una película (DELETE)
 app.delete("/api/peliculas/:id", (req, res) => {
     const id = parseInt(req.params.id);
+
+    if (Number.isNaN(id)) {
+        return res.status(400).json({ error: "El ID debe ser un número válido" });
+    }
+
     const index = peliculas.findIndex(p => p.id === id);
 
     if (index !== -1) {
@@ -249,8 +315,19 @@ async function completarPortadasIniciales() {
 }
 
 completarPortadasIniciales().then(() => {
-    app.listen(3000, () => {
+    const server = app.listen(3000, () => {
         console.log("🎬 Servidor de películas listo en el puerto 3000");
         console.log("🔒 Protecciones activas: validación, antiduplicados, rate limiting");
     });
+
+    function closeServer(signal) {
+        console.log(`\n${signal} recibido. Cerrando servidor gracefully...`);
+        server.close(() => {
+            console.log('Servidor cerrado.');
+            process.exit(0);
+        });
+    }
+
+    process.on('SIGINT', () => closeServer('SIGINT'));
+    process.on('SIGTERM', () => closeServer('SIGTERM'));
 });

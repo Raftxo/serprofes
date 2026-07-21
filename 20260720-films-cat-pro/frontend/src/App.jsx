@@ -7,6 +7,7 @@ import { useState, useEffect, useCallback } from "react";
 import MovieList from "./components/MovieList.jsx";
 import MovieForm from "./components/MovieForm.jsx";
 import ErrorBanner from "./components/ErrorBanner.jsx";
+import ProjectInfo from "./components/ProjectInfo.jsx";
 import { getMovies, createMovie, updateMovie, deleteMovie } from "./services/movieService.js";
 
 function App() {
@@ -99,52 +100,58 @@ function App() {
 
   return (
     <div className="app-container">
-      <header className="app-header">
-        <h1>🎬 Catálogo de Películas</h1>
+      <div className="app-layout">
+        <main className="app-main">
+          <header className="app-header">
+            <h1>🎬 Catálogo de Películas</h1>
 
-        {backendStatus === "online" && (
-          <span className="status status-online">🟢 Backend conectado</span>
-        )}
-        {backendStatus === "offline" && (
-          <span className="status status-offline">🔴 Backend desconectado</span>
-        )}
-        {backendStatus === "checking" && (
-          <span className="status status-checking">🟡 Comprobando conexión...</span>
-        )}
-      </header>
+            {backendStatus === "online" && (
+              <span className="status status-online">🟢 Backend conectado</span>
+            )}
+            {backendStatus === "offline" && (
+              <span className="status status-offline">🔴 Backend desconectado</span>
+            )}
+            {backendStatus === "checking" && (
+              <span className="status status-checking">🟡 Comprobando conexión...</span>
+            )}
+          </header>
 
-      <ErrorBanner
-        message={error?.message}
-        details={error?.details}
-        onClose={clearError}
-      />
+          <ErrorBanner
+            message={error?.message}
+            details={error?.details}
+            onClose={clearError}
+          />
 
-      {backendStatus === "offline" && (
-        <div className="offline-banner">
-          No se puede conectar con <strong>http://localhost:3000</strong>.
-          <br />
-          Comprueba que tu servidor Express esté encendido (<code>npm run dev</code>).
-        </div>
-      )}
+          {backendStatus === "offline" && (
+            <div className="offline-banner">
+              No se puede conectar con <strong>http://localhost:3000</strong>.
+              <br />
+              Comprueba que tu servidor Express esté encendido (<code>npm run dev</code>).
+            </div>
+          )}
 
-      <MovieForm
-        editingMovie={editingMovie}
-        onSubmit={handleFormSubmit}
-        onCancelEdit={handleCancelEdit}
-        existingMovies={movies}
-      />
+          <MovieForm
+            editingMovie={editingMovie}
+            onSubmit={handleFormSubmit}
+            onCancelEdit={handleCancelEdit}
+            existingMovies={movies}
+          />
 
-      {loading ? (
-        <div className="loading-state">
-          <p>⏳ Cargando películas...</p>
-        </div>
-      ) : (
-        <MovieList
-          movies={movies}
-          onEdit={handleEditClick}
-          onDelete={handleDeleteClick}
-        />
-      )}
+          {loading ? (
+            <div className="loading-state">
+              <p>⏳ Cargando películas...</p>
+            </div>
+          ) : (
+            <MovieList
+              movies={movies}
+              onEdit={handleEditClick}
+              onDelete={handleDeleteClick}
+            />
+          )}
+        </main>
+
+        <ProjectInfo />
+      </div>
     </div>
   );
 }
