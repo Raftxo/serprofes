@@ -32,19 +32,25 @@
   {
     "id": 12,
     "titulo": "Der Untergang",
-    "director": "Desconocida",
+    "director": "Oliver Hirschbiegel",
     "portada": "https://image.tmdb.org/t/p/w500/cP1ElGjBhbZAAqmueXjHDKlSwiP.jpg"
-  },
-  {
-    "id": 14,
-    "titulo": "El Señor de los Anillos: la comunidad del anillo",
-    "director": "Peter Jackson",
-    "portada": "https://image.tmdb.org/t/p/w500/5OPg6M0yHr21Ovs1fni2H1xpKuF.jpg"
   },
   {
     "id": 15,
     "titulo": "Les Anarchistes",
     "director": "Elie Wajeman",
     "portada": "https://image.tmdb.org/t/p/w500/meavCzAaEsWk1Vmu5HxwAEvSPd2.jpg"
+  },
+  {
+    "id": 16,
+    "titulo": "El Señor de los Anillos: la comunidad del anillo",
+    "director": "Peter Jackson",
+    "portada": "https://image.tmdb.org/t/p/w500/9xtH1RmAzQ0rrMBNUMXstb2s3er.jpg"
+  },
+  {
+    "id": 17,
+    "titulo": "Sibyl",
+    "director": "Justine Triet",
+    "portada": "https://image.tmdb.org/t/p/w500/9W4pznUF8Np6qHExgclaRHVHzom.jpg"
   }
 ]
