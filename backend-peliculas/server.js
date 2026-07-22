@@ -42,8 +42,67 @@ app.post("/api/peliculas", (req, res) => {
     .json({ mensaje: "Recurso creado con éxito", pelicula: nuevaPelicula });
 });
 
+// Operación de Actualización Completa (PUT)
+app.put("/api/peliculas/:id", (req, res) => {
+  const { id } = req.params;
+  const { titulo, director, anio } = req.body;
+
+  // Validación de campos obligatorios
+  if (!titulo || !director || !anio) {
+    return res
+      .status(400)
+      .json({
+        error:
+          "Faltan propiedades obligatorias: titulo, director y año son requeridos.",
+      });
+  }
+
+  // Buscar la película por ID
+  const indice = peliculas.findIndex((p) => p.id === parseInt(id));
+
+  if (indice === -1) {
+    return res
+      .status(404)
+      .json({ error: "Película no encontrada con el ID proporcionado." });
+  }
+
+  // Actualizar la película
+  peliculas[indice] = {
+    ...peliculas[indice],
+    titulo: titulo,
+    director: director,
+    anio: parseInt(anio),
+  };
+
+  res.status(200).json({
+    mensaje: "Película actualizada con éxito",
+    pelicula: peliculas[indice],
+  });
+});
+
+// Operación de Eliminación (DELETE)
+app.delete("/api/peliculas/:id", (req, res) => {
+  const { id } = req.params;
+
+  // Buscar la película por ID
+  const indice = peliculas.findIndex((p) => p.id === parseInt(id));
+
+  if (indice === -1) {
+    return res
+      .status(404)
+      .json({ error: "Película no encontrada con el ID proporcionado." });
+  }
+
+  // Eliminar la película
+  const peliculaEliminada = peliculas.splice(indice, 1)[0];
+
+  res.status(200).json({
+    mensaje: "Película eliminada con éxito",
+    pelicula: peliculaEliminada,
+  });
+});
+
 // DECLARACIÓN DE ENTRADA AL SERVIDOR
 app.listen(PORT, () => {
-  console.log(`\u2611 Servidor de películas operativo con éxito en
-http://localhost:\${PORT}`);
+  console.log(`\u2611 Servidor de películas operativo con éxito en \nhttp://localhost:${PORT}`);
 });
